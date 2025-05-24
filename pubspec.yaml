@@ -3,6 +3,7 @@ description: FFmpeg Kit for Flutter with Full GPL and updated bindings. Supports
 repository: https://github.com/sk3llo/ffmpeg_kit_flutter
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
 version: 1.6.1
+publish_to: none
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
@@ -20,8 +21,10 @@ flutter:
         pluginClass: FFmpegKitFlutterPlugin
 
 dependencies:
-  ffmpeg_kit_flutter_android: ^1.4.0
-#    path: ffmpeg_kit_flutter_android
+  ffmpeg_kit_flutter_android:
+    git:
+      url: https://github.com/sk3llo/ffmpeg_kit_flutter_android.git
+      ref: custom-jni-libs
   ffmpeg_kit_flutter_platform_interface: ^0.2.1
 
   flutter:
