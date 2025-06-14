@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.default_subspec = 'full-gpl-lts'
 
   s.dependency          'Flutter'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
 
   s.subspec 'min' do |ss|
     ss.source_files         = 'Classes/**/*'
@@ -126,6 +126,13 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'full-gpl-lts' do |ss|
+    # Adding pre-install hook
+    s.prepare_command = <<-CMD
+      if [ ! -d "./Frameworks" ]; then
+        chmod +x ../scripts/setup_ios.sh
+        ../scripts/setup_ios.sh
+      fi
+    CMD
     ss.source_files         = 'Classes/**/*'
     ss.public_header_files  = 'Classes/**/*.h'
     ss.ios.vendored_frameworks = 'Frameworks/ffmpegkit.framework',
@@ -140,14 +147,6 @@ Pod::Spec.new do |s|
     ss.ios.frameworks = 'AudioToolbox', 'CoreMedia'
     ss.libraries = 'z', 'bz2', 'c++', 'iconv'
     ss.ios.deployment_target = '14.0'
-    
-    # Adding pre-install hook
-    s.prepare_command = <<-CMD
-      if [ ! -d "./Frameworks" ]; then
-        chmod +x ../scripts/setup_ios.sh
-        ../scripts/setup_ios.sh
-      fi
-    CMD
   end
 
 end

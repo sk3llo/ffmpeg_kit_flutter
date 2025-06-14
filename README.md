@@ -1,5 +1,5 @@
 
-# FFmpegKit for Flutter [![pub](https://img.shields.io/badge/pub-1.6.1-blue)](https://pub.dev/packages/ffmpeg_kit_flutter_new)
+# FFmpegKit for Flutter [![pub](https://img.shields.io/badge/pub-1.7.0-blue)](https://pub.dev/packages/ffmpeg_kit_flutter_new)
 
 ## Upgraded version of the original [Flutter FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter).
 
@@ -43,13 +43,33 @@ import com.arthenica.ffmpegkit.FFmpegKitConfig;
 ```
 The error above is going to happen during the first run only ONCE. It occurs because downloaded `.aar` cannot be found after Gradle assemble task. Sadly, mentioned `.aar` cannot be bundled along with the package [because of the pub.dev package restrictions](https://dart.dev/tools/pub/publishing#prepare-your-package-for-publication) and always have to be downloaded first.
 
+#### iOS:
+```
+Could not build the precompiled application for the device.
+Lexical or Preprocessor Issue (Xcode): 'ffmpegkit/FFmpegKitConfig.h' file not found
+/Users/.../.pub-cache/hosted/pub.flutter-io.cn/ffmpeg_kit_flutter_new-.../ios/Classes/FFmpegKitFlutterPlugin.m:21:8
+```
+
+In order to fix the error, you will need to exclude the `arm64` architecture when building for iOS simulators. Add the following code to the `ios/Podfile` file:
+```
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+
+    installer.pods_project.build_configurations.each do |config|               # ADD THIS LINE
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"  # ADD THIS LINE
+    end                                                                        # ADD THIS LINE
+  end
+end
+```
+
 ### 3. Installation
 
 Add `ffmpeg_kit_flutter_new` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new: ^1.6.1
+ ffmpeg_kit_flutter_new: ^1.7.0
 ```
 
 NOTE: Android know issue:

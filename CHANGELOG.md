@@ -1,3 +1,9 @@
+## 1.7.0
+
+* Added updated arm64-v8a Android .so libraries, compatible with Google 16 KB requirement
+* Updated `setup_ios.sh` script
+* Removed resource shrinking for Android
+
 ## 1.6.1
 
 * Removed manual packaging of prebuilt dependencies for Android
