@@ -34,7 +34,4 @@ android/ffmpeg-kit-https/
 build/
 
 # FVM Version Cache
-.fvm/libs/*.aar
-Frameworks/
-example/ios/Frameworks/
-ffmpeg-kit/
+.fvm/
