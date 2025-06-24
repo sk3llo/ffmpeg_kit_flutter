@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name             = 'ffmpeg_kit_flutter_new'
   s.version          = '1.0.0'
-  s.summary          = 'FFmpeg Kit for Flutter'
-  s.description      = 'A Flutter plugin for running FFmpeg and FFprobe commands.'
+  s.summary          = 'FFmpeg Kit for Flutter with Hardware Acceleration'
+  s.description      = 'A Flutter plugin for running FFmpeg and FFprobe commands with VideoToolbox support.'
   s.homepage         = 'https://github.com/sk3llo/ffmpeg_kit_flutter'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'AK' => 'kapraton@gmail.com' }
@@ -144,9 +144,16 @@ Pod::Spec.new do |s|
                                  'Frameworks/libswresample.framework',
                                  'Frameworks/libswscale.framework'
     
-    ss.ios.frameworks = 'AudioToolbox', 'CoreMedia'
+    # VideoToolbox support
+    ss.ios.frameworks = 'AudioToolbox', 'CoreMedia', 'VideoToolbox', 'CoreVideo'
     ss.libraries = 'z', 'bz2', 'c++', 'iconv'
     ss.ios.deployment_target = '14.0'
+    
+    # Enable VideoToolbox features
+    ss.pod_target_xcconfig = {
+      'OTHER_CFLAGS' => '-DHAVE_VIDEOTOOLBOX=1',
+      'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) HAVE_VIDEOTOOLBOX=1'
+    }
   end
 
 end

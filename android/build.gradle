@@ -47,9 +47,23 @@ android {
         minSdk = 24
         versionCode 1
         versionName "1.0.0"
+        
+        // Enable MediaCodec support
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+    }
+
+    // Enable MediaCodec features
+    packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libjsc.so'
     }
 
     dependencies {
         implementation("androidx.annotation:annotation:1.9.1")
+        
+        // MediaCodec support
+        implementation("androidx.media:media:1.7.0")
     }
 }

@@ -1,3 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.antonkarpenko.ffmpegkit">
+    
+    <!-- Permisos para MediaCodec y hardware acceleration -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <!-- Características de hardware -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    
+    <!-- Soporte para MediaCodec -->
+    <uses-feature android:name="android.software.media_codec" android:required="true" />
+    
 </manifest>
