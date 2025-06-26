@@ -1,4 +1,3 @@
-
 # FFmpegKit for Flutter [![pub](https://img.shields.io/badge/pub-2.0.0-blue)](https://pub.dev/packages/ffmpeg_kit_flutter_new) [![discord](https://img.shields.io/badge/discord-purple)](https://discord.gg/s2HCWep9)
 
 ## Upgraded version of the original [Flutter FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter).
@@ -7,6 +6,7 @@
 
 - Updated Android and MacOS bindings to work with Flutter 3.29
 - Includes both `FFmpeg` and `FFprobe`
+- **Hardware Acceleration Support**: MediaCodec (Android) and VideoToolbox (iOS/macOS)
 - Supports
     - `Android`, `iOS` and `macOS`
 - FFmpeg `v6.0.2-LTS`
@@ -30,7 +30,75 @@
 
 - Licensed under `LGPL 3.0` by default, some packages licensed by `GPL v3.0` effectively
 
-### 2. Known issues
+### 2. Hardware Acceleration
+
+This project includes **hardware acceleration support** for improved performance:
+
+#### Android (MediaCodec)
+- **Supported Codecs**: H.264, H.265, VP8, VP9, AV1
+- **Performance**: 2-10x faster than software encoding/decoding
+- **Requirements**: Android API Level 24+
+
+#### iOS/macOS (VideoToolbox)
+- **Supported Codecs**: H.264, H.265, MPEG-2, MPEG-4, VP8, VP9, AV1
+- **Performance**: 2-8x faster than software encoding/decoding
+- **Requirements**: iOS 14.0+, macOS 10.15+
+
+#### Usage Examples
+```dart
+// Hardware encoding (Android)
+FFmpegKit.execute('-i input.mp4 -c:v h264_mediacodec -b:v 2M output.mp4');
+
+// Hardware encoding (iOS/macOS)
+FFmpegKit.execute('-i input.mp4 -c:v h264_videotoolbox -b:v 2M output.mp4');
+
+// Platform detection
+import 'dart:io';
+String getHardwareCodec() {
+  if (Platform.isAndroid) return 'h264_mediacodec';
+  if (Platform.isIOS || Platform.isMacOS) return 'h264_videotoolbox';
+  return 'libx264'; // Software fallback
+}
+```
+
+For detailed hardware acceleration documentation, see [README_HARDWARE.md](README_HARDWARE.md).
+
+### 3. Build Scripts
+
+The project includes comprehensive build scripts for hardware acceleration:
+
+#### Quick Setup
+```bash
+# Setup pre-built binaries (recommended)
+./scripts/setup_android.sh
+./scripts/setup_ios.sh
+./scripts/setup_macos.sh
+
+# Or build from source with hardware acceleration
+./scripts/build_all_hw.sh
+```
+
+#### Individual Platform Builds
+```bash
+# Android with MediaCodec
+./scripts/build_android_hw.sh
+
+# iOS with VideoToolbox
+./scripts/build_ios_hw.sh
+
+# macOS with VideoToolbox
+./scripts/build_macos_hw.sh
+```
+
+#### Binary Packaging
+```bash
+# Package built binaries for distribution
+./scripts/prepare_binaries.sh
+```
+
+For detailed scripts documentation, see [docs/SCRIPTS_GUIDE.md](docs/SCRIPTS_GUIDE.md) and [docs/SCRIPTS_SUMMARY.md](docs/SCRIPTS_SUMMARY.md).
+
+### 4. Known issues
 
 #### Android:
 ```
@@ -85,7 +153,7 @@ If you see an error like `'ffmpegkit/FFmpegKitConfig.h' file not found` when bui
 - Make sure you have CocoaPods installed and up to date.  
 - If you have any issues, make sure you are running these commands from the correct directories.
 
-### 3. Installation
+### 5. Installation
 
 Add `ffmpeg_kit_flutter_new` as a dependency in your `pubspec.yaml file`.
 
@@ -96,7 +164,7 @@ dependencies:
 
 NOTE: Android know issue:
 
-#### 4. Platform Support
+#### 6. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
 `ffmpeg_kit_flutter_new` releases.
@@ -121,7 +189,7 @@ The following table shows Android API level, iOS deployment target and macOS dep
   </tbody>  
 </table>  
 
-### 4. Using
+### 7. Using
 
 1. Execute FFmpeg commands.
 
@@ -281,3 +349,50 @@ FFmpegKitConfig.enableStatisticsCallback((statistics) {
 ```dart  
 FFmpegKitConfig.setFontDirectoryList(["/system/fonts", "/System/Library/Fonts", "<folder with fonts>"]);
 ```
+
+### 8. Hardware Acceleration Examples
+
+#### Platform Detection
+```dart
+import 'dart:io';
+
+String getHardwareCodec() {
+  if (Platform.isAndroid) {
+    return 'h264_mediacodec';
+  } else if (Platform.isIOS || Platform.isMacOS) {
+    return 'h264_videotoolbox';
+  } else {
+    return 'libx264'; // Software fallback
+  }
+}
+```
+
+#### Hardware Encoding
+```dart
+// Use hardware acceleration when available
+FFmpegKit.execute('-i input.mp4 -c:v ${getHardwareCodec()} -b:v 2M output.mp4')
+    .then((session) async {
+  final returnCode = await session.getReturnCode();
+  if (ReturnCode.isSuccess(returnCode)) {
+    print('Hardware encoding completed successfully!');
+  }
+});
+```
+
+#### Check Available Codecs
+```dart
+FFmpegKit.execute('-encoders').then((session) async {
+  final output = await session.getOutput();
+  if (output.contains('h264_mediacodec') || output.contains('h264_videotoolbox')) {
+    print('Hardware acceleration is available!');
+  }
+});
+```
+
+### 9. Documentation
+
+- **[Hardware Acceleration Guide](README_HARDWARE.md)** - Complete hardware acceleration documentation
+- **[Scripts Guide](docs/SCRIPTS_GUIDE.md)** - Detailed documentation for all build scripts
+- **[Scripts Summary](docs/SCRIPTS_SUMMARY.md)** - Quick reference for all scripts
+- **[Build Guide](docs/BUILD_GUIDE.md)** - Build instructions and troubleshooting
+- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Technical implementation details

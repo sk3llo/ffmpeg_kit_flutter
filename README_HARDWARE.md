@@ -2,17 +2,45 @@
 
 This project provides FFmpeg Kit Flutter with hardware acceleration support for Android (MediaCodec) and iOS/macOS (VideoToolbox).
 
-## Features
+## 🚀 Features
 
 - **Android MediaCodec**: Hardware encoding/decoding for H.264, H.265, VP8, VP9, and AV1
 - **iOS VideoToolbox**: Hardware encoding/decoding for H.264, H.265, VP8, and VP9
 - **macOS VideoToolbox**: Hardware encoding/decoding for H.264, H.265, VP8, and VP9
 - **Performance**: 2-10x faster than software encoding/decoding
 - **Compatibility**: Maintains full compatibility with existing FFmpeg Kit Flutter APIs
+- **Build Scripts**: Comprehensive automation for building and packaging
 
-## Quick Start
+## 📋 Scripts Overview
 
-### 1. Build Hardware Accelerated Binaries
+The project includes several scripts for different purposes:
+
+### Setup Scripts
+- `setup_android.sh` - Download and setup Android AAR with MediaCodec support
+- `setup_ios.sh` - Download and setup iOS frameworks with VideoToolbox support
+- `setup_macos.sh` - Download and setup macOS frameworks with VideoToolbox support
+
+### Build Scripts
+- `build_android_hw.sh` - Build Android binaries with MediaCodec support
+- `build_ios_hw.sh` - Build iOS binaries with VideoToolbox support
+- `build_macos_hw.sh` - Build macOS binaries with VideoToolbox support
+- `build_all_hw.sh` - Build all platforms with hardware acceleration
+
+### Packaging Scripts
+- `prepare_binaries.sh` - Package built binaries for distribution
+
+## 🛠️ Quick Start
+
+### Option 1: Use Pre-built Binaries (Recommended)
+
+```bash
+# Setup all platforms with pre-built hardware accelerated binaries
+./scripts/setup_android.sh
+./scripts/setup_ios.sh
+./scripts/setup_macos.sh
+```
+
+### Option 2: Build from Source
 
 ```bash
 # Build for all platforms
@@ -24,19 +52,94 @@ This project provides FFmpeg Kit Flutter with hardware acceleration support for 
 ./scripts/build_macos_hw.sh
 ```
 
-### 2. Test Hardware Acceleration
+### Option 3: Package for Distribution
 
 ```bash
-cd example
-flutter run
+# Package built binaries
+./scripts/prepare_binaries.sh
 ```
 
-The example app includes three modes:
-- **Software**: Standard FFmpeg processing
-- **Hardware**: Hardware accelerated processing
-- **Test HW**: Hardware acceleration detection
+## 🔧 Build Scripts Details
 
-## Hardware Acceleration Support
+### Android Build (`build_android_hw.sh`)
+
+**Requirements:**
+- Android SDK (API level 24+)
+- Android NDK (r21+)
+- Environment variables: `ANDROID_SDK_ROOT`, `ANDROID_NDK_ROOT`
+
+**Features:**
+- MediaCodec hardware acceleration
+- WebP support
+- H.264 encoding (x264)
+- H.265 encoding (x265)
+
+**Output:** `output_android_hw/` directory with AAR file
+
+### iOS Build (`build_ios_hw.sh`)
+
+**Requirements:**
+- macOS with Xcode 12+
+- iOS 14.0+ SDK
+- Command Line Tools
+
+**Features:**
+- VideoToolbox hardware acceleration
+- WebP support
+- H.264 encoding (x264)
+- H.265 encoding (x265)
+
+**Output:** `output_ios_hw/` directory with framework bundles
+
+### macOS Build (`build_macos_hw.sh`)
+
+**Requirements:**
+- macOS with Xcode 12+
+- macOS 10.15+ SDK
+- Command Line Tools
+
+**Features:**
+- VideoToolbox hardware acceleration
+- WebP support
+- H.264 encoding (x264)
+- H.265 encoding (x265)
+
+**Output:** `output_macos_hw/` directory with framework bundles
+
+### All Platforms Build (`build_all_hw.sh`)
+
+Automatically detects available build environments and builds for all supported platforms:
+
+```bash
+./scripts/build_all_hw.sh
+```
+
+**Features:**
+- Automatic platform detection
+- Conditional building based on available tools
+- Comprehensive build summary
+- Hardware acceleration verification
+
+## 📦 Binary Packaging (`prepare_binaries.sh`)
+
+The packaging script creates optimized distribution packages:
+
+### Android Package
+- **File**: `ffmpeg-kit-android-full-gpl-hw-7.0-hw.aar`
+- **Contents**: Single AAR file with all architectures
+- **Optimization**: Removed build artifacts, minimal footprint
+
+### iOS Package
+- **File**: `ffmpeg-kit-ios-full-gpl-hw-6.0-hw.zip`
+- **Contents**: Framework bundles only
+- **Frameworks**: ffmpegkit, libavcodec, libavdevice, libavfilter, libavformat, libavutil, libswresample, libswscale
+
+### macOS Package
+- **File**: `ffmpeg-kit-macos-full-gpl-hw-6.0-hw.zip`
+- **Contents**: Framework bundles only
+- **Frameworks**: Same as iOS
+
+## 🎯 Hardware Acceleration Support
 
 ### Android MediaCodec
 
@@ -74,7 +177,7 @@ FFmpegKit.execute('-i input.mp4 -c:v h264_videotoolbox -f null -');
 FFmpegKit.execute('-i input.mp4 -c:v h264_videotoolbox -c:a aac output.mp4');
 ```
 
-## Platform Detection
+## 🔍 Platform Detection
 
 ```dart
 import 'dart:io';
@@ -93,7 +196,7 @@ String getHardwareCodec() {
 FFmpegKit.execute('-i input.mp4 -c:v ${getHardwareCodec()} output.mp4');
 ```
 
-## Performance Benefits
+## 📊 Performance Benefits
 
 Hardware acceleration provides significant performance improvements:
 
@@ -104,19 +207,19 @@ Hardware acceleration provides significant performance improvements:
 | H.265 Encode | 100% | 15-30% | 3-7x faster |
 | H.265 Decode | 100% | 10-25% | 4-10x faster |
 
-## Build Configuration
+## 🏗️ Build Configuration
 
 ### Prerequisites
 
 **Android:**
-- Android SDK (API level 21+)
+- Android SDK (API level 24+)
 - Android NDK (r21+)
 - Java 8 or higher
 - CMake 3.10.2 or higher
 
 **iOS/macOS:**
 - Xcode 12+ with Command Line Tools
-- iOS 11.0+ SDK
+- iOS 14.0+ SDK
 - macOS 10.15+ SDK
 
 **General:**
@@ -135,7 +238,7 @@ export ANDROID_NDK_ROOT=/path/to/android/ndk
 ./scripts/setup_macos.sh
 ```
 
-## Integration
+## 🔄 Integration
 
 ### 1. Replace Binaries
 
@@ -143,7 +246,7 @@ After building, replace the existing binaries:
 
 ```bash
 # Android
-cp libs/com.arthenica.ffmpegkit-flutter-7.0-hw.aar libs/com.arthenica.ffmpegkit-flutter-7.0.aar
+cp output_android_hw/bundle-android-aar/ffmpeg-kit/ffmpeg-kit.aar android/libs/com.arthenica.ffmpegkit-flutter-7.0.aar
 
 # iOS/macOS (podspecs are automatically updated)
 ```
@@ -157,13 +260,13 @@ If hosting your own binaries, update the URLs in setup scripts:
 ANDROID_URL="https://your-repo.com/ffmpeg-kit-android-hw.aar"
 
 # scripts/setup_ios.sh
-IOS_URL="https://your-repo.com/ffmpeg-kit-ios-hw.tar.gz"
+IOS_URL="https://your-repo.com/ffmpeg-kit-ios-hw.zip"
 
 # scripts/setup_macos.sh
-MACOS_URL="https://your-repo.com/ffmpeg-kit-macos-hw.tar.gz"
+MACOS_URL="https://your-repo.com/ffmpeg-kit-macos-hw.zip"
 ```
 
-## Testing
+## 🧪 Testing
 
 ### Hardware Acceleration Detection
 
@@ -190,7 +293,19 @@ stopwatch.stop();
 print('Encoding time: ${stopwatch.elapsedMilliseconds}ms');
 ```
 
-## Troubleshooting
+### Example App Testing
+
+```bash
+cd example
+flutter run
+```
+
+The example app includes three modes:
+- **Software**: Standard FFmpeg processing
+- **Hardware**: Hardware accelerated processing
+- **Test HW**: Hardware acceleration detection
+
+## 🔧 Troubleshooting
 
 ### Common Issues
 
@@ -200,87 +315,58 @@ print('Encoding time: ${stopwatch.elapsedMilliseconds}ms');
 - **SDK not found**: Set `ANDROID_SDK_ROOT` environment variable
 
 **iOS/macOS:**
-- **VideoToolbox not available**: Check iOS/macOS version compatibility
-- **Xcode not found**: Install Xcode and Command Line Tools
-- **Bitcode error**: Build scripts automatically remove bitcode
+- **VideoToolbox not found**: Verify Xcode and Command Line Tools installation
+- **Framework not found**: Run setup scripts to download frameworks
+- **Bitcode issues**: Frameworks are automatically stripped of bitcode
 
-### Debug Logs
+**Build Issues:**
+- **Permission denied**: Make scripts executable with `chmod +x scripts/*.sh`
+- **Missing dependencies**: Install required build tools
+- **Network issues**: Check internet connection for downloading dependencies
 
-```dart
-// Enable detailed logs
-FFmpegKitConfig.enableLogCallback((log) {
-  print('FFmpeg Log: ${log.getMessage()}');
-});
+### Verification Commands
 
-// Check version
-FFmpegKitConfig.getFFmpegVersion().then((version) {
-  print('FFmpeg Version: $version');
-});
+```bash
+# Check Android environment
+echo $ANDROID_SDK_ROOT
+echo $ANDROID_NDK_ROOT
+
+# Check iOS/macOS environment
+xcode-select --print-path
+xcrun --show-sdk-path
+
+# Verify scripts
+ls -la scripts/
+chmod +x scripts/*.sh
 ```
 
-## Build Scripts
+## 📝 Release Notes
 
-### Main Scripts
+### Version 6.0-hw (iOS/macOS) / 7.0-hw (Android)
 
-- `scripts/build_all_hw.sh` - Build all platforms
-- `scripts/build_android_hw.sh` - Build Android only
-- `scripts/build_ios_hw.sh` - Build iOS only
-- `scripts/build_macos_hw.sh` - Build macOS only
-- `scripts/prepare_binaries.sh` - Package binaries for distribution
+**Features:**
+- Hardware acceleration for all platforms
+- Optimized binary packaging
+- Comprehensive build automation
+- Performance improvements
 
-### Setup Scripts
+**Supported Platforms:**
+- Android API Level 24+
+- iOS 14.0+
+- macOS 10.15+
 
-- `scripts/setup_android.sh` - Setup Android environment
-- `scripts/setup_ios.sh` - Setup iOS environment
-- `scripts/setup_macos.sh` - Setup macOS environment
+**Hardware Acceleration:**
+- Android: MediaCodec (H.264, H.265, VP8, VP9, AV1)
+- iOS/macOS: VideoToolbox (H.264, H.265, MPEG-2, MPEG-4, VP8, VP9, AV1)
 
-## Output Structure
+## 🤝 Contributing
 
-```
-output_android_hw/          # Android binaries
-├── android-arm64/
-├── android-armv7/
-├── android-x86/
-└── android-x86_64/
-
-output_ios_hw/              # iOS binaries
-├── ios-arm64/
-├── ios-armv7/
-├── ios-x86_64/
-└── frameworks/
-
-output_macos_hw/            # macOS binaries
-├── macos-arm64/
-├── macos-x86_64/
-└── frameworks/
-
-dist/                       # Packaged binaries
-├── ffmpeg-kit-android-full-gpl-hw-6.0.2-hw.aar
-├── ffmpeg-kit-ios-full-gpl-hw-6.0.2-hw.tar.gz
-├── ffmpeg-kit-macos-full-gpl-hw-6.0.2-hw.tar.gz
-└── RELEASE_NOTES.md
-```
-
-## Documentation
-
-- [Build Guide](docs/BUILD_GUIDE.md) - Detailed build instructions
-- [Implementation Summary](IMPLEMENTATION_SUMMARY.md) - Technical implementation details
-
-## Resources
-
-- [FFmpeg Kit Wiki](https://github.com/arthenica/ffmpeg-kit/wiki)
-- [FFmpeg Documentation](https://ffmpeg.org/documentation.html)
-- [Android MediaCodec](https://developer.android.com/reference/android/media/MediaCodec)
-- [iOS VideoToolbox](https://developer.apple.com/documentation/videotoolbox)
-
-## Contributing
-
-1. Fork the project
+1. Fork the repository
 2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+3. Make your changes
+4. Test with hardware acceleration
+5. Submit a pull request
 
-## License
+## 📄 License
 
-This project is licensed under LGPL 3.0. See `LICENSE` for details. 
+This project is licensed under LGPL 3.0 with GPL v3.0 components for hardware acceleration features. 

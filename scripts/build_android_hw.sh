@@ -27,13 +27,10 @@ if [ -z "$ANDROID_NDK_ROOT" ]; then
 fi
 
 # Build configuration
-FFMPEG_VERSION="6.0.2"
-FFMPEG_KIT_VERSION="6.0.2"
-BUILD_DIR="build_android_hw"
+FFMPEG_KIT_VERSION="v6.0.LTS"
 OUTPUT_DIR="output_android_hw"
 
 # Create build directories
-mkdir -p $BUILD_DIR
 mkdir -p $OUTPUT_DIR
 
 echo -e "${YELLOW}Building FFmpeg Kit for Android with MediaCodec support...${NC}"
@@ -60,48 +57,10 @@ export ANDROID_NDK_ROOT="${ANDROID_NDK_ROOT}"
 # Build with hardware acceleration enabled
 ./android.sh \
   --enable-gpl \
-  --enable-version3 \
-  --enable-nonfree \
-  --enable-mediacodec \
-  --enable-mediacodec-h264 \
-  --enable-mediacodec-hevc \
-  --enable-mediacodec-mpeg2 \
-  --enable-mediacodec-mpeg4 \
-  --enable-mediacodec-vp8 \
-  --enable-mediacodec-vp9 \
-  --enable-mediacodec-av1 \
-  --enable-amf \
-  --enable-aom \
-  --enable-chromaprint \
-  --enable-fontconfig \
-  --enable-freetype \
-  --enable-fribidi \
-  --enable-gmp \
-  --enable-gnutls \
-  --enable-kvazaar \
-  --enable-lame \
-  --enable-libaom \
-  --enable-libass \
-  --enable-libiconv \
-  --enable-libilbc \
-  --enable-libtheora \
-  --enable-libvorbis \
-  --enable-libvpx \
+  --enable-android-media-codec \
   --enable-libwebp \
-  --enable-libxml2 \
-  --enable-opencore-amr \
-  --enable-opus \
-  --enable-shine \
-  --enable-snappy \
-  --enable-soxr \
-  --enable-speex \
-  --enable-twolame \
-  --enable-vo-amrwbenc \
-  --enable-zimg \
-  --enable-libx264 \
-  --enable-libx265 \
-  --enable-libxvid \
-  --enable-vidstab
+  --enable-x264 \
+  --enable-x265
 EOF
 
 chmod +x android_hw.sh
@@ -117,11 +76,8 @@ cd ..
 
 echo -e "${GREEN}=== Android build completed successfully! ===${NC}"
 echo -e "${GREEN}Built artifacts are in: $OUTPUT_DIR${NC}"
-echo -e "${GREEN}MediaCodec support is enabled for:${NC}"
-echo -e "${GREEN}  - H.264/AVC${NC}"
-echo -e "${GREEN}  - H.265/HEVC${NC}"
-echo -e "${GREEN}  - MPEG-2${NC}"
-echo -e "${GREEN}  - MPEG-4${NC}"
-echo -e "${GREEN}  - VP8${NC}"
-echo -e "${GREEN}  - VP9${NC}"
-echo -e "${GREEN}  - AV1${NC}" 
+echo -e "${GREEN}Enabled features:${NC}"
+echo -e "${GREEN}  - MediaCodec hardware acceleration${NC}"
+echo -e "${GREEN}  - WebP support${NC}"
+echo -e "${GREEN}  - H.264 encoding (x264)${NC}"
+echo -e "${GREEN}  - H.265 encoding (x265)${NC}" 

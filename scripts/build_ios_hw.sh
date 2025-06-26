@@ -26,13 +26,10 @@ if ! command -v xcodebuild &> /dev/null; then
 fi
 
 # Build configuration
-FFMPEG_VERSION="6.0.2"
-FFMPEG_KIT_VERSION="6.0.2"
-BUILD_DIR="build_ios_hw"
+FFMPEG_KIT_VERSION="v6.0.LTS"
 OUTPUT_DIR="output_ios_hw"
 
 # Create build directories
-mkdir -p $BUILD_DIR
 mkdir -p $OUTPUT_DIR
 
 echo -e "${YELLOW}Building FFmpeg Kit for iOS with VideoToolbox support...${NC}"
@@ -55,47 +52,10 @@ cat > ios_hw.sh << 'EOF'
 # Custom iOS build script with VideoToolbox support
 ./ios.sh \
   --enable-gpl \
-  --enable-version3 \
-  --enable-nonfree \
-  --enable-videotoolbox \
-  --enable-videotoolbox-h264 \
-  --enable-videotoolbox-hevc \
-  --enable-videotoolbox-mpeg2 \
-  --enable-videotoolbox-mpeg4 \
-  --enable-videotoolbox-vp8 \
-  --enable-videotoolbox-vp9 \
-  --enable-videotoolbox-av1 \
-  --enable-aom \
-  --enable-chromaprint \
-  --enable-fontconfig \
-  --enable-freetype \
-  --enable-fribidi \
-  --enable-gmp \
-  --enable-gnutls \
-  --enable-kvazaar \
-  --enable-lame \
-  --enable-libaom \
-  --enable-libass \
-  --enable-libiconv \
-  --enable-libilbc \
-  --enable-libtheora \
-  --enable-libvorbis \
-  --enable-libvpx \
+  --enable-ios-videotoolbox \
   --enable-libwebp \
-  --enable-libxml2 \
-  --enable-opencore-amr \
-  --enable-opus \
-  --enable-shine \
-  --enable-snappy \
-  --enable-soxr \
-  --enable-speex \
-  --enable-twolame \
-  --enable-vo-amrwbenc \
-  --enable-zimg \
-  --enable-libx264 \
-  --enable-libx265 \
-  --enable-libxvid \
-  --enable-vidstab
+  --enable-x264 \
+  --enable-x265
 EOF
 
 chmod +x ios_hw.sh
@@ -111,11 +71,8 @@ cd ..
 
 echo -e "${GREEN}=== iOS build completed successfully! ===${NC}"
 echo -e "${GREEN}Built artifacts are in: $OUTPUT_DIR${NC}"
-echo -e "${GREEN}VideoToolbox support is enabled for:${NC}"
-echo -e "${GREEN}  - H.264/AVC${NC}"
-echo -e "${GREEN}  - H.265/HEVC${NC}"
-echo -e "${GREEN}  - MPEG-2${NC}"
-echo -e "${GREEN}  - MPEG-4${NC}"
-echo -e "${GREEN}  - VP8${NC}"
-echo -e "${GREEN}  - VP9${NC}"
-echo -e "${GREEN}  - AV1${NC}" 
+echo -e "${GREEN}Enabled features:${NC}"
+echo -e "${GREEN}  - VideoToolbox hardware acceleration${NC}"
+echo -e "${GREEN}  - WebP support${NC}"
+echo -e "${GREEN}  - H.264 encoding (x264)${NC}"
+echo -e "${GREEN}  - H.265 encoding (x265)${NC}" 
