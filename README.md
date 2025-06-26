@@ -1,4 +1,3 @@
-
 # FFmpegKit for Flutter [![pub](https://img.shields.io/badge/pub-2.0.0-blue)](https://pub.dev/packages/ffmpeg_kit_flutter_new)
 
 ## Upgraded version of the original [Flutter FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter).
@@ -42,6 +41,48 @@ import com.arthenica.ffmpegkit.FFmpegKitConfig;
 ...100 more lines...
 ```
 The error above is going to happen during the first run only ONCE. It occurs because downloaded `.aar` cannot be found after Gradle assemble task. Sadly, mentioned `.aar` cannot be bundled along with the package [because of the pub.dev package restrictions](https://dart.dev/tools/pub/publishing#prepare-your-package-for-publication) and always have to be downloaded first.
+
+### iOS: 'ffmpegkit/FFmpegKitConfig.h' file not found
+
+If you see an error like `'ffmpegkit/FFmpegKitConfig.h' file not found` when building for iOS, it means the required FFmpegKit frameworks have not been downloaded yet. This is expected, as the frameworks are not included in the repository and are downloaded automatically by a setup script.
+
+#### How to fix:
+
+1. **Install CocoaPods dependencies:**
+
+   ```sh
+   cd example/ios
+   pod install
+   ```
+
+2. **If you still get the `'ffmpegkit/FFmpegKitConfig.h' file not found` error, run the setup script manually:**
+
+   ```sh
+   cd ../../ios
+   chmod +x ../scripts/setup_ios.sh
+   ../scripts/setup_ios.sh
+   ```
+
+3. **Reinstall CocoaPods dependencies:**
+
+   ```sh
+   cd ../example/ios
+   pod install
+   ```
+
+4. **Now you can run the example app on the iOS simulator:**
+
+   ```sh
+   cd ..
+   flutter run -d <your_simulator_id>
+   ```
+
+---
+
+**Note:**  
+- The `Frameworks` folder is intentionally not included in the repository. It is generated automatically by the setup script.  
+- Make sure you have CocoaPods installed and up to date.  
+- If you have any issues, make sure you are running these commands from the correct directories.
 
 ### 3. Installation
 
