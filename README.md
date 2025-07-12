@@ -117,6 +117,18 @@ FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
     }
 });
 ```  
+
+Or execute FFmpeg commands with a custom log callback.
+
+```dart
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
+final outputPath = 'file2.mp4';
+FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').thenReturnResultOrLogs(
+    (_) => outputPath,
+).then((result) => print('FFmpeg command executed successfully: $result'))
+  .catchError((error) => print('FFmpeg command failed with error: $error'));
+```
+
 2. Each `execute` call creates a new session. Access every detail about your execution from the session created.  
   
 ```dart  
