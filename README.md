@@ -1,63 +1,117 @@
+<div align="center">
 
-# FFmpegKit for Flutter [![pub](https://img.shields.io/badge/pub-2.0.0-blue)](https://pub.dev/packages/ffmpeg_kit_flutter_new) [![discord](https://img.shields.io/badge/discord-purple)](https://discord.gg/s2HCWep9)
+# FFmpegKit for Flutter. Minimal version.
+
+_Fork of the original FFmpeg Kit library to work with Android V2 bindings and Flutter 3+_
+
+<p align="center">
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min">
+     <img src="https://img.shields.io/badge/pub-1.0.0-blue?logo=dart" alt="pub">
+  </a>
+  <a href="https://discord.gg/8NVwykjA">
+    <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
+  </a>
+  <a href="https://buymeacoffee.com/sk3llo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="21" width="114"></a>
+</p>
+</div>
 
 ## Upgraded version of the original [Flutter FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter).
 
 ### 1. Features
 
-- Updated Android and MacOS bindings to work with Flutter 3.29
+- Updated Android and MacOS bindings
 - Includes both `FFmpeg` and `FFprobe`
 - Supports
     - `Android`, `iOS` and `macOS`
-- FFmpeg `v6.0.2-LTS`
+- FFmpeg `v7.1.1`
 - `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86` and `x86_64` architectures on Android
     - `Android API Level 24` or later
-    - `armv7`, `armv7s`, `arm64`, `arm64-simulator`, `i386`, `x86_64`, `x86_64-mac-catalyst` and `arm64-mac-catalyst`  
-      architectures on iOS
+- `armv7`, `armv7s`, `arm64`, `x86_64`, `x86_64-mac-catalyst` and `arm64-mac-catalyst`  
+  architectures on iOS
     - `iOS SDK 14.0` or later
-    - `arm64` and `x86_64` architectures on macOS
+- `arm64` and `x86_64` architectures on macOS
     - `macOS SDK 10.15` or later
 - Can process Storage Access Framework (SAF) Uris on Android
-- 25 external libraries
 
-  `dav1d`, `fontconfig`, `freetype`, `fribidi`, `gmp`, `gnutls`, `kvazaar`, `lame`, `libass`, `libiconv`, `libilbc`  
-  , `libtheora`, `libvorbis`, `libvpx`, `libwebp`, `libxml2`, `opencore-amr`, `opus`, `shine`, `snappy`, `soxr`  
-  , `speex`, `twolame`, `vo-amrwbenc`, `zimg`
+- Licensed under `LGPL 3.0`
 
-- 4 external libraries with GPL license
+### 2. Installation
 
-  `vid.stab`, `x264`, `x265`, `xvidcore`
-
-- Licensed under `LGPL 3.0` by default, some packages licensed by `GPL v3.0` effectively
-
-### 2. Known issues
-
-#### Android:
-```
-...
-Running Gradle task 'assembleDebug'...
-*** DOWNLOADING AAR ***
-...android/src/main/java/com/arthenica/ffmpegkit/flutter FFmpegSessionExecuteTask.java:5: error: cannot find symbol
-import com.arthenica.ffmpegkit.FFmpegKitConfig;
-...100 more lines...
-```
-The error above is going to happen during the first run only ONCE. It occurs because downloaded `.aar` cannot be found after Gradle assemble task. Sadly, mentioned `.aar` cannot be bundled along with the package [because of the pub.dev package restrictions](https://dart.dev/tools/pub/publishing#prepare-your-package-for-publication) and always have to be downloaded first.
-
-### 3. Installation
-
-Add `ffmpeg_kit_flutter_new` as a dependency in your `pubspec.yaml file`.
+Add `ffmpeg_kit_flutter_new_min` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new: ^2.0.0
+ ffmpeg_kit_flutter_new_min: ^1.0.0
 ```
 
-NOTE: Android know issue:
+### 3. Packages
 
-#### 4. Platform Support
+There are eight different `ffmpeg-kit` packages:
+
+- [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)
+- Minimal-GPL
+- HTTPS
+- HTTPS-GPL
+- Audio
+- Video
+- Full
+- [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)
+
+Below you can see which system libraries and external libraries are enabled in each one of them.
+
+Please remember that some parts of `FFmpeg` are licensed under the `GPL` and only `GPL` licensed `ffmpeg-kit` packages
+include them.
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><sup>min</sup></th>
+<th align="center"><sup>min-gpl</sup></th>
+<th align="center"><sup>https</sup></th>
+<th align="center"><sup>https-gpl</sup></th>
+<th align="center"><sup>audio</sup></th>
+<th align="center"><sup>video</sup></th>
+<th align="center"><sup>full</sup></th>
+<th align="center"><sup>full-gpl</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><sup>external libraries</sup></td>
+<td align="center">-</td>
+<td align="center"><sup>vid.stab</sup><br><sup>x264</sup><br><sup>x265</sup><br><sup>xvidcore</sup></td>
+<td align="center"><sup>gmp</sup><br><sup>gnutls</sup></td>
+<td align="center"><sup>gmp</sup><br><sup>gnutls</sup><br><sup>vid.stab</sup><br><sup>x264</sup><br><sup>x265</sup><br><sup>xvidcore</sup></td>
+<td align="center"><sup>lame</sup><br><sup>libilbc</sup><br><sup>libvorbis</sup><br><sup>opencore-amr</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>twolame</sup><br><sup>vo-amrwbenc</sup></td>
+<td align="center"><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>kvazaar</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libtheora</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>snappy</sup><br><sup>zimg</sup></td>
+<td align="center"><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>gmp</sup><br><sup>gnutls</sup><br><sup>kvazaar</sup><br><sup>lame</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libilbc</sup><br><sup>libtheora</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>libxml2</sup><br><sup>opencore-amr</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>snappy</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>twolame</sup><br><sup>vo-amrwbenc</sup><br><sup>zimg</sup></td>
+<td align="center"><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>gmp</sup><br><sup>gnutls</sup><br><sup>kvazaar</sup><br><sup>lame</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libilbc</sup><br><sup>libtheora</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>libxml2</sup><br><sup>opencore-amr</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>snappy</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>twolame</sup><br><sup>vid.stab</sup><br><sup>vo-amrwbenc</sup><br><sup>x264</sup><br><sup>x265</sup><br><sup>xvidcore</sup><br><sup>zimg</sup></td>
+</tr>
+<tr>
+<td align="center"><sup>android system libraries</sup></td>
+<td align="center" colspan=8><sup>zlib</sup><br><sup>MediaCodec</sup></td>
+</tr>
+<tr>
+<td align="center"><sup>ios system libraries</sup></td>
+<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>iconv</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
+</tr>
+<tr>
+<tr>
+<td align="center"><sup>macos system libraries</sup></td>
+<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>Core Image</sup><br><sup>iconv</sup><br><sup>OpenCL</sup><br><sup>OpenGL</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
+</tr>
+<tr>
+<td align="center"><sup>tvos system libraries</sup></td>
+<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>iconv</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
+</tr>
+</tbody>
+</table>
+
+### 4. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
-`ffmpeg_kit_flutter_new` releases.
+`ffmpeg_kit_flutter_new_min` releases.
 
 <table align="center">  
   <thead>  
@@ -79,7 +133,7 @@ The following table shows Android API level, iOS deployment target and macOS dep
   </tbody>  
 </table>  
 
-### 4. Using
+### 5. Using
 
 1. Execute FFmpeg commands.
 
@@ -109,8 +163,8 @@ FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').thenReturnResultOrLogs(
 ).then((result) => print('FFmpeg command executed successfully: $result'))
   .catchError((error) => print('FFmpeg command failed with error: $error'));
 ```
-2. Each `execute` call creates a new session. Access every detail about your execution from the session created.  
-  
+2. Each `execute` call creates a new session. Access every detail about your execution from the session created.
+
 ```dart  
 FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {  
     // Unique session id created for this execution
@@ -147,8 +201,8 @@ FFmpegKit.executeAsync('-i file1.mp4 -c:v mpeg4 file2.mp4', (Session session) as
     // CALLED WHEN SESSION GENERATES STATISTICS  
 });
 ```  
-4. Execute `FFprobe` commands.  
-  
+4. Execute `FFprobe` commands.
+
 ```dart  
 FFprobeKit.execute(ffprobeCommand).then((session) async {  
     // CALLED WHEN SESSION IS EXECUTED  
@@ -169,13 +223,13 @@ FFprobeKit.getMediaInformation('<file path or url>').then((session) async {
     }
 });
 ```  
-6. Stop ongoing FFmpeg operations.  
-  
-- Stop all sessions  
+6. Stop ongoing FFmpeg operations.
+
+- Stop all sessions
 ```dart  
 FFmpegKit.cancel();
 ```
-- Stop a specific session  
+- Stop a specific session
 ```dart  
 FFmpegKit.cancel(sessionId);  
 ```  
@@ -190,7 +244,7 @@ FFmpegKitConfig.selectDocumentForRead('*/*').then((uri) {
     });
 });
 ```  
-- Writing to a file:  
+- Writing to a file:
 ```dart  
 FFmpegKitConfig.selectDocumentForWrite('video.mp4', 'video/*').then((uri) {
     FFmpegKitConfig.getSafParameterForWrite(uri!).then((safUrl) {
@@ -217,10 +271,10 @@ FFprobeKit.listMediaInformationSessions().then((sessionList) {
     });
 });
 ```  
-9. Enable global callbacks.  
-  
-- Session type specific Complete Callbacks, called when an async session has been completed  
-  
+9. Enable global callbacks.
+
+- Session type specific Complete Callbacks, called when an async session has been completed
+
 ```dart  
 FFmpegKitConfig.enableFFmpegSessionCompleteCallback((session) {
     final sessionId = session.getSessionId();
@@ -239,11 +293,11 @@ FFmpegKitConfig.enableLogCallback((log) {
     final message = log.getMessage();
 });
 ```  
-- Statistics Callback, called when a session generates statistics  
-  
+- Statistics Callback, called when a session generates statistics
+
 ```dart  
-FFmpegKitConfig.enableStatisticsCallback((statistics) {  
-    final size = statistics.getSize();
+FFmpegKitConfig.enableStatisticsCallback((statistics) {
+final size = statistics.getSize();
 });  
 ```  
 10. Register system fonts and custom font directories.

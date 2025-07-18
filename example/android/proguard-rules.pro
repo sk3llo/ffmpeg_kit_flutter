@@ -1,1 +1,1 @@
--keep class com.arthenica.ffmpegkit.** { *; }
+-keep class com.antonkarpenko.ffmpegkit.** { *; }
