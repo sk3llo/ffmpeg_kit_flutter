@@ -88,15 +88,17 @@ class _MyHomePageState extends State<MyHomePage> {
           scrollDirection: Axis.horizontal,
           children: [
             ElevatedButton(
-              onPressed: isProcessing
-                  ? null
-                  : () => executeFFmpegCommand('list_codecs'),
+              onPressed:
+                  isProcessing
+                      ? null
+                      : () => executeFFmpegCommand('list_codecs'),
               child: const Text('List Codecs'),
             ),
             ElevatedButton(
-              onPressed: isProcessing
-                  ? null
-                  : () => executeFFmpegCommand('mediacodec'),
+              onPressed:
+                  isProcessing
+                      ? null
+                      : () => executeFFmpegCommand('mediacodec'),
               child: const Text('MediaCodec'),
             ),
           ],
