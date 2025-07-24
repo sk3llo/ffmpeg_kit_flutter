@@ -1,9 +1,8 @@
 buildscript {
-    ext.kotlin_version = "2.1.10"
+    ext.kotlin_version = "2.2.0"
 
     repositories {
         google()
-        mavenLocal()
         mavenCentral()
     }
 
@@ -49,13 +48,8 @@ android {
         versionName "1.0.0"
     }
 
-    // Enable MediaCodec features
-    packagingOptions {
-        pickFirst '**/libc++_shared.so'
-        pickFirst '**/libjsc.so'
-    }
-
     dependencies {
         implementation("androidx.annotation:annotation:1.9.1")
+        implementation("com.antonkarpenko:ffmpeg-kit-min:1.0.1")
     }
 }

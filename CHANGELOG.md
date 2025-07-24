@@ -1,3 +1,8 @@
+## 2.0.0
+
+* Removed bundled Android FFmpeg (jniLibs, cpp, bindings)
+* Added FFmpeg min using new Maven Central package
+
 ## 1.0.1
 
 * Updated README.md
