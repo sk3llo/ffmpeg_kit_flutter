@@ -6,7 +6,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 <p align="center">
   <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new">
-     <img src="https://img.shields.io/badge/pub-2.0.0-blue?logo=dart" alt="pub">
+     <img src="https://img.shields.io/badge/pub-3.0.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -19,13 +19,15 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 ### 1. Features
 
-- Updated Android and MacOS bindings to work with Flutter 3.29
+- Updated Android and MacOS bindings to work newest Flutter version
 - Includes both `FFmpeg` and `FFprobe`
 - Supports
     - `Android`, `iOS` and `macOS`
-- FFmpeg `v6.0.2-LTS`
+- FFmpeg `v7.1.1`
+- iOS and MacOS `Videotoolbox` support
 - `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86` and `x86_64` architectures on Android
     - `Android API Level 24` or later
+    - `Kotlin` v2.2.0 or later
     - `armv7`, `armv7s`, `arm64`, `arm64-simulator`, `i386`, `x86_64`, `x86_64-mac-catalyst` and `arm64-mac-catalyst`  
       architectures on iOS
     - `iOS SDK 14.0` or later
@@ -44,30 +46,17 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 - Licensed under `LGPL 3.0` by default, some packages licensed by `GPL v3.0` effectively
 
-### 2. Known issues
-
-#### Android:
-```
-...
-Running Gradle task 'assembleDebug'...
-*** DOWNLOADING AAR ***
-...android/src/main/java/com/arthenica/ffmpegkit/flutter FFmpegSessionExecuteTask.java:5: error: cannot find symbol
-import com.arthenica.ffmpegkit.FFmpegKitConfig;
-...100 more lines...
-```
-The error above is going to happen during the first run only ONCE. It occurs because downloaded `.aar` cannot be found after Gradle assemble task. Sadly, mentioned `.aar` cannot be bundled along with the package [because of the pub.dev package restrictions](https://dart.dev/tools/pub/publishing#prepare-your-package-for-publication) and always have to be downloaded first.
-
-### 3. Installation
+### 2. Installation
 
 Add `ffmpeg_kit_flutter_new` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new: ^2.0.0
+ ffmpeg_kit_flutter_new: ^3.0.0
 ```
 
 
-### 4. Packages
+### 3. Packages
 
 There are eight different `ffmpeg-kit` packages:
 
@@ -132,7 +121,7 @@ include them.
 </table>
 
 
-### 5. Platform Support
+### 4. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
 `ffmpeg_kit_flutter_new` releases.
@@ -157,7 +146,7 @@ The following table shows Android API level, iOS deployment target and macOS dep
   </tbody>  
 </table>  
 
-### 6. Using
+### 5. Using
 
 1. Execute FFmpeg commands.
 

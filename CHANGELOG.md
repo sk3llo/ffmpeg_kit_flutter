@@ -1,3 +1,20 @@
+## 3.0.0
+
+* FFmpeg `v7.1.1`
+* Multiple upgrade of internal libraries:
+    - `Nettle` - from `3.8.2` to `3.10.2`
+    - `SDL` from `2.0.0` to `3.2.16`
+    - `Libxml2` from `2.11.4` to `2.14.0`
+    - `SRT` from `1.5.2` to `1.5.4`
+    - `Leptonica` from `1.83.1` to `1.85.0`
+    - `GnuTLS` from `3.7.9` to `3.8.9`
+* Cleaned up iOS and Macos .podspec code
+* Bumped Kotlin version to 2.2.0
+* Fixed iOS and MacOS dowload scripts and added Videotoolbox support
+* New Android Full-GPL Maven Central dependency
+* Got rid of obsolete `ffmpeg_kit_flutter_android` package
+* Updated `example` project with Hardware, Software and Videotoolbox encoding commands
+
 ## 2.0.0
 
 * Uploaded updated Android .aar, compatible with Google 16 KB requirement

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Download and unzip iOS framework
-IOS_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/6.0.2/ffmpeg-kit-full-gpl-6.0.LTS-ios-framework.zip"
+IOS_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/7.1.1-full-gpl/ffmpeg-kit-ios-full-gpl-7.1.1.zip"
 mkdir -p Frameworks
 curl -L $IOS_URL -o frameworks.zip
-unzip -o frameworks.zip -d Frameworks
+unzip -o frameworks.zip
 rm frameworks.zip
 
 # Delete bitcode from all frameworks

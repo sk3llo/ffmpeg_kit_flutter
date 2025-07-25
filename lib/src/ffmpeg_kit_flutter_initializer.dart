@@ -42,8 +42,9 @@ import 'ffmpeg_kit_factory.dart';
 
 class FFmpegKitInitializer {
   static FFmpegKitPlatform _platform = FFmpegKitPlatform.instance;
-  static const EventChannel _eventChannel =
-      const EventChannel('flutter.arthenica.com/ffmpeg_kit_event');
+  static const EventChannel _eventChannel = const EventChannel(
+    'flutter.arthenica.com/ffmpeg_kit_event',
+  );
 
   static FFmpegKitInitializer _instance = new FFmpegKitInitializer();
 
@@ -105,7 +106,7 @@ class FFmpegKitInitializer {
 
     activeLogRedirectionStrategy =
         FFmpegKitFactory.getLogRedirectionStrategy(sessionId) ??
-            activeLogRedirectionStrategy;
+        activeLogRedirectionStrategy;
     final LogCallback? logCallback = FFmpegKitFactory.getLogCallback(sessionId);
 
     if (logCallback != null) {
@@ -215,8 +216,8 @@ class FFmpegKitInitializer {
       if (session != null) {
         if (session.isFFmpeg()) {
           final ffmpegSession = session as FFmpegSession;
-          final FFmpegSessionCompleteCallback? completeCallback =
-              ffmpegSession.getCompleteCallback();
+          final FFmpegSessionCompleteCallback? completeCallback = ffmpegSession
+              .getCompleteCallback();
 
           if (completeCallback != null) {
             try {
@@ -280,13 +281,14 @@ class FFmpegKitInitializer {
             }
           }
 
-          final globalMediaInformationSessionCompleteCallback = FFmpegKitFactory
-              .getGlobalMediaInformationSessionCompleteCallback();
+          final globalMediaInformationSessionCompleteCallback =
+              FFmpegKitFactory.getGlobalMediaInformationSessionCompleteCallback();
           if (globalMediaInformationSessionCompleteCallback != null) {
             try {
               // NOTIFY GLOBAL CALLBACK DEFINED
               globalMediaInformationSessionCompleteCallback(
-                  mediaInformationSession);
+                mediaInformationSession,
+              );
             } on Exception catch (e, stack) {
               print("Exception thrown inside global complete callback. $e");
               print(stack);

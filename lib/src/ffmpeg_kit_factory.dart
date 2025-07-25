@@ -45,18 +45,19 @@ class FFmpegKitFactory {
   static FFmpegSessionCompleteCallback? _ffmpegSessionCompleteCallback;
   static FFprobeSessionCompleteCallback? _ffprobeSessionCompleteCallback;
   static MediaInformationSessionCompleteCallback?
-      _mediaInformationSessionCompleteCallback;
+  _mediaInformationSessionCompleteCallback;
 
   static Statistics mapToStatistics(Map<dynamic, dynamic> statisticsMap) =>
       new Statistics(
-          statisticsMap["sessionId"].toInt(),
-          statisticsMap["videoFrameNumber"].toInt(),
-          statisticsMap["videoFps"],
-          statisticsMap["videoQuality"],
-          statisticsMap["size"].toInt(),
-          statisticsMap["time"].toInt(),
-          statisticsMap["bitrate"],
-          statisticsMap["speed"]);
+        statisticsMap["sessionId"].toInt(),
+        statisticsMap["videoFrameNumber"].toInt(),
+        statisticsMap["videoFps"],
+        statisticsMap["videoQuality"],
+        statisticsMap["size"].toInt(),
+        statisticsMap["time"].toInt(),
+        statisticsMap["bitrate"],
+        statisticsMap["speed"],
+      );
 
   static Log mapToLog(Map<dynamic, dynamic> logMap) =>
       new Log(logMap["sessionId"], logMap["level"], logMap["message"]);
@@ -80,7 +81,8 @@ class FFmpegKitFactory {
           return AbstractSession.createFFprobeSessionFromMap(sessionMap);
         case 3:
           return AbstractSession.createMediaInformationSessionFromMap(
-              sessionMap);
+            sessionMap,
+          );
         case 1:
         default:
           return AbstractSession.createFFmpegSessionFromMap(sessionMap);
@@ -91,7 +93,8 @@ class FFmpegKitFactory {
   }
 
   static MediaInformation? mapToNullableMediaInformation(
-      Map<dynamic, dynamic>? mediaInformationMap) {
+    Map<dynamic, dynamic>? mediaInformationMap,
+  ) {
     if (mediaInformationMap != null) {
       return new MediaInformation(mediaInformationMap);
     } else {
@@ -105,7 +108,9 @@ class FFmpegKitFactory {
       logRedirectionStrategyMap[sessionId];
 
   static void setLogRedirectionStrategy(
-      int? sessionId, LogRedirectionStrategy? logRedirectionStrategy) {
+    int? sessionId,
+    LogRedirectionStrategy? logRedirectionStrategy,
+  ) {
     if (sessionId != null && logRedirectionStrategy != null) {
       logRedirectionStrategyMap[sessionId] = logRedirectionStrategy;
     }
@@ -130,7 +135,9 @@ class FFmpegKitFactory {
       statisticsCallbackMap[sessionId];
 
   static void setStatisticsCallback(
-      int? sessionId, StatisticsCallback? statisticsCallback) {
+    int? sessionId,
+    StatisticsCallback? statisticsCallback,
+  ) {
     if (sessionId != null && statisticsCallback != null) {
       statisticsCallbackMap[sessionId] = statisticsCallback;
     }
@@ -140,67 +147,75 @@ class FFmpegKitFactory {
       _statisticsCallback;
 
   static void setGlobalStatisticsCallback(
-      StatisticsCallback? statisticsCallback) {
+    StatisticsCallback? statisticsCallback,
+  ) {
     _statisticsCallback = statisticsCallback;
   }
 
   static FFmpegSessionCompleteCallback? getFFmpegSessionCompleteCallback(
-          int? sessionId) =>
-      ffmpegSessionCompleteCallbackMap[sessionId];
+    int? sessionId,
+  ) => ffmpegSessionCompleteCallbackMap[sessionId];
 
   static void setFFmpegSessionCompleteCallback(
-      int? sessionId, FFmpegSessionCompleteCallback? completeCallback) {
+    int? sessionId,
+    FFmpegSessionCompleteCallback? completeCallback,
+  ) {
     if (sessionId != null && completeCallback != null) {
       ffmpegSessionCompleteCallbackMap[sessionId] = completeCallback;
     }
   }
 
   static FFmpegSessionCompleteCallback?
-      getGlobalFFmpegSessionCompleteCallback() =>
-          _ffmpegSessionCompleteCallback;
+  getGlobalFFmpegSessionCompleteCallback() => _ffmpegSessionCompleteCallback;
 
   static void setGlobalFFmpegSessionCompleteCallback(
-      FFmpegSessionCompleteCallback? completeCallback) {
+    FFmpegSessionCompleteCallback? completeCallback,
+  ) {
     _ffmpegSessionCompleteCallback = completeCallback;
   }
 
   static FFprobeSessionCompleteCallback? getFFprobeSessionCompleteCallback(
-          int? sessionId) =>
-      ffprobeSessionCompleteCallbackMap[sessionId];
+    int? sessionId,
+  ) => ffprobeSessionCompleteCallbackMap[sessionId];
 
   static void setFFprobeSessionCompleteCallback(
-      int? sessionId, FFprobeSessionCompleteCallback? completeCallback) {
+    int? sessionId,
+    FFprobeSessionCompleteCallback? completeCallback,
+  ) {
     if (sessionId != null && completeCallback != null) {
       ffprobeSessionCompleteCallbackMap[sessionId] = completeCallback;
     }
   }
 
   static FFprobeSessionCompleteCallback?
-      getGlobalFFprobeSessionCompleteCallback() =>
-          _ffprobeSessionCompleteCallback;
+  getGlobalFFprobeSessionCompleteCallback() => _ffprobeSessionCompleteCallback;
 
   static void setGlobalFFprobeSessionCompleteCallback(
-      FFprobeSessionCompleteCallback? completeCallback) {
+    FFprobeSessionCompleteCallback? completeCallback,
+  ) {
     _ffprobeSessionCompleteCallback = completeCallback;
   }
 
   static MediaInformationSessionCompleteCallback?
-      getMediaInformationSessionCompleteCallback(int? sessionId) =>
-          mediaInformationSessionCompleteCallbackMap[sessionId];
+  getMediaInformationSessionCompleteCallback(int? sessionId) =>
+      mediaInformationSessionCompleteCallbackMap[sessionId];
 
-  static void setMediaInformationSessionCompleteCallback(int? sessionId,
-      MediaInformationSessionCompleteCallback? completeCallback) {
+  static void setMediaInformationSessionCompleteCallback(
+    int? sessionId,
+    MediaInformationSessionCompleteCallback? completeCallback,
+  ) {
     if (sessionId != null && completeCallback != null) {
       mediaInformationSessionCompleteCallbackMap[sessionId] = completeCallback;
     }
   }
 
   static MediaInformationSessionCompleteCallback?
-      getGlobalMediaInformationSessionCompleteCallback() =>
-          _mediaInformationSessionCompleteCallback;
+  getGlobalMediaInformationSessionCompleteCallback() =>
+      _mediaInformationSessionCompleteCallback;
 
   static void setGlobalMediaInformationSessionCompleteCallback(
-      MediaInformationSessionCompleteCallback? completeCallback) {
+    MediaInformationSessionCompleteCallback? completeCallback,
+  ) {
     _mediaInformationSessionCompleteCallback = completeCallback;
   }
 
