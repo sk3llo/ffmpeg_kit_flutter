@@ -369,8 +369,7 @@ class FFmpegKitConfig {
   /// execution results for MediaInformation sessions.
   static void enableMediaInformationSessionCompleteCallback([
     MediaInformationSessionCompleteCallback?
-        mediaInformationSessionCompleteCallback =
-        null,
+        mediaInformationSessionCompleteCallback = null,
   ]) {
     FFmpegKitFactory.setGlobalMediaInformationSessionCompleteCallback(
       mediaInformationSessionCompleteCallback,
@@ -379,8 +378,8 @@ class FFmpegKitConfig {
 
   /// Returns the global MediaInformationSessionCompleteCallback set.
   static MediaInformationSessionCompleteCallback?
-  getMediaInformationSessionCompleteCallback() =>
-      FFmpegKitFactory.getGlobalMediaInformationSessionCompleteCallback();
+      getMediaInformationSessionCompleteCallback() =>
+          FFmpegKitFactory.getGlobalMediaInformationSessionCompleteCallback();
 
   /// Returns the current log level.
   static int getLogLevel() => _activeLogLevel;
@@ -488,8 +487,8 @@ class FFmpegKitConfig {
     try {
       await init();
       return _platform.ffmpegKitConfigGetLastSession().then(
-        FFmpegKitFactory.mapToNullableSession,
-      );
+            FFmpegKitFactory.mapToNullableSession,
+          );
     } on PlatformException catch (e, stack) {
       print("Plugin getLastSession error: ${e.message}");
       return Future.error("getLastSession failed.", stack);
@@ -501,8 +500,8 @@ class FFmpegKitConfig {
     try {
       await init();
       return _platform.ffmpegKitConfigGetLastCompletedSession().then(
-        FFmpegKitFactory.mapToNullableSession,
-      );
+            FFmpegKitFactory.mapToNullableSession,
+          );
     } on PlatformException catch (e, stack) {
       print("Plugin getLastCompletedSession error: ${e.message}");
       return Future.error("getLastCompletedSession failed.", stack);
@@ -594,7 +593,7 @@ class FFmpegKitConfig {
 
   /// Returns all MediaInformation sessions in the session history.
   static Future<List<MediaInformationSession>>
-  getMediaInformationSessions() async {
+      getMediaInformationSessions() async {
     try {
       await FFmpegKitConfig.init();
       return _platform.ffprobeKitListMediaInformationSessions().then((
@@ -628,18 +627,18 @@ class FFmpegKitConfig {
       return _platform
           .ffmpegKitConfigGetSessionsByState(sessionState.index)
           .then((sessions) {
-            if (sessions == null) {
-              return List.empty();
-            } else {
-              return sessions
-                  .map(
-                    (dynamic sessionObject) => FFmpegKitFactory.mapToSession(
-                      sessionObject as Map<dynamic, dynamic>,
-                    ),
-                  )
-                  .toList();
-            }
-          });
+        if (sessions == null) {
+          return List.empty();
+        } else {
+          return sessions
+              .map(
+                (dynamic sessionObject) => FFmpegKitFactory.mapToSession(
+                  sessionObject as Map<dynamic, dynamic>,
+                ),
+              )
+              .toList();
+        }
+      });
     } on PlatformException catch (e, stack) {
       print("Plugin getSessionsByState error: ${e.message}");
       return Future.error("getSessionsByState failed.", stack);

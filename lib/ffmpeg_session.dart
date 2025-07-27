@@ -72,19 +72,18 @@ class FFmpegSession extends AbstractSession {
       return FFmpegKitPlatform.instance
           .ffmpegSessionGetAllStatistics(this.getSessionId(), waitTimeout)
           .then((allStatistics) {
-            if (allStatistics == null) {
-              return List.empty();
-            } else {
-              return allStatistics
-                  .map(
-                    (dynamic statisticsObject) =>
-                        FFmpegKitFactory.mapToStatistics(
-                          statisticsObject as Map<dynamic, dynamic>,
-                        ),
-                  )
-                  .toList();
-            }
-          });
+        if (allStatistics == null) {
+          return List.empty();
+        } else {
+          return allStatistics
+              .map(
+                (dynamic statisticsObject) => FFmpegKitFactory.mapToStatistics(
+                  statisticsObject as Map<dynamic, dynamic>,
+                ),
+              )
+              .toList();
+        }
+      });
     } on PlatformException catch (e, stack) {
       print("Plugin getAllStatistics error: ${e.message}");
       return Future.error("getAllStatistics failed.", stack);
@@ -100,19 +99,18 @@ class FFmpegSession extends AbstractSession {
       return FFmpegKitPlatform.instance
           .ffmpegSessionGetStatistics(this.getSessionId())
           .then((statistics) {
-            if (statistics == null) {
-              return List.empty();
-            } else {
-              return statistics
-                  .map(
-                    (dynamic statisticsObject) =>
-                        FFmpegKitFactory.mapToStatistics(
-                          statisticsObject as Map<dynamic, dynamic>,
-                        ),
-                  )
-                  .toList();
-            }
-          });
+        if (statistics == null) {
+          return List.empty();
+        } else {
+          return statistics
+              .map(
+                (dynamic statisticsObject) => FFmpegKitFactory.mapToStatistics(
+                  statisticsObject as Map<dynamic, dynamic>,
+                ),
+              )
+              .toList();
+        }
+      });
     } on PlatformException catch (e, stack) {
       print("Plugin getStatistics error: ${e.message}");
       return Future.error("getStatistics failed.", stack);
