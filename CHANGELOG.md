@@ -1,3 +1,7 @@
+## 3.0.1
+
+* Updated README.md with link to Minimal-GPL
+
 ## 3.0.0
 
 * FFmpeg `v7.1.1`
