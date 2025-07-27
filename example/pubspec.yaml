@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  path_provider: ^2.1.5
-  ffmpeg_kit_flutter_new_https:
+  ffmpeg_kit_flutter_new_https_gpl:
     path: ../
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

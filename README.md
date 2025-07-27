@@ -1,12 +1,12 @@
 <div align="center">
 
-# FFmpegKit for Flutter. HTTPS version.
+# FFmpegKit for Flutter. HTTPS-GPL version.
 
 _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Flutter 3+_
 
 <p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https">
-     <img src="https://img.shields.io/badge/pub-1.0.1-blue?logo=dart" alt="pub">
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl">
+     <img src="https://img.shields.io/badge/pub-1.0.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -37,11 +37,11 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 ### 2. Installation
 
-Add `ffmpeg_kit_flutter_new_https` as a dependency in your `pubspec.yaml file`.
+Add `ffmpeg_kit_flutter_new_https_gpl` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_https: ^1.0.1
+ ffmpeg_kit_flutter_new_https_gpl: ^1.0.0
 ```
 
 ### 3. Packages
@@ -51,7 +51,7 @@ There are eight different `ffmpeg-kit` packages:
 - [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)
 - [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)
 - [HTTPS](https://pub.dev/packages/ffmpeg_kit_flutter_new_https)
-- HTTPS-GPL
+- [HTTPS-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl)
 - Audio
 - Video
 - Full
@@ -111,7 +111,7 @@ include them.
 ### 4. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
-`ffmpeg_kit_flutter_new_https` releases.
+`ffmpeg_kit_flutter_new_https_gpl` releases.
 
 <table align="center">  
   <thead>  
