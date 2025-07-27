@@ -1,12 +1,12 @@
 <div align="center">
 
-# FFmpegKit for Flutter. Minimal version.
+# FFmpegKit for Flutter. Minimal-GPL version.
 
 _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Flutter 3+_
 
 <p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min">
-     <img src="https://img.shields.io/badge/pub-2.0.0-blue?logo=dart" alt="pub">
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl">
+     <img src="https://img.shields.io/badge/pub-1.0.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -33,15 +33,15 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
     - `macOS SDK 10.15` or later
 - Can process Storage Access Framework (SAF) Uris on Android
 
-- Licensed under `LGPL 3.0`
+- Licensed under `LGPL 3.0` and `GPL 3.0`
 
 ### 2. Installation
 
-Add `ffmpeg_kit_flutter_new_min` as a dependency in your `pubspec.yaml file`.
+Add `ffmpeg_kit_flutter_new_min_gpl` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_min: ^2.0.0
+ ffmpeg_kit_flutter_new_min_gpl: ^1.0.0
 ```
 
 ### 3. Packages
@@ -49,7 +49,7 @@ dependencies:
 There are eight different `ffmpeg-kit` packages:
 
 - [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)
-- Minimal-GPL
+- [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)
 - HTTPS
 - HTTPS-GPL
 - Audio
@@ -111,7 +111,7 @@ include them.
 ### 4. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
-`ffmpeg_kit_flutter_new_min` releases.
+`ffmpeg_kit_flutter_new_min_gpl` releases.
 
 <table align="center">  
   <thead>  

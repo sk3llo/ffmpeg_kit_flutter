@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:ffmpeg_kit_flutter_new_min/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new_min/log.dart';
-import 'package:ffmpeg_kit_flutter_new_min/session.dart';
-import 'package:ffmpeg_kit_flutter_new_min/statistics.dart';
+import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_min_gpl/log.dart';
+import 'package:ffmpeg_kit_flutter_new_min_gpl/packages.dart';
+import 'package:ffmpeg_kit_flutter_new_min_gpl/session.dart';
+import 'package:ffmpeg_kit_flutter_new_min_gpl/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
