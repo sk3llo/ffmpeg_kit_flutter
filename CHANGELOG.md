@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Updated repository URL and header
+* Formatted code
+
 ## 1.0.0
 
 * Initial release
