@@ -89,8 +89,9 @@ class MediaInformation {
 
   /// Returns all streams found as a list.
   List<StreamInformation> getStreams() {
-    final List<StreamInformation> list =
-        List<StreamInformation>.empty(growable: true);
+    final List<StreamInformation> list = List<StreamInformation>.empty(
+      growable: true,
+    );
 
     dynamic createStreamInformation(Map<dynamic, dynamic> streamProperties) =>
         list.add(new StreamInformation(streamProperties));
