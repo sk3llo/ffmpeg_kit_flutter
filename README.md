@@ -1,6 +1,6 @@
 <div align="center">
 
-# FFmpegKit for Flutter. Minimal-GPL version.
+# FFmpegKit for Flutter. HTTPS version.
 
 _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Flutter 3+_
 
