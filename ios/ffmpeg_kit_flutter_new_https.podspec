@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'ffmpeg_kit_flutter_new_min_gpl'
+  s.name             = 'ffmpeg_kit_flutter_new_https'
   s.version          = '7.1.1'
   s.summary          = 'FFmpeg Kit for Flutter'
   s.description      = 'A Flutter plugin for running FFmpeg and FFprobe commands.'
@@ -15,12 +15,12 @@ Pod::Spec.new do |s|
   s.source_files        = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
 
-  s.default_subspec = 'min-gpl'
+  s.default_subspec = 'https'
 
   s.dependency          'Flutter'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
 
-  s.subspec 'min-gpl' do |ss|
+  s.subspec 'https' do |ss|
     s.prepare_command = <<-CMD
       if [ ! -d "./Frameworks" ]; then
         chmod +x ../scripts/setup_ios.sh

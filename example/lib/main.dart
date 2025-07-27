@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new_min_gpl/log.dart';
-import 'package:ffmpeg_kit_flutter_new_min_gpl/packages.dart';
-import 'package:ffmpeg_kit_flutter_new_min_gpl/session.dart';
-import 'package:ffmpeg_kit_flutter_new_min_gpl/statistics.dart';
+import 'package:ffmpeg_kit_flutter_new_https/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_https/log.dart';
+import 'package:ffmpeg_kit_flutter_new_https/session.dart';
+import 'package:ffmpeg_kit_flutter_new_https/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -127,11 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
       String description;
 
       switch (mode) {
-        case 'videotoolbox':
-          command =
-              '-i ${sampleVideoFile.path} -c:v h264_videotoolbox -b:v 2M ${outputFile.path}';
-          description = 'Hardware encoding (VideoToolbox)';
-          break;
         case 'list_codecs':
           if (Platform.isAndroid) {
             command = '-hide_banner -encoders | grep -i mediacodec';
