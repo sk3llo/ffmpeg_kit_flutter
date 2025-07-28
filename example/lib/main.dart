@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:ffmpeg_kit_flutter_new_https/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new_https/log.dart';
-import 'package:ffmpeg_kit_flutter_new_https/session.dart';
-import 'package:ffmpeg_kit_flutter_new_https/statistics.dart';
+import 'package:ffmpeg_kit_flutter_new_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_audio/log.dart';
+import 'package:ffmpeg_kit_flutter_new_audio/session.dart';
+import 'package:ffmpeg_kit_flutter_new_audio/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -122,8 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
       await sampleVideoFile.writeAsBytes(sampleVideoRoot.buffer.asUint8List());
       if (outputFile.existsSync()) await outputFile.delete();
 
-      String command;
-      String description;
+      String command = '';
+      String description = '';
 
       switch (mode) {
         case 'list_codecs':

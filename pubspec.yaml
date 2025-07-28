@@ -1,8 +1,8 @@
-name: ffmpeg_kit_flutter_new_https
+name: ffmpeg_kit_flutter_new_audio
 description: FFmpeg Kit Minimal for Flutter. Supports Android, iOS and macOS platforms.
 repository: https://github.com/sk3llo/ffmpeg_kit_flutter/tree/https
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
-version: 1.0.2
+version: 1.0.0
 
 environment:
   sdk: ">=3.1.0 <4.0.0"

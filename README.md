@@ -1,12 +1,12 @@
 <div align="center">
 
-# FFmpegKit for Flutter. HTTPS version.
+# FFmpegKit for Flutter. Audio version.
 
 _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Flutter 3+_
 
 <p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https">
-     <img src="https://img.shields.io/badge/pub-1.0.2-blue?logo=dart" alt="pub">
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_audio">
+     <img src="https://img.shields.io/badge/pub-1.0.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -24,6 +24,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 - Supports
     - `Android`, `iOS` and `macOS`
 - FFmpeg `v7.1.1`
+- Kotlin `v1.8.0`
 - `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86` and `x86_64` architectures on Android
     - `Android API Level 24` or later
 - `armv7`, `armv7s`, `arm64`, `x86_64`, `x86_64-mac-catalyst` and `arm64-mac-catalyst`  
@@ -37,11 +38,11 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 ### 2. Installation
 
-Add `ffmpeg_kit_flutter_new_https` as a dependency in your `pubspec.yaml file`.
+Add `ffmpeg_kit_flutter_new_audio` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_https: ^1.0.2
+ ffmpeg_kit_flutter_new_audio: ^1.0.0
 ```
 
 ### 3. Packages
@@ -52,7 +53,7 @@ There are eight different `ffmpeg-kit` packages:
 - [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)
 - [HTTPS](https://pub.dev/packages/ffmpeg_kit_flutter_new_https)
 - [HTTPS-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl)
-- Audio
+- [Audio](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio)
 - Video
 - Full
 - [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)
@@ -111,7 +112,7 @@ include them.
 ### 4. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
-`ffmpeg_kit_flutter_new_https` releases.
+`ffmpeg_kit_flutter_new_audio` releases.
 
 <table align="center">  
   <thead>  

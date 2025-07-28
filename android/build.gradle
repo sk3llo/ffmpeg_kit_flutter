@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = "2.2.0"
+    ext.kotlin_version = "1.8.0"
 
     repositories {
         google()
@@ -50,6 +50,6 @@ android {
 
     dependencies {
         implementation("androidx.annotation:annotation:1.9.1")
-        implementation("com.antonkarpenko:ffmpeg-kit-https:1.0.0")
+        implementation("com.antonkarpenko:ffmpeg-kit-audio:1.0.2")
     }
 }
