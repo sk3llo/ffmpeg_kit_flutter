@@ -132,10 +132,7 @@ include them.
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in the `ffmpeg_kit_flutter_new_video` releases.
 
 <table align="center">  
-  <thead>  
-    <tr>  
-      <th align="center" colspan="3">LTS Release</th>  
-    </tr>  
+  <thead>   
     <tr>  
       <th align="center">Android<br>API Level</th>  
       <th align="center">iOS Minimum<br>Deployment Target</th>  
