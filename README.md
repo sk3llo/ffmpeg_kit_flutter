@@ -64,16 +64,16 @@ dependencies:
 
 There are eight different `ffmpeg-kit` packages:
 
-| Package Name                     | Description                                                                                                   
-|----------------------------------|-----------------------------------------------
-| [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)                          | A minimal version of FFmpeg Kit                |
-| [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)                     | Minimal version with GPL licensing           
-| [HTTPS](https://pub.dev/packages/ffmpeg_kit_flutter_new_https)                            | FFmpeg Kit with HTTPS support                      |
-| [HTTPS-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl)                       | HTTPS version with GPL licensing               |
-| [Audio](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio)                            | FFmpeg Kit focused on audio processing            |
-| [Video](https://pub.dev/packages/ffmpeg_kit_flutter_new_video)                            | FFmpeg Kit focused on video processing                                                                        |
-| Full                             | Full version of FFmpeg Kit                                                                                     |
-| [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)                        | Full version with GPL licensing                        |
+| Package Name                                                           | Description                                                                                                   
+|------------------------------------------------------------------------|-----------------------------------------------
+| [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)         | A minimal version of FFmpeg Kit                |
+| [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal version with GPL licensing           
+| [HTTPS](https://pub.dev/packages/ffmpeg_kit_flutter_new_https)         | FFmpeg Kit with HTTPS support                      |
+| [HTTPS-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS version with GPL licensing               |
+| [Audio](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio)         | FFmpeg Kit focused on audio processing            |
+| [Video](https://pub.dev/packages/ffmpeg_kit_flutter_new_video)         | FFmpeg Kit focused on video processing             |
+| [Full](https://pub.dev/packages/ffmpeg_kit_flutter_new_full)           | Full version of FFmpeg Kit                         |
+| [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)            | Full version with GPL licensing                        |
 
 
 * Below you can see which system libraries and external libraries are enabled in each one of them.
@@ -129,8 +129,7 @@ include them.
 
 ### 4. Platform Support
 
-The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
-`ffmpeg_kit_flutter_new_video` releases.
+The following table shows Android API level, iOS deployment target and macOS deployment target requirements in the `ffmpeg_kit_flutter_new_video` releases.
 
 <table align="center">  
   <thead>  
