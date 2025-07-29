@@ -8,7 +8,7 @@ environment:
   sdk: ^3.7.2
 
 dependencies:
-  ffmpeg_kit_flutter_new_audio:
+  ffmpeg_kit_flutter_new_video:
     path: ../
   flutter:
     sdk: flutter

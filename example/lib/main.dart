@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:ffmpeg_kit_flutter_new_audio/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new_audio/log.dart';
-import 'package:ffmpeg_kit_flutter_new_audio/session.dart';
-import 'package:ffmpeg_kit_flutter_new_audio/statistics.dart';
+import 'package:ffmpeg_kit_flutter_new_video/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_video/log.dart';
+import 'package:ffmpeg_kit_flutter_new_video/session.dart';
+import 'package:ffmpeg_kit_flutter_new_video/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -85,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
               child: LinearProgressIndicator(),
             ),
           BottomAppBar(
-            // padding: EdgeInsets.zero,
             child: SizedBox(
               height: 40,
               child: ListView(
@@ -112,80 +111,48 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed:
                         isProcessing
                             ? null
-                            : () => executeFFmpegCommand('lame'),
-                    child: const Text('LAME'),
+                            : () => executeFFmpegCommand('kvazaar'),
+                    child: const Text('kvazaar'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed:
                         isProcessing
                             ? null
-                            : () => executeFFmpegCommand('libilbc'),
-                    child: const Text('iLBC'),
+                            : () => executeFFmpegCommand('libtheora'),
+                    child: const Text('libtheora'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed:
                         isProcessing
                             ? null
-                            : () => executeFFmpegCommand('libvorbis'),
-                    child: const Text('Vorbis'),
+                            : () => executeFFmpegCommand('libvpx'),
+                    child: const Text('libvpx'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed:
                         isProcessing
                             ? null
-                            : () => executeFFmpegCommand('opencore-amr'),
-                    child: const Text('AMR'),
+                            : () => executeFFmpegCommand('libwebp'),
+                    child: const Text('libwebp'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed:
                         isProcessing
                             ? null
-                            : () => executeFFmpegCommand('opus'),
-                    child: const Text('Opus'),
+                            : () => executeFFmpegCommand('snappy'),
+                    child: const Text('snappy'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed:
                         isProcessing
                             ? null
-                            : () => executeFFmpegCommand('shine'),
-                    child: const Text('Shine'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed:
-                        isProcessing
-                            ? null
-                            : () => executeFFmpegCommand('soxr'),
-                    child: const Text('SoXr'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed:
-                        isProcessing
-                            ? null
-                            : () => executeFFmpegCommand('speex'),
-                    child: const Text('Speex'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed:
-                        isProcessing
-                            ? null
-                            : () => executeFFmpegCommand('twolame'),
-                    child: const Text('TwoLAME'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed:
-                        isProcessing
-                            ? null
-                            : () => executeFFmpegCommand('vo-amrwbenc'),
-                    child: const Text('AMR-WB'),
+                            : () => executeFFmpegCommand('zimg'),
+                    child: const Text('zimg'),
                   ),
                 ],
               ),
@@ -200,6 +167,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final tempDir = await getTemporaryDirectory();
     final assetData = await rootBundle.load('assets/$assetName');
     final tempFile = File('${tempDir.path}/$assetName');
+    if (await tempFile.exists()) {
+      await tempFile.delete();
+    }
     await tempFile.writeAsBytes(assetData.buffer.asUint8List());
     return tempFile;
   }
@@ -218,25 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       final tempDir = await getTemporaryDirectory();
 
-      // Determine if the command is for audio or video
-      final audioModes = [
-        'lame',
-        'libilbc',
-        'libvorbis',
-        'opencore-amr',
-        'opus',
-        'shine',
-        'soxr',
-        'speex',
-        'twolame',
-        'vo-amrwbenc',
-      ];
-
-      if (audioModes.contains(mode)) {
-        inputFile = await _copyAssetToTemp('sample_audio.wav');
-      } else {
-        inputFile = await _copyAssetToTemp('sample_video.mp4');
-      }
+      inputFile = await _copyAssetToTemp('sample_video.mp4');
 
       switch (mode) {
         case 'list_codecs':
@@ -255,69 +207,44 @@ class _MyHomePageState extends State<MyHomePage> {
           command = '-hide_banner -encoders | grep -i mediacodec';
           description = 'List MediaCodec codecs';
           break;
-        // Audio Library Test Cases
-        case 'lame':
-          outputFile = File('${tempDir.path}/output.mp3');
+        case 'kvazaar':
+          outputFile = File('${tempDir.path}/output_kvazaar.mp4');
           command =
-              '-y -i ${inputFile.path} -c:a libmp3lame -q:a 2 ${outputFile.path}';
-          description = 'Encode with LAME (MP3)';
+              '-y -i ${inputFile.path} -c:v libkvazaar -preset ultrafast ${outputFile.path}';
+          description = 'Encode HEVC with kvazaar';
           break;
-        case 'libilbc':
-          outputFile = File('${tempDir.path}/output.lbc');
+        case 'libtheora':
+          outputFile = File('${tempDir.path}/output.ogv');
           command =
-              '-y -i ${inputFile.path} -c:a libilbc -ar 8000 -b:a 15.2k ${outputFile.path}';
-          description = 'Encode with iLBC';
+              '-y -i ${inputFile.path} -c:v libtheora -q:v 7 ${outputFile.path}';
+          description = 'Encode with libtheora';
           break;
-        case 'libvorbis':
-          outputFile = File('${tempDir.path}/output.ogg');
+        case 'libvpx':
+          outputFile = File('${tempDir.path}/output.webm');
           command =
-              '-y -i ${inputFile.path} -c:a libvorbis -qscale:a 5 ${outputFile.path}';
-          description = 'Encode with Vorbis';
+              '-y -i ${inputFile.path} -c:v libvpx-vp9 -b:v 1M -c:a libopus ${outputFile.path}';
+          description = 'Encode VP9 with libvpx';
           break;
-        case 'opencore-amr':
-          outputFile = File('${tempDir.path}/output.amr');
+        case 'libwebp':
+          outputFile = File('${tempDir.path}/output.webp');
           command =
-              '-y -i ${inputFile.path} -c:a libopencore_amrnb -ar 8000 -b:a 12.2k ${outputFile.path}';
-          description = 'Encode with OpenCORE AMR-NB';
+              '-y -i ${inputFile.path} -c:v libwebp -loop 0 -an -vsync 0 ${outputFile.path}';
+          description = 'Encode to animated WebP';
           break;
-        case 'opus':
-          outputFile = File('${tempDir.path}/output.opus');
+        case 'snappy':
+          outputFile = File('${tempDir.path}/output_hap.mov');
           command =
-              '-y -i ${inputFile.path} -c:a libopus -b:a 96k ${outputFile.path}';
-          description = 'Encode with Opus';
+              '-y -i ${inputFile.path} -c:v hap -format hap_q ${outputFile.path}';
+          description = 'Encode with HAP (uses snappy)';
           break;
-        case 'shine':
-          outputFile = File('${tempDir.path}/output.mp3');
+        case 'zimg':
+          outputFile = File('${tempDir.path}/output_zscale.mp4');
           command =
-              '-y -i ${inputFile.path} -c:a libshine -b:a 128k ${outputFile.path}';
-          description = 'Encode with Shine (MP3)';
-          break;
-        case 'soxr':
-          outputFile = File('${tempDir.path}/output_resampled.wav');
-          command =
-              '-y -i ${inputFile.path} -af "aresample=resampler=soxr" -ar 44100 ${outputFile.path}';
-          description = 'Resample with SoXr';
-          break;
-        case 'speex':
-          outputFile = File('${tempDir.path}/output.spx');
-          command =
-              '-y -i ${inputFile.path} -c:a libspeex -ar 16000 ${outputFile.path}';
-          description = 'Encode with Speex';
-          break;
-        case 'twolame':
-          outputFile = File('${tempDir.path}/output.mp2');
-          command =
-              '-y -i ${inputFile.path} -c:a libtwolame -b:a 192k ${outputFile.path}';
-          description = 'Encode with TwoLAME (MP2)';
-          break;
-        case 'vo-amrwbenc':
-          outputFile = File('${tempDir.path}/output.awb');
-          command =
-              '-y -i ${inputFile.path} -c:a libvo_amrwbenc -ar 16000 -b:a 23.85k ${outputFile.path}';
-          description = 'Encode with AMR-WB';
+              '-y -i ${inputFile.path} -vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709" ${outputFile.path}';
+          description = 'Apply filter with zimg (zscale)';
           break;
         default:
-          outputFile = File('${tempDir.path}/output.mp4');
+          outputFile = File('${tempDir.path}/output_default.mp4');
           command =
               '-y -i ${inputFile.path} -c:v mpeg4 -preset ultrafast ${outputFile.path}';
           description = 'Default video encoding';
@@ -356,7 +283,6 @@ class _MyHomePageState extends State<MyHomePage> {
           debugPrint('log: ${log.getMessage()}');
         },
         (Statistics statistics) {
-          // No need to update the log string for every statistic, can be noisy
           debugPrint('statistics: ${statistics.getTime()}');
         },
       );
