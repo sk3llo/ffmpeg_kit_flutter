@@ -1,3 +1,7 @@
+## 1.0.1
+
+* Updated README.md packages links and pubspec.yaml semantics
+
 ## 1.0.0
 
 * Initial release
