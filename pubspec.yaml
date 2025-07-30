@@ -1,8 +1,8 @@
-name: ffmpeg_kit_flutter_new_video
-description: FFmpeg Kit Minimal for Flutter. Supports Android, iOS and macOS platforms.
-repository: https://github.com/sk3llo/ffmpeg_kit_flutter/tree/video
+name: ffmpeg_kit_flutter_new_full
+description: FFmpeg Kit Full v7.1.1 for Flutter. Supports Android, iOS and macOS platforms.
+repository: https://github.com/sk3llo/ffmpeg_kit_flutter/tree/full
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
-version: 1.0.1
+version: 1.0.0
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
