@@ -45,7 +45,7 @@ class FFmpegKitFactory {
   static FFmpegSessionCompleteCallback? _ffmpegSessionCompleteCallback;
   static FFprobeSessionCompleteCallback? _ffprobeSessionCompleteCallback;
   static MediaInformationSessionCompleteCallback?
-  _mediaInformationSessionCompleteCallback;
+      _mediaInformationSessionCompleteCallback;
 
   static Statistics mapToStatistics(Map<dynamic, dynamic> statisticsMap) =>
       new Statistics(
@@ -154,7 +154,8 @@ class FFmpegKitFactory {
 
   static FFmpegSessionCompleteCallback? getFFmpegSessionCompleteCallback(
     int? sessionId,
-  ) => ffmpegSessionCompleteCallbackMap[sessionId];
+  ) =>
+      ffmpegSessionCompleteCallbackMap[sessionId];
 
   static void setFFmpegSessionCompleteCallback(
     int? sessionId,
@@ -166,7 +167,8 @@ class FFmpegKitFactory {
   }
 
   static FFmpegSessionCompleteCallback?
-  getGlobalFFmpegSessionCompleteCallback() => _ffmpegSessionCompleteCallback;
+      getGlobalFFmpegSessionCompleteCallback() =>
+          _ffmpegSessionCompleteCallback;
 
   static void setGlobalFFmpegSessionCompleteCallback(
     FFmpegSessionCompleteCallback? completeCallback,
@@ -176,7 +178,8 @@ class FFmpegKitFactory {
 
   static FFprobeSessionCompleteCallback? getFFprobeSessionCompleteCallback(
     int? sessionId,
-  ) => ffprobeSessionCompleteCallbackMap[sessionId];
+  ) =>
+      ffprobeSessionCompleteCallbackMap[sessionId];
 
   static void setFFprobeSessionCompleteCallback(
     int? sessionId,
@@ -188,7 +191,8 @@ class FFmpegKitFactory {
   }
 
   static FFprobeSessionCompleteCallback?
-  getGlobalFFprobeSessionCompleteCallback() => _ffprobeSessionCompleteCallback;
+      getGlobalFFprobeSessionCompleteCallback() =>
+          _ffprobeSessionCompleteCallback;
 
   static void setGlobalFFprobeSessionCompleteCallback(
     FFprobeSessionCompleteCallback? completeCallback,
@@ -197,8 +201,8 @@ class FFmpegKitFactory {
   }
 
   static MediaInformationSessionCompleteCallback?
-  getMediaInformationSessionCompleteCallback(int? sessionId) =>
-      mediaInformationSessionCompleteCallbackMap[sessionId];
+      getMediaInformationSessionCompleteCallback(int? sessionId) =>
+          mediaInformationSessionCompleteCallbackMap[sessionId];
 
   static void setMediaInformationSessionCompleteCallback(
     int? sessionId,
@@ -210,8 +214,8 @@ class FFmpegKitFactory {
   }
 
   static MediaInformationSessionCompleteCallback?
-  getGlobalMediaInformationSessionCompleteCallback() =>
-      _mediaInformationSessionCompleteCallback;
+      getGlobalMediaInformationSessionCompleteCallback() =>
+          _mediaInformationSessionCompleteCallback;
 
   static void setGlobalMediaInformationSessionCompleteCallback(
     MediaInformationSessionCompleteCallback? completeCallback,

@@ -69,8 +69,8 @@ abstract class AbstractSession extends Session {
   ]) async {
     try {
       await FFmpegKitConfig.init();
-      final Map<dynamic, dynamic>? nativeSession = await _platform
-          .abstractSessionCreateFFmpegSession(argumentsArray);
+      final Map<dynamic, dynamic>? nativeSession =
+          await _platform.abstractSessionCreateFFmpegSession(argumentsArray);
 
       final session = new FFmpegSession();
 
@@ -130,8 +130,8 @@ abstract class AbstractSession extends Session {
   ]) async {
     try {
       await FFmpegKitConfig.init();
-      final Map<dynamic, dynamic>? nativeSession = await _platform
-          .abstractSessionCreateFFprobeSession(argumentsArray);
+      final Map<dynamic, dynamic>? nativeSession =
+          await _platform.abstractSessionCreateFFprobeSession(argumentsArray);
 
       final session = new FFprobeSession();
 
@@ -295,18 +295,18 @@ abstract class AbstractSession extends Session {
       return _platform
           .abstractSessionGetAllLogs(this.getSessionId(), waitTimeout)
           .then((allLogs) {
-            if (allLogs == null) {
-              return List.empty();
-            } else {
-              return allLogs
-                  .map(
-                    (dynamic logObject) => FFmpegKitFactory.mapToLog(
-                      logObject as Map<dynamic, dynamic>,
-                    ),
-                  )
-                  .toList();
-            }
-          });
+        if (allLogs == null) {
+          return List.empty();
+        } else {
+          return allLogs
+              .map(
+                (dynamic logObject) => FFmpegKitFactory.mapToLog(
+                  logObject as Map<dynamic, dynamic>,
+                ),
+              )
+              .toList();
+        }
+      });
     } on PlatformException catch (e, stack) {
       print("Plugin getAllLogs error: ${e.message}");
       return Future.error("getAllLogs failed.", stack);

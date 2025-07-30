@@ -1,3 +1,7 @@
+## 3.0.2
+
+* Updated README.md with new package links
+
 ## 3.0.1
 
 * Updated README.md with link to Minimal-GPL

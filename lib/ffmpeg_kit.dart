@@ -49,12 +49,13 @@ class FFmpegKit {
     FFmpegSessionCompleteCallback? completeCallback = null,
     LogCallback? logCallback = null,
     StatisticsCallback? statisticsCallback = null,
-  ]) async => FFmpegKit.executeWithArgumentsAsync(
-    FFmpegKitConfig.parseArguments(command),
-    completeCallback,
-    logCallback,
-    statisticsCallback,
-  );
+  ]) async =>
+      FFmpegKit.executeWithArgumentsAsync(
+        FFmpegKitConfig.parseArguments(command),
+        completeCallback,
+        logCallback,
+        statisticsCallback,
+      );
 
   /// Starts an asynchronous FFmpeg execution with arguments provided.
   ///

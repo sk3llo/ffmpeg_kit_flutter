@@ -106,7 +106,7 @@ class FFmpegKitInitializer {
 
     activeLogRedirectionStrategy =
         FFmpegKitFactory.getLogRedirectionStrategy(sessionId) ??
-        activeLogRedirectionStrategy;
+            activeLogRedirectionStrategy;
     final LogCallback? logCallback = FFmpegKitFactory.getLogCallback(sessionId);
 
     if (logCallback != null) {
@@ -216,8 +216,8 @@ class FFmpegKitInitializer {
       if (session != null) {
         if (session.isFFmpeg()) {
           final ffmpegSession = session as FFmpegSession;
-          final FFmpegSessionCompleteCallback? completeCallback = ffmpegSession
-              .getCompleteCallback();
+          final FFmpegSessionCompleteCallback? completeCallback =
+              ffmpegSession.getCompleteCallback();
 
           if (completeCallback != null) {
             try {
@@ -281,8 +281,8 @@ class FFmpegKitInitializer {
             }
           }
 
-          final globalMediaInformationSessionCompleteCallback =
-              FFmpegKitFactory.getGlobalMediaInformationSessionCompleteCallback();
+          final globalMediaInformationSessionCompleteCallback = FFmpegKitFactory
+              .getGlobalMediaInformationSessionCompleteCallback();
           if (globalMediaInformationSessionCompleteCallback != null) {
             try {
               // NOTIFY GLOBAL CALLBACK DEFINED
