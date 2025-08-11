@@ -1,3 +1,18 @@
+## 3.2.0
+
+* Upgraded `freetype` from **2.13.0** to **2.13.3**
+* Upgraded `harfbuzz` from **8.0.1** to **11.3.3**
+* Upgraded `fontconfig` from **2.16.2** to 2.17.1
+* Added support for `harfbuzz` library in order to support `drawtext` filter
+* Fixed missing `libunibreak` for `libass.sh`
+
+## 3.1.0
+
+* Updated README.md with new package links
+* Uploaded new binary with Kotlin 1.8.22
+* Downgraded required Kotlin version in `example` project to 1.8.22
+* Formatted code
+
 ## 3.0.2
 
 * Updated README.md with new package links

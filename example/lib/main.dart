@@ -98,21 +98,24 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             if (Platform.isIOS || Platform.isMacOS)
               ElevatedButton(
-                onPressed: isProcessing
-                    ? null
-                    : () => executeFFmpegCommand('videotoolbox'),
+                onPressed:
+                    isProcessing
+                        ? null
+                        : () => executeFFmpegCommand('videotoolbox'),
                 child: const Text('VideoToolbox'),
               ),
             ElevatedButton(
-              onPressed: isProcessing
-                  ? null
-                  : () => executeFFmpegCommand('list_codecs'),
+              onPressed:
+                  isProcessing
+                      ? null
+                      : () => executeFFmpegCommand('list_codecs'),
               child: const Text('List Codecs'),
             ),
             ElevatedButton(
-              onPressed: isProcessing
-                  ? null
-                  : () => executeFFmpegCommand('mediacodec'),
+              onPressed:
+                  isProcessing
+                      ? null
+                      : () => executeFFmpegCommand('mediacodec'),
               child: const Text('MediaCodec'),
             ),
           ],
