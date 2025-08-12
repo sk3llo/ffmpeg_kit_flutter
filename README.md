@@ -6,7 +6,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 <p align="center">
   <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl">
-     <img src="https://img.shields.io/badge/pub-1.0.0-blue?logo=dart" alt="pub">
+     <img src="https://img.shields.io/badge/pub-1.1.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -19,21 +19,50 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 ### 1. Features
 
-- Updated Android and MacOS bindings
-- Includes both `FFmpeg` and `FFprobe`
-- Supports
-    - `Android`, `iOS` and `macOS`
-- FFmpeg `v7.1.1`
-- `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86` and `x86_64` architectures on Android
-    - `Android API Level 24` or later
-- `armv7`, `armv7s`, `arm64`, `x86_64`, `x86_64-mac-catalyst` and `arm64-mac-catalyst`  
-  architectures on iOS
-    - `iOS SDK 14.0` or later
-- `arm64` and `x86_64` architectures on macOS
-    - `macOS SDK 10.15` or later
-- Can process Storage Access Framework (SAF) Uris on Android
+- **Updated Bindings**: Updated Android and macOS bindings to work with the newest Flutter version
 
-- Licensed under `LGPL 3.0` and `GPL 3.0`
+- **Includes**: Both `FFmpeg` and `FFprobe`
+
+- **Supported Platforms**:
+    - `Android`
+    - `iOS`
+    - `macOS`
+
+- **FFmpeg Version**: `v7.1.1`
+
+- **iOS and macOS Support**: iOS and macOS `Videotoolbox` support
+
+- **Supported Architectures**:
+    - **Android**:
+        - `arm-v7a`
+        - `arm-v7a-neon`
+        - `arm64-v8a`
+        - `x86`
+        - `x86_64`
+        - Requires `Android API Level 24` or later
+        - Requires **Kotlin** `1.8.22` or later
+    - **iOS**:
+        - `armv7`
+        - `armv7s`
+        - `arm64`
+        - `arm64-simulator`
+        - `i386`
+        - `x86_64`
+        - `x86_64-mac-catalyst`
+        - `arm64-mac-catalyst`
+        - Requires `iOS SDK 14.0` or later
+    - **macOS**:
+        - `arm64`
+        - `x86_64`
+        - Requires `macOS SDK 10.15` or later
+
+- **Storage Access**: Can process Storage Access Framework (SAF) Uris on Android
+
+- **GPL Licensed Libraries**: 4 external libraries with GPL license: `vid.stab`, `x264`, `x265`, `xvidcore`
+
+- **License**: Licensed under `LGPL 3.0` by default, some packages licensed by `GPL v3.0` effectively
+
+
 
 ### 2. Installation
 
@@ -41,21 +70,24 @@ Add `ffmpeg_kit_flutter_new_min_gpl` as a dependency in your `pubspec.yaml file`
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_min_gpl: ^1.0.0
+ ffmpeg_kit_flutter_new_min_gpl: ^1.1.0
 ```
+
 
 ### 3. Packages
 
 There are eight different `ffmpeg-kit` packages:
 
-- [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)
-- [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)
-- HTTPS
-- HTTPS-GPL
-- Audio
-- Video
-- Full
-- [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)
+| Package Name                                                           | Description                                                                                                   
+|------------------------------------------------------------------------|-----------------------------------------------
+| [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)         | A minimal version of FFmpeg Kit                |
+| [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal version with GPL licensing           
+| [HTTPS](https://pub.dev/packages/ffmpeg_kit_flutter_new_https)         | FFmpeg Kit with HTTPS support                      |
+| [HTTPS-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS version with GPL licensing               |
+| [Audio](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio)         | FFmpeg Kit focused on audio processing            |
+| [Video](https://pub.dev/packages/ffmpeg_kit_flutter_new_video)         | FFmpeg Kit focused on video processing                                                                        |
+| [Full](https://pub.dev/packages/ffmpeg_kit_flutter_new_full)           | Full version of FFmpeg Kit                                                                                     |
+| [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)            | Full version with GPL licensing  
 
 Below you can see which system libraries and external libraries are enabled in each one of them.
 
@@ -108,6 +140,7 @@ include them.
 </tbody>
 </table>
 
+
 ### 4. Platform Support
 
 The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
@@ -116,10 +149,8 @@ The following table shows Android API level, iOS deployment target and macOS dep
 <table align="center">  
   <thead>  
     <tr>  
-      <th align="center" colspan="3">LTS Release</th>  
-    </tr>  
-    <tr>  
       <th align="center">Android<br>API Level</th>  
+      <th align="center">Kotlin<br>Minimum Version</th>  
       <th align="center">iOS Minimum<br>Deployment Target</th>  
       <th align="center">macOS Minimum<br>Deployment Target</th>  
     </tr>  
@@ -127,6 +158,7 @@ The following table shows Android API level, iOS deployment target and macOS dep
   <tbody>  
     <tr>  
       <td align="center">24</td>  
+      <td align="center">1.8.22</td>  
       <td align="center">14</td>  
       <td align="center">10.15</td>  
     </tr>  
@@ -143,11 +175,11 @@ import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
     final returnCode = await session.getReturnCode();  
     if (ReturnCode.isSuccess(returnCode)) {  
-    // SUCCESS  
+        // SUCCESS  
     } else if (ReturnCode.isCancel(returnCode)) {  
-    // CANCEL  
-    } else {  
-    // ERROR  
+        // CANCEL  
+    } else {
+        // ERROR  
     }
 });
 ```  
@@ -296,8 +328,8 @@ FFmpegKitConfig.enableLogCallback((log) {
 - Statistics Callback, called when a session generates statistics
 
 ```dart  
-FFmpegKitConfig.enableStatisticsCallback((statistics) {
-final size = statistics.getSize();
+FFmpegKitConfig.enableStatisticsCallback((statistics) {  
+    final size = statistics.getSize();
 });  
 ```  
 10. Register system fonts and custom font directories.

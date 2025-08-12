@@ -50,6 +50,6 @@ android {
 
     dependencies {
         implementation("androidx.annotation:annotation:1.9.1")
-        implementation("com.antonkarpenko:ffmpeg-kit-min-gpl:1.0.0")
+        implementation("com.antonkarpenko:ffmpeg-kit-min-gpl:1.1.0")
     }
 }
