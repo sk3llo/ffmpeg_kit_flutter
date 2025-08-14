@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Updated `pubspec.yaml` description
+
 ## 1.1.0
 
 * Added proguard-rules.pro to keep `ffmpeg` dependencies when minification is enabled
