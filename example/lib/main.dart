@@ -93,86 +93,98 @@ class _MyHomePageState extends State<MyHomePage> {
                 scrollDirection: Axis.horizontal,
                 children: [
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('list_codecs'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('list_codecs'),
                     child: const Text('List Codecs'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('mediacodec'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('mediacodec'),
                     child: const Text('MediaCodec'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('lame'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('lame'),
                     child: const Text('LAME'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('libilbc'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('libilbc'),
                     child: const Text('iLBC'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('libvorbis'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('libvorbis'),
                     child: const Text('Vorbis'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('opencore-amr'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('opencore-amr'),
                     child: const Text('AMR'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('opus'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('opus'),
                     child: const Text('Opus'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('shine'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('shine'),
                     child: const Text('Shine'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('soxr'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('soxr'),
                     child: const Text('SoXr'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('speex'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('speex'),
                     child: const Text('Speex'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('twolame'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('twolame'),
                     child: const Text('TwoLAME'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: isProcessing
-                        ? null
-                        : () => executeFFmpegCommand('vo-amrwbenc'),
+                    onPressed:
+                        isProcessing
+                            ? null
+                            : () => executeFFmpegCommand('vo-amrwbenc'),
                     child: const Text('AMR-WB'),
                   ),
                 ],

@@ -50,6 +50,6 @@ android {
 
     dependencies {
         implementation("androidx.annotation:annotation:1.9.1")
-        implementation("com.antonkarpenko:ffmpeg-kit-audio:1.0.2")
+        implementation("com.antonkarpenko:ffmpeg-kit-audio:1.1.0")
     }
 }
