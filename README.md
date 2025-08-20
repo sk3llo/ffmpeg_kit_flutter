@@ -246,7 +246,7 @@ FFprobeKit.execute(ffprobeCommand).then((session) async {
 
 ```dart  
 FFprobeKit.getMediaInformation('<file path or url>').then((session) async {  
-    final information = await session.getMediaInformation();  
+    final information = session.getMediaInformation();  
     if (information == null) {  
         // CHECK THE FOLLOWING ATTRIBUTES ON ERROR
         final state = FFmpegKitConfig.sessionStateToString(await session.getState());
