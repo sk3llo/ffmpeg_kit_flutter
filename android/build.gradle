@@ -49,6 +49,6 @@ android {
 
     dependencies {
         implementation("androidx.annotation:annotation:1.9.1")
-        implementation("com.antonkarpenko:ffmpeg-kit-min:1.0.3")
+        implementation("com.antonkarpenko:ffmpeg-kit-min:2.0.0")
     }
 }

@@ -1,3 +1,7 @@
+## 3.0.0
+
+* FFmpeg `v8.0.0` with [all the sweet perks](https://ffmpeg.org/index.html#news)
+
 ## 2.1.0
 
 * Downgraded Kotlin from 2.2.0 to 1.8.22
