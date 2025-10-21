@@ -1,3 +1,7 @@
+## 4.0.0
+
+* FFmpeg `v8.0.0` with [all the sweet perks](https://ffmpeg.org/index.html#news)
+
 ## 3.2.0
 
 * Upgraded `freetype` from **2.13.0** to **2.13.3**

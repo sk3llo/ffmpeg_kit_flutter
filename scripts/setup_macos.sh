@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Download and unzip MacOS framework
-MACOS_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/7.1.1-full-gpl/ffmpeg-kit-macos-full-gpl-7.1.1.zip"
+MACOS_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/8.0.0-full-gpl/ffmpeg-kit-macos-full-gpl-8.0.0.zip"
 mkdir -p Frameworks
 curl -L $MACOS_URL -o frameworks.zip
-unzip -o frameworks.zip
+unzip -o frameworks.zip -d Frameworks
 rm frameworks.zip
 
 # Delete bitcode from all frameworks
