@@ -2,7 +2,7 @@ name: ffmpeg_kit_flutter_new_https_gpl
 description: FFmpeg Kit HTTPS-GPL for Flutter. Supports Android, iOS and macOS platforms.
 repository: https://github.com/sk3llo/ffmpeg_kit_flutter/tree/https-gpl
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
-version: 1.1.0
+version: 2.0.0
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
