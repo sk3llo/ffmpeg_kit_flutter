@@ -1,3 +1,7 @@
+## 2.0.0
+
+* FFmpeg `v8.0.0` with [all the sweet perks](https://ffmpeg.org/index.html#news)
+
 ## 1.1.1
 
 * Updated `pubspec.yaml` description
