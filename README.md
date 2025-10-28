@@ -75,6 +75,33 @@ dependencies:
  ffmpeg_kit_flutter_new: ^4.1.0
 ```
 
+#### 2.1 Set proguard rules for Android release build
+
+To work without errors for android release builds, you have to add up the following exception to your proguard rules. This will even be necessary if you deactivated shrinking/minification, as obfusciation is automatically applied by flutter for android release builds.
+
+**Step 1: Create/Update ProGuard Rules**
+
+```
+# Add this line in {PROJECT}/android/app/proguard-rules.pro
+-keep class com.antonkarpenko.ffmpegkit.** { *; }
+```
+
+**Step 2: Enable ProGuard in Build Configuration**
+
+Make sure proguard rule is properly setup in {PROJECT}/android/app/build.gradle.
+
+```
+android {
+    buildTypes {
+        release {
+            {... existing lines ...}
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        } 
+    }
+}
+```
 
 ### 3. Packages
 
