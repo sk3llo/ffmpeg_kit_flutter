@@ -76,6 +76,17 @@ dependencies:
 ```
 
 
+### macOS Development Requirements
+
+**Note for macOS Developers (arm64/Apple Silicon):**
+The pre-compiled FFmpeg frameworks for macOS require certain Homebrew libraries to be installed on your development machine. If you encounter dyld errors about missing libraries, install the following:
+
+```bash
+brew install libiconv libsamplerate srt
+```
+
+This is a known limitation with the current pre-built frameworks. For more details, see issue #134.
+
 ### 3. Packages
 
 There are eight different `ffmpeg-kit` packages:
