@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
   s.platform            = :ios
   s.requires_arc        = true
-  s.static_framework    = true
+  s.static_framework    = false
 
   s.source              = { :path => '.' }
   s.source_files        = 'Classes/**/*'
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.default_subspec = 'full-gpl'
 
   s.dependency          'Flutter'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
   s.subspec 'full-gpl' do |ss|
     # Adding pre-install hook

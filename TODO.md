@@ -1,0 +1,7 @@
+- Update pubspec.yaml
+- Update example/pubspec.yaml
+- Update scripts
+- Update README.md
+- Update CHANGELOG.md
+- Update iOS and macOS podspecs (inside content and naming)
+- Update Android build.gradle
