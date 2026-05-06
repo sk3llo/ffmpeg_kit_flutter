@@ -8,6 +8,10 @@ project(hidapi_compat C)
 # no longer available in the platform namespace.
 add_library(hidapi_compat SHARED hidapi_compat.c)
 
+set_target_properties(hidapi_compat PROPERTIES
+    LINK_FLAGS "-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
+)
+
 # dl  — for dlopen / dladdr
 # log — for __android_log_print
 target_link_libraries(hidapi_compat dl log)
