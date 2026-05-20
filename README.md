@@ -75,6 +75,58 @@ dependencies:
  ffmpeg_kit_flutter_new: ^4.1.0
 ```
 
+> [!IMPORTANT]
+> On some Android devices, the **release build** may crash during startup with the following error:
+>
+> `Bad JNI version returned from JNI_OnLoad`
+>
+> This happens because ProGuard/R8 may strip or optimize required FFmpegKit JNI classes and native bindings in release mode.
+>
+> To fix the issue, add the following rules to `android/app/proguard-rules.pro`:
+<details>
+<summary>ProGuard / R8 rules for FFmpegKit</summary>
+
+```proguard
+# FFmpegKit rules
+-keep class com.antonkarpenko.ffmpegkit.** { *; }
+-dontwarn com.antonkarpenko.ffmpegkit.**
+
+# Keep all FFmpegKit native methods
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Keep FFmpegKit Config
+-keep class com.antonkarpenko.ffmpegkit.FFmpegKitConfig {
+    *;
+}
+
+# Keep ABI Detection
+-keep class com.antonkarpenko.ffmpegkit.AbiDetect {
+    *;
+}
+
+# Keep all FFmpegKit sessions
+-keep class com.antonkarpenko.ffmpegkit.*Session {
+    *;
+}
+
+# Keep FFmpegKit callbacks
+-keep class com.antonkarpenko.ffmpegkit.*Callback {
+    *;
+}
+
+# Preserve all public classes in ffmpegkit
+-keep public class com.antonkarpenko.ffmpegkit.** {
+    public *;
+}
+
+# Keep reflection-based access
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+```
+</details>
 
 ### 3. Packages
 
