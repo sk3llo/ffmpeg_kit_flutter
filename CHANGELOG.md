@@ -1,3 +1,9 @@
+## 4.2.0
+
+* Added **Windows** support (x86_64) with a genuine `full-gpl` FFmpeg 8.0 build (all 27 external libraries, GPL components enabled).
+* Native libraries are downloaded from the `8.0.0-full-gpl` release; for local development point `FFMPEGKIT_LOCAL_DIR` (CMake cache var or environment) at a locally built bundle.
+* The bundled MinGW DLLs are rebased/ASLR-adjusted at build time and the full runtime dependency closure (gnutls, gmp, nettle, libxml2, lame, …) is shipped so the plugin loads standalone.
+
 ## 4.1.0
 
 * Fixed the FFmpeg 8.0 compatibility issue across all platforms. The problem was that `all_channel_counts` was being set AFTER the filter was created, but FFmpeg 8.0 requires it to be set DURING filter creation.
