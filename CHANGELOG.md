@@ -1,3 +1,7 @@
+## 4.2.1
+
+* Fixed iOS/macOS `pod install` failure introduced in 4.2.0: the setup scripts (`scripts/setup_ios.sh`, `scripts/setup_macos.sh`, `scripts/setup_android.sh`) were published with Windows CRLF line endings, causing `/bin/bash^M: bad interpreter: No such file or directory`. Scripts are now forced to LF via `.gitattributes` so the published package is always packaged with Unix line endings (fixes [#153](https://github.com/sk3llo/ffmpeg_kit_flutter/issues/153)).
+
 ## 4.2.0
 
 * Added **Windows** support (x86_64) with a genuine `full-gpl` FFmpeg 8.0 build (all 27 external libraries, GPL components enabled).
