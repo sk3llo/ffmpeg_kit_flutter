@@ -90,10 +90,10 @@ if(NOT FFMPEGKIT_LOCAL_DIR AND DEFINED ENV{FFMPEGKIT_LOCAL_DIR})
   set(FFMPEGKIT_LOCAL_DIR "$ENV{FFMPEGKIT_LOCAL_DIR}")
 endif()
 
-# The Windows native libraries are published under a windows-specific GitHub
-# release tag (e.g. 8.0.0-full-gpl-windows) so they don't collide with other
-# platforms' artifacts.
-set(FFMPEGKIT_RELEASE_TAG "${FFMPEGKIT_VERSION}-${FFMPEGKIT_PACKAGE}-windows")
+# The Windows native libraries are published under the per-variant GitHub
+# release tag (e.g. 8.0.0-full) shared with the iOS/macOS assets; the
+# windows-specific zip name keeps them from colliding with other platforms.
+set(FFMPEGKIT_RELEASE_TAG "${FFMPEGKIT_VERSION}-${FFMPEGKIT_PACKAGE}")
 set(FFMPEGKIT_ZIP_NAME "ffmpeg-kit-windows-${FFMPEGKIT_ARCH}-${FFMPEGKIT_PACKAGE}-${FFMPEGKIT_VERSION}.zip")
 set(FFMPEGKIT_DOWNLOAD_URL "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${FFMPEGKIT_RELEASE_TAG}/${FFMPEGKIT_ZIP_NAME}")
 set(FFMPEGKIT_ZIP_PATH "${FFMPEGKIT_PREBUILT_DIR}/${FFMPEGKIT_ZIP_NAME}")
