@@ -13,6 +13,11 @@
 migrate_working_dir/
 android/ffmpeg-kit-https/
 
+# Windows prebuilt FFmpegKit DLLs/headers (downloaded at build time or copied
+# from FFMPEGKIT_LOCAL_DIR; never commit the large binaries).
+windows/ffmpeg-kit/bin/
+windows/ffmpeg-kit/include/
+
 # IntelliJ related
 *.iml
 *.ipr
