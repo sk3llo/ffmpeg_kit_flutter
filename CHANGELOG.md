@@ -1,3 +1,10 @@
+## 2.1.0
+
+* Added **Windows** support (x86_64) for the `video` FFmpeg 8.0 variant (video-codec set: dav1d, fontconfig, freetype, fribidi, kvazaar, libass, libiconv, libtheora, libvpx, libwebp, snappy).
+* Native libraries are downloaded automatically at build time from the `8.0.0-video` release (`ffmpeg-kit-windows-x86_64-video-8.0.0.zip`); for local development point `FFMPEGKIT_LOCAL_DIR` (CMake cache var or environment) at a locally built bundle.
+* The bundled MinGW DLLs are rebased/ASLR-adjusted at build time so the plugin loads standalone.
+* Shell scripts are forced to LF via `.gitattributes` so the published package never carries Windows CRLF line endings (avoids the iOS/macOS `pod install` `/bin/bash^M: bad interpreter` failure).
+
 ## 2.0.0
 
 * Upgraded FFmpeg to `v8.0.0`
