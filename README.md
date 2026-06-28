@@ -6,7 +6,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 <p align="center">
   <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https">
-     <img src="https://img.shields.io/badge/pub-2.1.0-blue?logo=dart" alt="pub">
+     <img src="https://img.shields.io/badge/pub-2.2.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -27,6 +27,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
     - `Android`
     - `iOS`
     - `macOS`
+    - `Windows` (x86_64)
 
 - **FFmpeg Version**: `v8.0.0`
 
@@ -49,6 +50,9 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
         - `arm64`
         - `x86_64`
         - Requires `macOS SDK 10.15` or later
+    - **Windows**:
+        - `x86_64`
+        - Requires `Windows 10` or later
 
 - **Storage Access**: Can process Storage Access Framework (SAF) Uris on Android
 
@@ -60,7 +64,7 @@ Add `ffmpeg_kit_flutter_new_https` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_https: ^2.1.0
+ ffmpeg_kit_flutter_new_https: ^2.2.0
 ```
 
 ### 3. Packages
@@ -141,6 +145,7 @@ The following table shows Android API level, iOS deployment target and macOS dep
       <th align="center">Kotlin<br>Minimum Version</th>  
       <th align="center">iOS Minimum<br>Deployment Target</th>  
       <th align="center">macOS Minimum<br>Deployment Target</th>  
+      <th align="center">Windows</th>  
     </tr>  
   </thead>  
   <tbody>  
@@ -149,9 +154,12 @@ The following table shows Android API level, iOS deployment target and macOS dep
       <td align="center">1.8.22</td>  
       <td align="center">14</td>  
       <td align="center">10.15</td>  
+      <td align="center">Windows 10+ (x86_64)</td>  
     </tr>  
   </tbody>  
 </table> 
+
+> **Windows:** prebuilt `https` FFmpeg 8.0 libraries (x86_64) are downloaded automatically at build time from the `8.0.0-https` release (`ffmpeg-kit-windows-x86_64-https-8.0.0.zip`). For local development against a self-built bundle, set the `FFMPEGKIT_LOCAL_DIR` environment variable (or CMake cache variable) to the bundle directory before `flutter run/build windows`.
 
 ### 5. Using
 

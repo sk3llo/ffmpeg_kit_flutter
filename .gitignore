@@ -13,6 +13,10 @@
 migrate_working_dir/
 android/ffmpeg-kit-https/
 
+# Windows: native libraries fetched/extracted at build time by windows/CMakeLists.txt
+# (downloaded from the GitHub release or copied from FFMPEGKIT_LOCAL_DIR). Never commit.
+windows/ffmpeg-kit/
+
 # IntelliJ related
 *.iml
 *.ipr
