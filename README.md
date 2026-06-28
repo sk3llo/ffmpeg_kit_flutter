@@ -6,7 +6,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 <p align="center">
   <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https">
-     <img src="https://img.shields.io/badge/pub-2.3.2-blue?logo=dart" alt="pub">
+     <img src="https://img.shields.io/badge/pub-2.4.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -29,7 +29,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
     - `macOS`
     - `Windows` (x86_64)
 
-- **FFmpeg Version**: `v8.0.0`
+- **FFmpeg Version**: `v8.1.1`
 
 - **Supported Architectures**:
     - **Android**:
@@ -65,7 +65,7 @@ Add `ffmpeg_kit_flutter_new_https` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_https: ^2.3.2
+ ffmpeg_kit_flutter_new_https: ^2.4.0
 ```
 
 ### 3. Packages
