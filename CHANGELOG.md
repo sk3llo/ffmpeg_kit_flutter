@@ -1,3 +1,10 @@
+## 2.1.0
+
+* Added **Windows** support (x86_64) for the `audio` FFmpeg 8.0 variant (audio-codec set: lame, libilbc, libvorbis, opencore-amr, opus, shine, soxr, speex, twolame).
+* Native libraries are downloaded automatically at build time from the `8.0.0-audio` release (`ffmpeg-kit-windows-x86_64-audio-8.0.0.zip`); for local development point `FFMPEGKIT_LOCAL_DIR` (CMake cache var or environment) at a locally built bundle.
+* The bundled MinGW DLLs are rebased/ASLR-adjusted at build time so the plugin loads standalone.
+* Shell scripts are forced to LF via `.gitattributes` so the published package never carries Windows CRLF line endings (avoids the iOS/macOS `pod install` `/bin/bash^M: bad interpreter` failure).
+
 ## 2.0.0
 
 * FFmpeg `v8.0.0` with [all the sweet perks](https://ffmpeg.org/index.html#news)
