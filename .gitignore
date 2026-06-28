@@ -17,6 +17,12 @@ android/ffmpeg-kit-https/
 # (downloaded from the GitHub release or copied from FFMPEGKIT_LOCAL_DIR). Never commit.
 windows/ffmpeg-kit/
 
+# iOS/macOS: frameworks fetched at build time by scripts/setup_ios.sh and
+# scripts/setup_macos.sh (the podspec prepare_command), then converted to
+# .xcframework. Downloaded from the GitHub release. Never commit or publish.
+ios/Frameworks/
+macos/Frameworks/
+
 # IntelliJ related
 *.iml
 *.ipr
