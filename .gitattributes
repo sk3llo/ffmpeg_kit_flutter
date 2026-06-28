@@ -1,0 +1,19 @@
+# Normalize line endings to avoid CRLF breaking shell scripts on macOS/Linux.
+# Shell scripts MUST be LF — a CRLF shebang causes
+# "/bin/bash^M: bad interpreter: No such file or directory" during pod install.
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Leave binaries untouched.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.a binary
+*.so binary
+*.dylib binary
+*.dll binary
+*.framework binary
+*.xcframework binary
+*.zip binary
