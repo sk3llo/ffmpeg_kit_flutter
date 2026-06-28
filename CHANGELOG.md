@@ -1,3 +1,7 @@
+## 4.2.2
+
+* Fixed the Windows release build: `windows/ffmpeg_kit_flutter_plugin_c_api.cpp` included the generated public header from the wrong package directory (`ffmpeg_kit_flutter_new_full` instead of `ffmpeg_kit_flutter_new`), so building the published package on Windows failed to find the header. Thanks [@Nicoeevee](https://github.com/Nicoeevee) ([#159](https://github.com/sk3llo/ffmpeg_kit_flutter/pull/159)).
+
 ## 4.2.1
 
 * Fixed iOS/macOS `pod install` failure introduced in 4.2.0: the setup scripts (`scripts/setup_ios.sh`, `scripts/setup_macos.sh`, `scripts/setup_android.sh`) were published with Windows CRLF line endings, causing `/bin/bash^M: bad interpreter: No such file or directory`. Scripts are now forced to LF via `.gitattributes` so the published package is always packaged with Unix line endings (fixes [#153](https://github.com/sk3llo/ffmpeg_kit_flutter/issues/153)).
