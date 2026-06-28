@@ -1,4 +1,4 @@
-#include "include/ffmpeg_kit_flutter_new_full/f_fmpeg_kit_flutter_plugin.h"
+#include "include/ffmpeg_kit_flutter_new/f_fmpeg_kit_flutter_plugin.h"
 
 #include <flutter/plugin_registrar_windows.h>
 
