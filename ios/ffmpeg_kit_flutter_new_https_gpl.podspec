@@ -18,7 +18,9 @@ Pod::Spec.new do |s|
   s.default_subspec = 'https_gpl'
 
   s.dependency          'Flutter'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
+  # The vendored xcframeworks ship a native arm64 iOS-simulator slice, so arm64
+  # must NOT be excluded for the simulator (required by Apple Silicon / Xcode 26+).
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 
   s.subspec 'https_gpl' do |ss|
     s.prepare_command = <<-CMD
@@ -29,14 +31,14 @@ Pod::Spec.new do |s|
     CMD
     ss.source_files         = 'Classes/**/*'
     ss.public_header_files  = 'Classes/**/*.h'
-    ss.ios.vendored_frameworks = 'Frameworks/ffmpegkit.framework',
-                                 'Frameworks/libavcodec.framework',
-                                 'Frameworks/libavdevice.framework',
-                                 'Frameworks/libavfilter.framework',
-                                 'Frameworks/libavformat.framework',
-                                 'Frameworks/libavutil.framework',
-                                 'Frameworks/libswresample.framework',
-                                 'Frameworks/libswscale.framework'
+    ss.ios.vendored_frameworks = 'Frameworks/ffmpegkit.xcframework',
+                                 'Frameworks/libavcodec.xcframework',
+                                 'Frameworks/libavdevice.xcframework',
+                                 'Frameworks/libavfilter.xcframework',
+                                 'Frameworks/libavformat.xcframework',
+                                 'Frameworks/libavutil.xcframework',
+                                 'Frameworks/libswresample.xcframework',
+                                 'Frameworks/libswscale.xcframework'
     ss.ios.deployment_target = '14.0'
   end
 end
