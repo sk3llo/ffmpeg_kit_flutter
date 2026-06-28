@@ -1,3 +1,10 @@
+## 3.2.0
+
+* Added **Windows** support (x86_64) for the `min` FFmpeg 8.0 variant (bare FFmpeg, no external libraries, no GPL components).
+* Native libraries are downloaded automatically at build time from the `8.0.0-min` release (`ffmpeg-kit-windows-x86_64-min-8.0.0.zip`); for local development point `FFMPEGKIT_LOCAL_DIR` (CMake cache var or environment) at a locally built bundle.
+* The bundled MinGW DLLs are rebased/ASLR-adjusted at build time and the full runtime dependency closure is shipped so the plugin loads standalone.
+* Shell scripts are forced to LF via `.gitattributes` so the published package never carries Windows CRLF line endings (avoids the iOS/macOS `pod install` `/bin/bash^M: bad interpreter` failure).
+
 ## 3.1.0
 
 * Added ProGuard rules
