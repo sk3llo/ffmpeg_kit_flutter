@@ -6,7 +6,7 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
 
 <p align="center">
   <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min">
-     <img src="https://img.shields.io/badge/pub-3.2.0-blue?logo=dart" alt="pub">
+     <img src="https://img.shields.io/badge/pub-3.3.0-blue?logo=dart" alt="pub">
   </a>
   <a href="https://discord.gg/8NVwykjA">
     <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
@@ -41,10 +41,10 @@ _Fork of the original FFmpeg Kit library to work with Android V2 bindings and Fl
         - Requires **Android API** `level 24` or later
         - Requires **Kotlin** `1.8.22` or later
     - **iOS**:
-        - `armv7`
-        - `armv7s`
-        - `arm64`
-        - `x86_64`
+        - `arm64` (device)
+        - `arm64` (simulator — Apple Silicon, incl. Xcode 26 / iOS 26+)
+        - `x86_64` (simulator — Intel)
+        - Distributed as `.xcframework`, so it builds and runs on Apple Silicon simulators out of the box
         - Requires `iOS SDK 14.0` or later
     - **macOS**:
         - `arm64`
@@ -64,7 +64,7 @@ Add `ffmpeg_kit_flutter_new_min` as a dependency in your `pubspec.yaml file`.
 
 ```yaml
 dependencies:  
- ffmpeg_kit_flutter_new_min: ^3.2.0
+ ffmpeg_kit_flutter_new_min: ^3.3.0
 ```
 
 ### 3. Packages
