@@ -118,7 +118,18 @@ include them.
 </tr>
 <tr>
 <td align="center"><sup>ios system libraries</sup></td>
-<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>iconv</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
+<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>iconv</sup><br><sup>zlib</sup></td>
+</tr>
+<tr>
+<td align="center"><sup>ios VideoToolbox</sup></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center"><sup>VideoToolbox</sup></td>
+<td align="center"><sup>VideoToolbox</sup></td>
 </tr>
 <tr>
 <tr>
