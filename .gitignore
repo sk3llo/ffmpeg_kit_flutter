@@ -15,7 +15,13 @@ android/ffmpeg-kit-https/
 
 # Windows prebuilt FFmpegKit DLLs/headers (downloaded at build time or copied
 # from FFMPEGKIT_LOCAL_DIR; never commit the large binaries).
-windows/ffmpeg-kit/bin/
+windows/ffmpeg-kit/
+
+# iOS/macOS: frameworks fetched at build time by scripts/setup_ios.sh and
+# scripts/setup_macos.sh (the podspec prepare_command), then converted to
+# .xcframework. Downloaded from the GitHub release. Never commit or publish.
+ios/Frameworks/
+macos/Frameworks/bin/
 windows/ffmpeg-kit/include/
 
 # IntelliJ related
