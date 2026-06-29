@@ -237,8 +237,8 @@ std::shared_ptr<std::set<std::string>> ffmpegkit::Packages::getExternalLibraries
     std::shared_ptr<std::set<std::string>> enabledLibrarySet = std::make_shared<std::set<std::string>>();
 
     std::for_each(supportedExternalLibraries.cbegin(), supportedExternalLibraries.cend(), [&](const char* supportedExternalLibrary) {
-        sprintf(libraryName1, "enable-%s", supportedExternalLibrary);
-        sprintf(libraryName2, "enable-lib%s", supportedExternalLibrary);
+        snprintf(libraryName1, sizeof(libraryName1), "enable-%s", supportedExternalLibrary);
+        snprintf(libraryName2, sizeof(libraryName2), "enable-lib%s", supportedExternalLibrary);
 
         if (buildConfiguration.find(libraryName1) != std::string::npos || buildConfiguration.find(libraryName2) != std::string::npos) {
             enabledLibrarySet->insert(supportedExternalLibrary);
