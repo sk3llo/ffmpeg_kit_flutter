@@ -46,3 +46,4 @@ windows/ffmpeg-kit/
 # .xcframework. Downloaded from the GitHub release. Never commit or publish.
 ios/Frameworks/
 macos/Frameworks/
+.recall/
