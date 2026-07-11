@@ -21,7 +21,7 @@ windows/ffmpeg-kit/
 # scripts/setup_macos.sh (the podspec prepare_command), then converted to
 # .xcframework. Downloaded from the GitHub release. Never commit or publish.
 ios/Frameworks/
-macos/Frameworks/bin/
+macos/Frameworks/
 windows/ffmpeg-kit/include/
 
 # IntelliJ related
@@ -48,3 +48,4 @@ build/
 
 # FVM Version Cache
 .fvm/
+.recall/
