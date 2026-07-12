@@ -80,7 +80,7 @@ message(STATUS "FFmpegKit prebuilt dir: ${FFMPEGKIT_PREBUILT_DIR} (arch: ${FFMPE
 #     setting FFMPEGKIT_LOCAL_DIR.
 # Distributing min-gpl makes the whole application GPL.
 set(FFMPEGKIT_PACKAGE "min-gpl" CACHE STRING "FFmpegKit variant: min-gpl, min, full, full-gpl, https, ...")
-set(FFMPEGKIT_VERSION "8.1.1" CACHE STRING "FFmpegKit release version")
+set(FFMPEGKIT_VERSION "8.1.2" CACHE STRING "FFmpegKit release version")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (dir containing bin/ [+ include/]) to use instead of downloading")
 
 # Allow pointing at a local bundle via the environment too, so it can be set
