@@ -1,3 +1,7 @@
+## 2.3.1
+
+* **Security (CVE-2026-8461):** updated **FFmpeg to v8.1.2** (arthenica `n8.1.2`) to fix a heap out-of-bounds write in the MagicYUV decoder ("PixelSmash", CVSS 8.8). All platforms (Android/iOS/macOS/Windows) rebuilt against FFmpeg 8.1.2; no API changes.
+
 ## 2.3.0
 
 * Updated **FFmpeg to v8.1.1** (arthenica `n8.1.1`), up from 8.0.0.
