@@ -1,90 +1,79 @@
 <div align="center">
 
-# FFmpegKit for Flutter. Audio version.
+# 🎬 FFmpegKit for Flutter — Audio
 
-_Fork of the original FFmpeg Kit library to work with Android V2 bindings and Flutter 3+_
+**Run `FFmpeg` & `FFprobe` on Android, iOS, macOS and Windows from a single Dart API.**
+
+_A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), updated for the Android V2 embedding and Flutter 3+._
 
 <p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_audio">
-     <img src="https://img.shields.io/badge/pub-2.3.0-blue?logo=dart" alt="pub">
-  </a>
-  <a href="https://discord.gg/8NVwykjA">
-    <img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord">
-  </a>
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_audio"><img src="https://img.shields.io/badge/pub-2.3.2-blue?logo=dart" alt="pub version"></a>
+  <img src="https://img.shields.io/badge/FFmpeg-8.1.2-green?logo=ffmpeg&logoColor=white" alt="FFmpeg 8.1.2">
+  <img src="https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20macOS%20%7C%20Windows-lightgrey" alt="platforms">
+  <img src="https://img.shields.io/badge/license-LGPL%203.0%20%2F%20GPL%203.0-orange" alt="license">
+  <a href="https://discord.gg/8NVwykjA"><img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord"></a>
   <a href="https://buymeacoffee.com/sk3llo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="21" width="114"></a>
 </p>
+
 </div>
 
-## Upgraded version of the original [Flutter FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter).
+---
 
-### 1. Features
+## ✨ Features
 
-- **Updated Bindings**: Android and macOS
-- **Includes**: Both `FFmpeg` and `FFprobe`
-- **Supported Platforms**:
-    - `Android`
-    - `iOS`
-    - `macOS`
-    - `Windows` (x86_64)
-- **FFmpeg Version**: `v8.1.1`
-- **Kotlin Version**: `v1.8.22`
-- **Supported Architectures**:
-    - **Android**:
-        - `arm-v7a`
-        - `arm-v7a-neon`
-        - `arm64-v8a`
-        - `x86`
-        - `x86_64`
-        - Requires `Android API Level 24` or later
-    - **iOS**:
-        - `armv7`
-        - `armv7s`
-        - `arm64`
-        - `x86_64`
-        - `x86_64-mac-catalyst`
-        - `arm64-mac-catalyst`
-        - Requires `iOS SDK 14.0` or later
-        - Runs on Apple Silicon iOS Simulators (`arm64`, Xcode 26 / iOS 26+); shipped as `.xcframework`
-    - **macOS**:
-        - `arm64`
-        - `x86_64`
-        - Requires `macOS SDK 10.15` or later
-    - **Windows**:
-        - `x86_64`
-        - Requires `Windows 10` or later
-- **Storage Access**: Can process Storage Access Framework (SAF) Uris on Android
-- **License**: Licensed under `LGPL 3.0`
+- 🧰 **Full toolkit** — both `FFmpeg` and `FFprobe`, with per-session logs, statistics and callbacks.
+- 📱 **Four platforms** — `Android`, `iOS`, `macOS`, and `Windows` (x86_64) behind one API.
+- 🎞️ **FFmpeg `v8.1.2`** — full command-line-compatible build.
+- 🗂️ **Android SAF** — process Storage Access Framework URIs directly.
+- 📚 **External libraries** — see the [enabled-libraries table](#-enabled-libraries) below.
+- 🔄 **Modernised bindings** for the latest Flutter and Android/macOS toolchains.
 
-
-### 2. Installation
-
-Add `ffmpeg_kit_flutter_new_audio` as a dependency in your `pubspec.yaml file`.
+## 📦 Install
 
 ```yaml
-dependencies:  
- ffmpeg_kit_flutter_new_audio: ^2.3.0
+dependencies:
+  ffmpeg_kit_flutter_new_audio: ^2.3.2
 ```
 
-### 3. Packages
+```dart
+import 'package:ffmpeg_kit_flutter_new_audio/ffmpeg_kit.dart';
+```
 
-There are eight different `ffmpeg-kit` packages:
+## 🎯 Choose your package
 
-| Package Name                                                           | Description                                                                                                   
-|------------------------------------------------------------------------|-----------------------------------------------
-| [Minimal](https://pub.dev/packages/ffmpeg_kit_flutter_new_min)         | A minimal version of FFmpeg Kit                |
-| [Minimal-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal version with GPL licensing           
-| [HTTPS](https://pub.dev/packages/ffmpeg_kit_flutter_new_https)         | FFmpeg Kit with HTTPS support                      |
-| [HTTPS-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS version with GPL licensing               |
-| [Audio](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio)         | FFmpeg Kit focused on audio processing            |
-| [Video](https://pub.dev/packages/ffmpeg_kit_flutter_new_video)         | FFmpeg Kit focused on video processing                                                                        |
-| [Full](https://pub.dev/packages/ffmpeg_kit_flutter_new_full)           | Full version of FFmpeg Kit                                                                                     |
-| [Full-GPL](https://pub.dev/packages/ffmpeg_kit_flutter_new)            | Full version with GPL licensing                        |
+There are **eight** `ffmpeg-kit` packages — pick the smallest one that covers the codecs and features you need. `GPL`-licensed codecs (`x264`, `x265`, `xvidcore`, `vid.stab`) are only in the `-gpl` packages.
 
+| Package | Best for |
+|---|---|
+| [`_min`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min) | Smallest build — core FFmpeg only |
+| [`_min_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal **+ GPL** codecs (x264/x265/xvid/vid.stab) |
+| [`_https`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https) | Adds TLS (`gnutls`) for `https://` inputs |
+| [`_https_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS **+ GPL** codecs |
+| [`_audio`](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio) **(this one)** | Audio-focused (mp3, opus, vorbis, speex, …) |
+| [`_video`](https://pub.dev/packages/ffmpeg_kit_flutter_new_video) | Video-focused (dav1d, vpx, theora, webp, …) |
+| [`_full`](https://pub.dev/packages/ffmpeg_kit_flutter_new_full) | Everything except GPL codecs |
+| [`ffmpeg_kit_flutter_new`](https://pub.dev/packages/ffmpeg_kit_flutter_new) | **Full + GPL** — every library |
 
-Below you can see which system libraries and external libraries are enabled in each one of them.
+## 🚀 Quick start
 
-Please remember that some parts of `FFmpeg` are licensed under the `GPL` and only `GPL` licensed `ffmpeg-kit` packages
-include them.
+```dart
+import 'package:ffmpeg_kit_flutter_new_audio/ffmpeg_kit.dart';
+
+final session = await FFmpegKit.execute('-i input.mp4 -c:v mpeg4 output.mp4');
+final returnCode = await session.getReturnCode();
+
+if (ReturnCode.isSuccess(returnCode)) {
+  // ✅ done
+} else if (ReturnCode.isCancel(returnCode)) {
+  // ⏹️ cancelled
+} else {
+  // ❌ error — inspect await session.getLogs()
+}
+```
+
+## 🧩 Enabled libraries
+
+Below is which system and external libraries each package enables. Some parts of `FFmpeg` are `GPL`-licensed and are only present in the `GPL` packages.
 
 <table>
 <thead>
@@ -132,215 +121,153 @@ include them.
 <td align="center"><sup>VideoToolbox</sup></td>
 </tr>
 <tr>
-<tr>
 <td align="center"><sup>macos system libraries</sup></td>
 <td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>Core Image</sup><br><sup>iconv</sup><br><sup>OpenCL</sup><br><sup>OpenGL</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
-</tr>
-<tr>
-<td align="center"><sup>tvos system libraries</sup></td>
-<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>iconv</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
 </tr>
 </tbody>
 </table>
 
-### 4. Platform Support
+## 📱 Platform support
 
-The following table shows Android API level, iOS deployment target and macOS deployment target requirements in  
-`ffmpeg_kit_flutter_new_audio` releases.
+<table align="center">
+  <thead>
+    <tr>
+      <th align="center">Android<br>API Level</th>
+      <th align="center">Kotlin<br>Min Version</th>
+      <th align="center">iOS<br>Min Target</th>
+      <th align="center">macOS<br>Min Target</th>
+      <th align="center">Windows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">24</td>
+      <td align="center">1.8.22</td>
+      <td align="center">14.0</td>
+      <td align="center">10.15</td>
+      <td align="center">10+ (x86_64)</td>
+    </tr>
+  </tbody>
+</table>
 
-<table align="center">  
-  <thead>  
-    <tr>  
-      <th align="center" colspan="3">LTS Release</th>  
-    </tr>  
-    <tr>  
-      <th align="center">Android<br>API Level</th>  
-      <th align="center">iOS Minimum<br>Deployment Target</th>  
-      <th align="center">macOS Minimum<br>Deployment Target</th>  
-      <th align="center">Windows</th>  
-    </tr>  
-  </thead>  
-  <tbody>  
-    <tr>  
-      <td align="center">24</td>  
-      <td align="center">14</td>  
-      <td align="center">10.15</td>  
-      <td align="center">Windows 10+ (x86_64)</td>  
-    </tr>  
-  </tbody>  
-</table>  
+**Architectures** — Android: `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` · iOS: `arm64` (device) + `arm64`/`x86_64` (simulator, incl. Apple Silicon / Xcode 26), shipped as `.xcframework` · macOS: `arm64`, `x86_64`.
 
-> **Windows:** prebuilt `audio` FFmpeg 8.0 libraries (x86_64) are downloaded automatically at build time from the `8.0.0-audio` release (`ffmpeg-kit-windows-x86_64-audio-8.0.0.zip`). For local development against a self-built bundle, set the `FFMPEGKIT_LOCAL_DIR` environment variable (or CMake cache variable) to the bundle directory before `flutter run/build windows`.
+> **Windows:** prebuilt FFmpeg **8.1.2** libraries (x86_64) are downloaded automatically at build time. For local development against a self-built bundle, set `FFMPEGKIT_LOCAL_DIR` (env or CMake cache variable) to the bundle directory before `flutter run/build windows`.
 
-### 5. Using
+## 📖 Usage
 
-1. Execute FFmpeg commands.
-
-```dart  
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
-
-FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
-    final returnCode = await session.getReturnCode();
-    if (ReturnCode.isSuccess(returnCode)) {
-    // SUCCESS  
-    } else if (ReturnCode.isCancel(returnCode)) {
-    // CANCEL  
-    } else {
-    // ERROR  
-    }
-});
-```  
-
-Or execute FFmpeg commands with a custom log callback.
+<details open>
+<summary><strong>Execute a command & read the result</strong></summary>
 
 ```dart
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
-final outputPath = 'file2.mp4';
+import 'package:ffmpeg_kit_flutter_new_audio/ffmpeg_kit.dart';
 
-FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').thenReturnResultOrLogs(
-    (_) => outputPath,
-).then((result) => print('FFmpeg command executed successfully: $result'))
-  .catchError((error) => print('FFmpeg command failed with error: $error'));
-```
-2. Each `execute` call creates a new session. Access every detail about your execution from the session created.
-
-```dart  
-FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {  
-    // Unique session id created for this execution
-    final sessionId = session.getSessionId();  
-    // Command arguments as a single string
-    final command = session.getCommand();  
-    // Command arguments
-    final commandArguments = session.getArguments();  
-    // State of the execution. Shows whether it is still running or completed
-    final state = await session.getState();  
-    // Return code for completed sessions. Will be undefined if session is still running or FFmpegKit fails to run it
-    final returnCode = await session.getReturnCode();  
-    final startTime = session.getStartTime();
-    final endTime = await session.getEndTime();
-    final duration = await session.getDuration();  
-    // Console output generated for this execution
-    final output = await session.getOutput();  
-    // The stack trace if FFmpegKit fails to run a command
-    final failStackTrace = await session.getFailStackTrace();  
-    // The list of logs generated for this execution
-    final logs = await session.getLogs();  
-    // The list of statistics generated for this execution (only available on FFmpegSession)
-    final statistics = await (session as FFmpegSession).getStatistics();  
+FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
+  final returnCode = await session.getReturnCode();
+  if (ReturnCode.isSuccess(returnCode)) {
+    // SUCCESS
+  } else if (ReturnCode.isCancel(returnCode)) {
+    // CANCEL
+  } else {
+    // ERROR
+  }
 });
-```  
-3. Execute `FFmpeg` commands by providing session specific `execute`/`log`/`session` callbacks.
+```
 
-```dart  
+</details>
+
+<details>
+<summary><strong>Inspect a session</strong></summary>
+
+```dart
+FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
+  final sessionId = session.getSessionId();
+  final command = session.getCommand();
+  final state = await session.getState();
+  final returnCode = await session.getReturnCode();
+  final duration = await session.getDuration();
+  final output = await session.getOutput();
+  final logs = await session.getLogs();
+  final statistics = await (session as FFmpegSession).getStatistics();
+});
+```
+
+</details>
+
+<details>
+<summary><strong>Async execution with callbacks</strong></summary>
+
+```dart
 FFmpegKit.executeAsync('-i file1.mp4 -c:v mpeg4 file2.mp4', (Session session) async {
-    // CALLED WHEN SESSION IS EXECUTED  
-}, (Log log) {  
-    // CALLED WHEN SESSION PRINTS LOGS  
-}, (Statistics statistics) {  
-    // CALLED WHEN SESSION GENERATES STATISTICS  
+  // CALLED WHEN SESSION IS EXECUTED
+}, (Log log) {
+  // CALLED WHEN SESSION PRINTS LOGS
+}, (Statistics statistics) {
+  // CALLED WHEN SESSION GENERATES STATISTICS
 });
-```  
-4. Execute `FFprobe` commands.
-
-```dart  
-FFprobeKit.execute(ffprobeCommand).then((session) async {  
-    // CALLED WHEN SESSION IS EXECUTED  
-});  
-```  
-5. Get media information for a file/url.
-
-```dart  
-FFprobeKit.getMediaInformation('<file path or url>').then((session) async {  
-    final information = await session.getMediaInformation();  
-    if (information == null) {  
-        // CHECK THE FOLLOWING ATTRIBUTES ON ERROR
-        final state = FFmpegKitConfig.sessionStateToString(await session.getState());
-        final returnCode = await session.getReturnCode();
-        final failStackTrace = await session.getFailStackTrace();
-        final duration = await session.getDuration();
-        final output = await session.getOutput();
-    }
-});
-```  
-6. Stop ongoing FFmpeg operations.
-
-- Stop all sessions
-```dart  
-FFmpegKit.cancel();
 ```
-- Stop a specific session
-```dart  
-FFmpegKit.cancel(sessionId);  
-```  
-7. (Android) Convert Storage Access Framework (SAF) Uris into paths that can be read or written by  
-   `FFmpegKit` and `FFprobeKit`.
 
-- Reading a file:
-```dart  
-FFmpegKitConfig.selectDocumentForRead('*/*').then((uri) {  
-    FFmpegKitConfig.getSafParameterForRead(uri!).then((safUrl) {
-        FFmpegKit.executeAsync("-i ${safUrl!} -c:v mpeg4 file2.mp4");
-    });
+</details>
+
+<details>
+<summary><strong>FFprobe & media information</strong></summary>
+
+```dart
+FFprobeKit.getMediaInformation('<file path or url>').then((session) async {
+  final information = await session.getMediaInformation();
 });
-```  
-- Writing to a file:
-```dart  
+```
+
+</details>
+
+<details>
+<summary><strong>Cancel sessions</strong></summary>
+
+```dart
+FFmpegKit.cancel();          // stop all sessions
+FFmpegKit.cancel(sessionId); // stop a specific session
+```
+
+</details>
+
+<details>
+<summary><strong>Android — Storage Access Framework (SAF)</strong></summary>
+
+```dart
+// Reading a file
+FFmpegKitConfig.selectDocumentForRead('*/*').then((uri) {
+  FFmpegKitConfig.getSafParameterForRead(uri!).then((safUrl) {
+    FFmpegKit.executeAsync("-i ${safUrl!} -c:v mpeg4 file2.mp4");
+  });
+});
+
+// Writing to a file
 FFmpegKitConfig.selectDocumentForWrite('video.mp4', 'video/*').then((uri) {
-    FFmpegKitConfig.getSafParameterForWrite(uri!).then((safUrl) {
-        FFmpegKit.executeAsync("-i file1.mp4 -c:v mpeg4 ${safUrl}");
-    });
-});  
-```  
-8. Get previous `FFmpeg`, `FFprobe` and `MediaInformation` sessions from the session history.
-
-```dart  
-FFmpegKit.listSessions().then((sessionList) {  
-    sessionList.forEach((session) {
-        final sessionId = session.getSessionId();
-    });
-});  
-FFprobeKit.listFFprobeSessions().then((sessionList) {
-    sessionList.forEach((session) {
-        final sessionId = session.getSessionId();
-    });
-});  
-FFprobeKit.listMediaInformationSessions().then((sessionList) {
-    sessionList.forEach((session) {
-        final sessionId = session.getSessionId();
-    });
+  FFmpegKitConfig.getSafParameterForWrite(uri!).then((safUrl) {
+    FFmpegKit.executeAsync("-i file1.mp4 -c:v mpeg4 ${safUrl}");
+  });
 });
-```  
-9. Enable global callbacks.
+```
 
-- Session type specific Complete Callbacks, called when an async session has been completed
+</details>
 
-```dart  
-FFmpegKitConfig.enableFFmpegSessionCompleteCallback((session) {
-    final sessionId = session.getSessionId();
-});  
-FFmpegKitConfig.enableFFprobeSessionCompleteCallback((session) {
-    final sessionId = session.getSessionId();
-});  
-FFmpegKitConfig.enableMediaInformationSessionCompleteCallback((session) {
-    final sessionId = session.getSessionId();
-});  
-```  
-- Log Callback, called when a session generates logs
+<details>
+<summary><strong>Global callbacks & fonts</strong></summary>
 
-```dart  
-FFmpegKitConfig.enableLogCallback((log) {  
-    final message = log.getMessage();
-});
-```  
-- Statistics Callback, called when a session generates statistics
-
-```dart  
-FFmpegKitConfig.enableStatisticsCallback((statistics) {
-    final size = statistics.getSize();
-});  
-```  
-10. Register system fonts and custom font directories.
-
-```dart  
+```dart
+FFmpegKitConfig.enableLogCallback((log) { final message = log.getMessage(); });
+FFmpegKitConfig.enableStatisticsCallback((statistics) { final size = statistics.getSize(); });
 FFmpegKitConfig.setFontDirectoryList(["/system/fonts", "/System/Library/Fonts", "<folder with fonts>"]);
 ```
+
+</details>
+
+## 📄 License
+
+Licensed under **LGPL 3.0**. This package contains no `GPL`-licensed components — if you need `x264`/`x265`/`xvidcore`/`vid.stab`, use the matching `-gpl` package.
+
+## 💬 Community & support
+
+- 💙 [Join the Discord](https://discord.gg/8NVwykjA)
+- ☕ [Buy me a coffee](https://buymeacoffee.com/sk3llo)
+- 🐛 [Report an issue](https://github.com/sk3llo/ffmpeg_kit_flutter/issues)
