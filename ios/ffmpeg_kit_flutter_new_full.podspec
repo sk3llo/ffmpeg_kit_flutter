@@ -23,11 +23,16 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 
   s.subspec 'full' do |ss|
+    # Guard on the actual xcframework, not just the ./Frameworks directory: a
+    # failed/interrupted download used to leave an empty ./Frameworks behind,
+    # which made every subsequent `pod install` skip setup and fail the build
+    # with "'ffmpegkit/FFmpegKitConfig.h' file not found" (issue #88). setup_ios.sh
+    # now installs atomically and re-runs until the frameworks are really there.
     s.prepare_command = <<-CMD
-      if [ ! -d "./Frameworks" ]; then
+      if [ ! -d "./Frameworks/ffmpegkit.xcframework" ]; then
         chmod +x ../scripts/setup_ios.sh
         ../scripts/setup_ios.sh
-        fi
+      fi
     CMD
     ss.source_files         = 'ffmpeg_kit_flutter_new_full/Sources/ffmpeg_kit_flutter_new_full/**/*.{h,m}'
     ss.public_header_files  = 'ffmpeg_kit_flutter_new_full/Sources/ffmpeg_kit_flutter_new_full/include/**/*.h'

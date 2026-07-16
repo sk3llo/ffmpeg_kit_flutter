@@ -33,9 +33,12 @@ Pod::Spec.new do |s|
                                  'Frameworks/libswscale.framework'
     ss.osx.deployment_target = '10.15'
 
-    # Adding pre-install hook for macOS
+    # Guard on the actual framework, not just the ./Frameworks directory, so a
+    # failed download can never leave a broken empty dir that makes future
+    # `pod install`s skip setup (see issue #88). setup_macos.sh installs
+    # atomically and re-runs until the frameworks are really present.
     s.prepare_command = <<-CMD
-      if [ ! -d "./Frameworks" ]; then
+      if [ ! -d "./Frameworks/ffmpegkit.framework" ]; then
         chmod +x ../scripts/setup_macos.sh
         ../scripts/setup_macos.sh
       fi
