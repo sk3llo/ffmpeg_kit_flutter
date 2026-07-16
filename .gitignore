@@ -46,3 +46,7 @@ build/
 # FVM Version Cache
 .fvm/
 .recall/
+
+# SPM: local test copies of prebuilt xcframeworks (never commit)
+ios/ffmpeg_kit_flutter_new_min_gpl/Frameworks/
+macos/ffmpeg_kit_flutter_new_min_gpl/Frameworks/
