@@ -47,3 +47,7 @@ windows/ffmpeg-kit/
 ios/Frameworks/
 macos/Frameworks/
 .recall/
+
+# SPM: local test copies of prebuilt xcframeworks (never commit)
+ios/ffmpeg_kit_flutter_new_video/Frameworks/
+macos/ffmpeg_kit_flutter_new_video/Frameworks/
