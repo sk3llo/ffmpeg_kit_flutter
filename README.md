@@ -27,6 +27,7 @@ _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmp
 - 🗂️ **Android SAF** — process Storage Access Framework URIs directly.
 - 📚 **External libraries** — see the [enabled-libraries table](#-enabled-libraries) below.
 - 🔄 **Modernised bindings** for the latest Flutter and Android/macOS toolchains.
+- 📦 **Swift Package Manager** — iOS & macOS integrate via SPM (Flutter 3.24+) or CocoaPods, with prebuilt checksum-pinned XCFrameworks.
 
 ## 📦 Install
 
