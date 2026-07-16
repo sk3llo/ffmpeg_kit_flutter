@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'https_gpl' do |ss|
     s.prepare_command = <<-CMD
-      if [ ! -d "./Frameworks" ]; then
+      if [ ! -d "./Frameworks/ffmpegkit.xcframework" ]; then
         chmod +x ../scripts/setup_ios.sh
         ../scripts/setup_ios.sh
         fi
