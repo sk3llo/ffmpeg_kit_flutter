@@ -7,7 +7,7 @@
 _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), updated for the Android V2 embedding and Flutter 3+._
 
 <p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl"><img src="https://img.shields.io/badge/pub-2.4.2-blue?logo=dart" alt="pub version"></a>
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl"><img src="https://img.shields.io/badge/pub-2.5.0-blue?logo=dart" alt="pub version"></a>
   <img src="https://img.shields.io/badge/FFmpeg-8.1.2-green?logo=ffmpeg&logoColor=white" alt="FFmpeg 8.1.2">
   <img src="https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20macOS%20%7C%20Windows-lightgrey" alt="platforms">
   <img src="https://img.shields.io/badge/license-LGPL%203.0%20%2F%20GPL%203.0-orange" alt="license">
@@ -33,7 +33,7 @@ _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmp
 
 ```yaml
 dependencies:
-  ffmpeg_kit_flutter_new_https_gpl: ^2.4.2
+  ffmpeg_kit_flutter_new_https_gpl: ^2.5.0
 ```
 
 ```dart
