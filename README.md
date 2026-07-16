@@ -8,9 +8,7 @@ _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmp
 
 <p align="center">
   <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min"><img src="https://img.shields.io/badge/pub-3.5.0-blue?logo=dart" alt="pub version"></a>
-  <img src="https://img.shields.io/badge/FFmpeg-8.1.2-green?logo=ffmpeg&logoColor=white" alt="FFmpeg 8.1.2">
-  <img src="https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20macOS%20%7C%20Windows-lightgrey" alt="platforms">
-  <img src="https://img.shields.io/badge/license-LGPL%203.0%20%2F%20GPL%203.0-orange" alt="license">
+  <a href="https://ffmpeg.org/index.html#news"><img src="https://img.shields.io/badge/FFmpeg-8.1.2-green?logo=ffmpeg&logoColor=white" alt="FFmpeg 8.1.2"></a>
   <a href="https://discord.gg/8NVwykjA"><img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord"></a>
   <a href="https://buymeacoffee.com/sk3llo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="21" width="114"></a>
 </p>
