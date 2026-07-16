@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.static_framework    = true
 
   s.source              = { :path => '.' }
-  s.source_files        = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files        = 'ffmpeg_kit_flutter_new/Sources/ffmpeg_kit_flutter_new/**/*.{h,m}'
+  s.public_header_files = 'ffmpeg_kit_flutter_new/Sources/ffmpeg_kit_flutter_new/include/**/*.h'
 
   s.default_subspec     = 'full-gpl'
 
@@ -28,8 +28,8 @@ Pod::Spec.new do |s|
         ../scripts/setup_macos.sh
       fi
     CMD
-    ss.source_files         = 'Classes/**/*'
-    ss.public_header_files  = 'Classes/**/*.h'
+    ss.source_files         = 'ffmpeg_kit_flutter_new/Sources/ffmpeg_kit_flutter_new/**/*.{h,m}'
+    ss.public_header_files  = 'ffmpeg_kit_flutter_new/Sources/ffmpeg_kit_flutter_new/include/**/*.h'
     ss.osx.vendored_frameworks = 'Frameworks/ffmpegkit.framework',
                                  'Frameworks/libavcodec.framework',
                                  'Frameworks/libavdevice.framework',
