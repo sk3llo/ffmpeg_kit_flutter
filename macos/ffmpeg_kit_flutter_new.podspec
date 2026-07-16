@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.subspec 'full-gpl' do |ss|
     # Adding pre-install hook for macOS
     s.prepare_command = <<-CMD
-      if [ ! -d "./Frameworks" ]; then
+      if [ ! -d "./Frameworks/ffmpegkit.framework" ]; then
         chmod +x ../scripts/setup_macos.sh
         ../scripts/setup_macos.sh
       fi
