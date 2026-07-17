@@ -1,3 +1,7 @@
+## 2.5.2
+
+* **iOS/macOS: hardware-accelerated H.264/HEVC encoding via Apple VideoToolbox** (`h264_videotoolbox`, `hevc_videotoolbox`), plus AVFoundation, is now enabled for this variant. Previously only the `full` / `full_gpl` variants shipped VideoToolbox. No patent-encumbered codecs are added and the codec surface is otherwise unchanged (#148).
+
 ## 2.5.1
 
 * Fixed the iOS/macOS build error `'ffmpegkit/FFmpegKitConfig.h' file not found` (#88). The framework setup scripts now download and install atomically, verify the archive, and never leave an empty `Frameworks/` directory behind after a failed download; the podspec re-runs setup until the frameworks are actually present. On restricted networks, point `FFMPEG_KIT_IOS_URL` / `FFMPEG_KIT_MACOS_URL` at a mirror of the release zip.
