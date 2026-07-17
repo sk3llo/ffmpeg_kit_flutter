@@ -1,3 +1,7 @@
+## 3.5.3
+
+* **Fixed: `Decoder (codec png) not found` (#105).** The native FFmpeg builds for this variant were compiled without zlib, which silently removed the PNG/APNG decoders. zlib is now enabled on Android (`com.antonkarpenko:ffmpeg-kit-*:2.2.2`), iOS and macOS, restoring PNG/APNG decoding (image overlays etc.) as in the original arthenica builds.
+
 ## 3.5.2
 
 * **iOS/macOS: hardware-accelerated H.264/HEVC encoding via Apple VideoToolbox** (`h264_videotoolbox`, `hevc_videotoolbox`), plus AVFoundation, is now enabled for this variant. Previously only the `full` / `full_gpl` variants shipped VideoToolbox. No patent-encumbered codecs are added and the codec surface is otherwise unchanged (#148).
