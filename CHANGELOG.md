@@ -1,3 +1,7 @@
+## 2.4.2
+
+* **Fixed: `Decoder (codec png) not found` (#105).** The native FFmpeg builds for this variant were compiled without zlib, which silently removed the PNG/APNG decoders. zlib is now enabled on Android (`com.antonkarpenko:ffmpeg-kit-*:2.2.2`), iOS and macOS, restoring PNG/APNG decoding (image overlays etc.) as in the original arthenica builds.
+
 ## 2.4.1
 
 * Fixed the iOS/macOS build error `'ffmpegkit/FFmpegKitConfig.h' file not found` (#88). The framework setup scripts now download and install atomically, verify the archive, and never leave an empty `Frameworks/` directory behind after a failed download; the podspec re-runs setup until the frameworks are actually present. On restricted networks, point `FFMPEG_KIT_IOS_URL` / `FFMPEG_KIT_MACOS_URL` at a mirror of the release zip.
