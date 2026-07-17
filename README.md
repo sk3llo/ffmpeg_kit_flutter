@@ -7,7 +7,7 @@
 _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), updated for the Android V2 embedding and Flutter 3+._
 
 <p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min"><img src="https://img.shields.io/badge/pub-3.5.1-blue?logo=dart" alt="pub version"></a>
+  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new_min"><img src="https://img.shields.io/badge/pub-3.5.2-blue?logo=dart" alt="pub version"></a>
   <a href="https://ffmpeg.org/index.html#news"><img src="https://img.shields.io/badge/FFmpeg-8.1.2-green?logo=ffmpeg&logoColor=white" alt="FFmpeg 8.1.2"></a>
   <a href="https://discord.gg/8NVwykjA"><img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord"></a>
   <a href="https://buymeacoffee.com/sk3llo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="21" width="114"></a>
@@ -110,8 +110,8 @@ Below is which system and external libraries each package enables. Some parts of
 </tr>
 <tr>
 <td align="center"><sup>ios VideoToolbox</sup></td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><sup>VideoToolbox</sup></td>
+<td align="center"><sup>VideoToolbox</sup></td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">-</td>
