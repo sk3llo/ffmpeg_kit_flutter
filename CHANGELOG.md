@@ -1,3 +1,8 @@
+## 3.5.4
+
+* **Fixed: App Store rejection `Invalid architecture ... arm64e slice with the ios 18.5 SDK` (#164).** The iOS device slices of the bundled FFmpeg XCFrameworks are now arm64 only, for both Swift Package Manager (regenerated binary targets + checksums) and CocoaPods (setup script). arm64e was never used by App Store apps, so nothing is lost.
+* SPM only: the regenerated iOS/macOS binaries now actually include the zlib/PNG decoders (#105) and VideoToolbox hardware encoders (#148) that the previous release added for CocoaPods and Android but not for the SPM artifacts.
+
 ## 3.5.3
 
 * **Fixed: `Decoder (codec png) not found` (#105).** The native FFmpeg builds for this variant were compiled without zlib, which silently removed the PNG/APNG decoders. zlib is now enabled on Android (`com.antonkarpenko:ffmpeg-kit-*:2.2.2`), iOS and macOS, restoring PNG/APNG decoding (image overlays etc.) as in the original arthenica builds.
