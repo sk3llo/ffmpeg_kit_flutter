@@ -1,3 +1,7 @@
+## 4.5.2
+
+* **Fixed: App Store rejection `Invalid architecture ... arm64e slice with the ios 18.5 SDK` (#164).** The iOS device slices of the bundled FFmpeg XCFrameworks are now arm64 only, for both Swift Package Manager (regenerated binary targets + checksums) and CocoaPods (setup script). arm64e was never used by App Store apps, so nothing is lost.
+
 ## 4.5.1
 
 * Fixed the iOS/macOS build error `'ffmpegkit/FFmpegKitConfig.h' file not found` (#88). The framework setup scripts now download and install atomically, verify the archive, and never leave an empty `Frameworks/` directory behind after a failed download; the podspec re-runs setup until the frameworks are actually present. On restricted networks, point `FFMPEG_KIT_IOS_URL` / `FFMPEG_KIT_MACOS_URL` at a mirror of the release zip.
