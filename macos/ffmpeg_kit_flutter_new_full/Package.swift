@@ -4,21 +4,21 @@
 import PackageDescription
 
 // FFmpeg 8.1.2 full prebuilt binaries.
-// Each zip contains one combined XCFramework with ios-arm64_arm64e,
+// Each zip contains one combined XCFramework with ios-arm64 (arm64e dropped, #164),
 // ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices.
 // URLs and checksums are regenerated on every native FFmpeg release
 // (see scripts/build_spm_artifacts.sh).
 let ffmpegTag = "8.1.2-full"
 let ffmpegBase = "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/\(ffmpegTag)"
 let ffmpegLibs: [(name: String, checksum: String)] = [
-    ("ffmpegkit", "49e64651d054226c89dd4c1db7ebf539f8f89f914ea16eb2c1455f7da0111894"),
-    ("libavcodec", "cc51cc4faec995ae7da69c254506b15948190132717e5f95844080153bf5797b"),
-    ("libavdevice", "40dfb7d807a018869bc996dc8c0cfdac6607f699764ffca2c6345262d4a71ca3"),
-    ("libavfilter", "a8cd456274a0b163cef9beb5f44e4b1f3c6965df8dbf3d69d278821cd2612526"),
-    ("libavformat", "54a82bfd57ca56e42b45c6161b214f6f8cb03cd592e522d3f0b837263356922a"),
-    ("libavutil", "c0fe643e627c4376ec828d4e1f36e94a7d76e7a86d2d661346199fab297495e7"),
-    ("libswresample", "6994edad7fbe472e265836ac4b33ef739f613a40d4e26505725e5d7d34087854"),
-    ("libswscale", "ac9f4efc200e8af1f1f5ab7341bb175302fc1bdb6da7617f272ce126e140353d"),
+    ("ffmpegkit", "a565f36d1d6769523fe78aee3c015212ea7f9b1fc1007bea21e46c1d6df06bde"),
+    ("libavcodec", "eb56ac124c03ebd4c91584b86fe3c6d758ed1cff1cf475cc6bca319f0f7c8106"),
+    ("libavdevice", "0f1f06f636beb75936e5f840f81ec15966fb1dfaff14f78cb83bdbcc3422bb89"),
+    ("libavfilter", "50eb73ebe41724444b8256c2c61541ced3fda7b2e1b20aac2f928fb2bf2d0ac6"),
+    ("libavformat", "e9f08440c7e0aa3fba67e1f9f1f4c06a6fb2b9da557953fd086b2343dda6b31a"),
+    ("libavutil", "70d35584a0ee9282bdbb6b02f3ce806f6ceb27b81cf148905642b468a40bfec6"),
+    ("libswresample", "df15ca091b005cc984f644c68d6617ac6b9588992fa8387bb068c4f1c8a6d0be"),
+    ("libswscale", "2570aab53ad07282e3539dff906d73a9c801589b1d3b33870df0ccbe892c4b07"),
 ]
 
 let package = Package(
