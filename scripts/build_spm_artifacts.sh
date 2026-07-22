@@ -12,7 +12,8 @@
 #          requires) and out/checksums.json, ready to upload to the same release.
 #
 # The iOS frameworks ship as fat Mach-O bundles (x86_64 sim + arm64/arm64e
-# device). A native arm64 simulator slice is produced by retagging the device
+# device). The device slice keeps arm64 only (arm64e is dropped, see #164).
+# A native arm64 simulator slice is produced by retagging the device
 # arm64 slice's LC_BUILD_VERSION platform from iOS (2) to iOS-Simulator (7) —
 # FFmpeg is plain C with no platform-conditional linkage, so the retagged slice
 # runs natively on Apple Silicon simulators (required by Xcode 26+).
@@ -62,15 +63,11 @@ convert() {
   cp -R "$IOS_DIR" "$STAGE/device/${FW}.framework"
   cp -R "$IOS_DIR" "$STAGE/sim/${FW}.framework"
 
-  # Device slice: arm64 (+ arm64e if present)
-  local DEV_ARGS=()
-  for A in arm64 arm64e; do
-    if echo "$ARCHS" | tr ' ' '\n' | grep -qx "$A"; then
-      lipo "$IOS_BIN" -thin "$A" -output "$STAGE/${A}.bin"
-      DEV_ARGS+=("$STAGE/${A}.bin")
-    fi
-  done
-  lipo -create "${DEV_ARGS[@]}" -output "$STAGE/device/${FW}.framework/${FW}"
+  # Device slice: arm64 ONLY. arm64e is deliberately dropped: App Store apps
+  # run as arm64 (third-party arm64e needs a special entitlement), and App
+  # Store validation rejects arm64e slices built with pre-iOS-26 SDKs (#164).
+  lipo "$IOS_BIN" -thin arm64 -output "$STAGE/arm64.bin"
+  lipo -create "$STAGE/arm64.bin" -output "$STAGE/device/${FW}.framework/${FW}"
 
   # Simulator slice: x86_64 + arm64 retagged iOS(2) -> iOS-Simulator(7)
   local SIM_ARGS=()
