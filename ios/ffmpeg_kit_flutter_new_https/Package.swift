@@ -4,21 +4,21 @@
 import PackageDescription
 
 // FFmpeg 8.1.2 https prebuilt binaries.
-// Each zip contains one combined XCFramework with ios-arm64_arm64e,
+// Each zip contains one combined XCFramework with ios-arm64 (arm64e dropped, #164),
 // ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices.
 // URLs and checksums are regenerated on every native FFmpeg release
 // (see scripts/build_spm_artifacts.sh).
 let ffmpegTag = "8.1.2-https"
 let ffmpegBase = "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/\(ffmpegTag)"
 let ffmpegLibs: [(name: String, checksum: String)] = [
-    ("ffmpegkit", "1cfea5c8682c875640ef855f2537883fc041dcdf043a130b2c0cc8e805fcead5"),
-    ("libavcodec", "af7b23e0aa7a4b9ad224fae4e2530575bcabec71618adc286188670c8b8574a5"),
-    ("libavdevice", "3490e4814c4ef73a2125d3eadf2869d46aab7a5ee6d606f1f913309f83869650"),
-    ("libavfilter", "093e81d0a345bb5eeeb04e789dd4e07134493c53f6c097b157aba7d5339f6083"),
-    ("libavformat", "3e748205606a2bad0f84134bd2706621b447d61f33d445bf8182c15caa2bc127"),
-    ("libavutil", "f6aee08a372a75f38497f2760e828c22cbe33c1e1cc78a0acf771c2da95250b1"),
-    ("libswresample", "d87515c8501d6b605eb49a60452f59f2dd11787a51ccdf3fd9d883be366dcb19"),
-    ("libswscale", "a25db360720a88fbf4cb1dc7caf28d2998db7c81ecc238414f9267d356abcb82"),
+    ("ffmpegkit", "96b8e0fdb9904e1433e436393318d490a28bdf0d37e4f2679e4d022772584f76"),
+    ("libavcodec", "8e121c6cba47851baa7d4dc047c763c2d2e9dc51caa76d6b109fa8cc2369d7b6"),
+    ("libavdevice", "91a14a0ccd305221788723bfb6d2f441972f0f4b672a80a2efb495286e080704"),
+    ("libavfilter", "a2a48ed6d5aa1c1cf996bd4b838a4d62b18c5cc87b1b312ce22d5fcd828a00f5"),
+    ("libavformat", "23b4128c7bdde73c66cd5d5d211b563e6a228414c8edff4cfd04444535f36597"),
+    ("libavutil", "6ffda916f89135a77a84cf34766a6e598c7e681bfb63e1788218842a61a7b980"),
+    ("libswresample", "52d6c3de7a4f1f05198d19ed887febcab9bdbd352dae019bb00b498ae06eb2ae"),
+    ("libswscale", "b6ee65b6d7df12325ee62bb7b2ebd2f62097817aac8c13fffb10b3159b8d4227"),
 ]
 
 let package = Package(

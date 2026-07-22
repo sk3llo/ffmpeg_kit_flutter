@@ -111,7 +111,7 @@ done
 # (same CPU type), which is why arm64 had to be excluded for the simulator.
 # Apple Silicon simulators on Xcode 26 / iOS 26+ require a native arm64
 # simulator slice, so we split each framework into two .xcframework variants:
-#   ios-arm64_arm64e            (device, untouched)
+#   ios-arm64                   (device; arm64e is dropped, see #164)
 #   ios-arm64_x86_64-simulator  (simulator: x86_64 + arm64 retagged via vtool)
 #
 # The arm64 simulator slice is produced by retagging the device arm64 slice's
@@ -149,15 +149,11 @@ convert_to_xcframework() {
   mkdir -p "$STAGE/sim"
   mv "$STAGE/sim.framework" "$STAGE/sim/${FW}.framework"
 
-  # --- Device slice: arm64 (+ arm64e if present) ---
-  local DEV_ARGS=()
-  for A in arm64 arm64e; do
-    if echo "$ARCHS" | tr ' ' '\n' | grep -qx "$A"; then
-      lipo "$BIN" -thin "$A" -output "$STAGE/${A}.dylib"
-      DEV_ARGS+=("$STAGE/${A}.dylib")
-    fi
-  done
-  lipo -create "${DEV_ARGS[@]}" -output "$STAGE/device/${FW}.framework/${FW}"
+  # --- Device slice: arm64 ONLY. arm64e is deliberately dropped: App Store
+  # apps run as arm64 (third-party arm64e needs a special entitlement), and
+  # App Store validation rejects arm64e slices built with pre-iOS-26 SDKs (#164).
+  lipo "$BIN" -thin arm64 -output "$STAGE/arm64.dylib"
+  lipo -create "$STAGE/arm64.dylib" -output "$STAGE/device/${FW}.framework/${FW}"
 
   # --- Simulator slice: x86_64 (+ arm64 retagged to simulator) ---
   local SIM_ARGS=()
