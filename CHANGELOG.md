@@ -1,3 +1,7 @@
+## 3.5.5
+
+* **Fixed: log/statistics/complete callbacks silently dropped in apps with a second `FlutterEngine`** (e.g. a Firebase Messaging background isolate), a 4.4.1+ regression (#163). FFmpegKit's global native callbacks are now registered once and dispatched to every attached engine that is actually listening, instead of being captured by whichever engine attached last. Background-isolate execution (#155) keeps working.
+
 ## 3.5.4
 
 * **Fixed: App Store rejection `Invalid architecture ... arm64e slice with the ios 18.5 SDK` (#164).** The iOS device slices of the bundled FFmpeg XCFrameworks are now arm64 only, for both Swift Package Manager (regenerated binary targets + checksums) and CocoaPods (setup script). arm64e was never used by App Store apps, so nothing is lost.
