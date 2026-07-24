@@ -125,6 +125,15 @@ public class FFmpegKitFlutterPlugin implements FlutterPlugin, ActivityAware, Met
     private EventChannel.EventSink eventSink;
     private final FFmpegKitFlutterMethodResultHandler resultHandler;
 
+    // FFmpegKit's native callbacks are global (last registration wins), so they are
+    // registered exactly once and dispatch to every attached plugin instance that has
+    // a live event sink. Registering them per-instance let the most recently attached
+    // engine (e.g. a Firebase Messaging background isolate that never listens) capture
+    // all events and drop them on its null sink (#163).
+    private static final java.util.Set<FFmpegKitFlutterPlugin> attachedPlugins =
+            java.util.concurrent.ConcurrentHashMap.newKeySet();
+    private static final AtomicBoolean globalCallbacksRegistered = new AtomicBoolean(false);
+
     public FFmpegKitFlutterPlugin() {
         this.logsEnabled = new AtomicBoolean(false);
         this.statisticsEnabled = new AtomicBoolean(false);
@@ -134,27 +143,49 @@ public class FFmpegKitFlutterPlugin implements FlutterPlugin, ActivityAware, Met
         Log.d(LIBRARY_NAME, String.format("FFmpegKitFlutterPlugin created %s.", this));
     }
 
-    protected void registerGlobalCallbacks() {
-        FFmpegKitConfig.enableFFmpegSessionCompleteCallback(this::emitSession);
-        FFmpegKitConfig.enableFFprobeSessionCompleteCallback(this::emitSession);
-        FFmpegKitConfig.enableMediaInformationSessionCompleteCallback(this::emitSession);
+    protected static void registerGlobalCallbacks() {
+        if (!globalCallbacksRegistered.compareAndSet(false, true)) {
+            return;
+        }
+
+        FFmpegKitConfig.enableFFmpegSessionCompleteCallback(FFmpegKitFlutterPlugin::broadcastSession);
+        FFmpegKitConfig.enableFFprobeSessionCompleteCallback(FFmpegKitFlutterPlugin::broadcastSession);
+        FFmpegKitConfig.enableMediaInformationSessionCompleteCallback(FFmpegKitFlutterPlugin::broadcastSession);
 
         FFmpegKitConfig.enableLogCallback(log -> {
-            if (logsEnabled.get()) {
-                emitLog(log);
+            for (FFmpegKitFlutterPlugin plugin : attachedPlugins) {
+                if (plugin.logsEnabled.get() && plugin.eventSink != null) {
+                    plugin.emitLog(log);
+                }
             }
         });
 
         FFmpegKitConfig.enableStatisticsCallback(statistics -> {
-            if (statisticsEnabled.get()) {
-                emitStatistics(statistics);
+            for (FFmpegKitFlutterPlugin plugin : attachedPlugins) {
+                if (plugin.statisticsEnabled.get() && plugin.eventSink != null) {
+                    plugin.emitStatistics(statistics);
+                }
             }
         });
+    }
+
+    private static void broadcastSession(final Session session) {
+        boolean delivered = false;
+        for (FFmpegKitFlutterPlugin plugin : attachedPlugins) {
+            if (plugin.eventSink != null) {
+                plugin.emitSession(session);
+                delivered = true;
+            }
+        }
+        if (!delivered) {
+            Log.w(LIBRARY_NAME, String.format("No attached engine is listening; complete event for session %d was not delivered.", session.getSessionId()));
+        }
     }
 
     @Override
     public void onAttachedToEngine(@NonNull final FlutterPluginBinding flutterPluginBinding) {
         this.flutterPluginBinding = flutterPluginBinding;
+        attachedPlugins.add(this);
         // Both channels must be registered here, not in onAttachedToActivity: engines without
         // an Activity (e.g. background service isolates) never attach to one, and the event
         // channel would be left without a stream handler (#155).
@@ -163,6 +194,7 @@ public class FFmpegKitFlutterPlugin implements FlutterPlugin, ActivityAware, Met
 
     @Override
     public void onDetachedFromEngine(@NonNull final FlutterPluginBinding binding) {
+        attachedPlugins.remove(this);
         uninit();
         this.flutterPluginBinding = null;
     }
