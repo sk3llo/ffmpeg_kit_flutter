@@ -2,7 +2,7 @@
 
 # 🎬 FFmpegKit for Flutter — HTTPS
 
-**Run `FFmpeg` & `FFprobe` on Android, iOS, macOS and Windows from a single Dart API.**
+**Run `FFmpeg` & `FFprobe` on Android, iOS, macOS, Windows and Linux from a single Dart API.**
 
 _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), updated for the Android V2 embedding and Flutter 3+._
 
@@ -20,7 +20,7 @@ _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmp
 ## ✨ Features
 
 - 🧰 **Full toolkit** — both `FFmpeg` and `FFprobe`, with per-session logs, statistics and callbacks.
-- 📱 **Four platforms** — `Android`, `iOS`, `macOS`, and `Windows` (x86_64) behind one API.
+- 📱 **Five platforms** — `Android`, `iOS`, `macOS`, `Windows` (x86_64), and `Linux` (x86_64) behind one API.
 - 🎞️ **FFmpeg `v8.1.2`** — full command-line-compatible build.
 - 🗂️ **Android SAF** — process Storage Access Framework URIs directly.
 - 📚 **External libraries** — see the [enabled-libraries table](#-enabled-libraries) below.
@@ -136,6 +136,7 @@ Below is which system and external libraries each package enables. Some parts of
       <th align="center">iOS<br>Min Target</th>
       <th align="center">macOS<br>Min Target</th>
       <th align="center">Windows</th>
+      <th align="center">Linux</th>
     </tr>
   </thead>
   <tbody>
@@ -145,6 +146,7 @@ Below is which system and external libraries each package enables. Some parts of
       <td align="center">14.0</td>
       <td align="center">10.15</td>
       <td align="center">10+ (x86_64)</td>
+      <td align="center">x86_64</td>
     </tr>
   </tbody>
 </table>
@@ -152,6 +154,14 @@ Below is which system and external libraries each package enables. Some parts of
 **Architectures** — Android: `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` · iOS: `arm64` (device) + `arm64`/`x86_64` (simulator, incl. Apple Silicon / Xcode 26), shipped as `.xcframework` · macOS: `arm64`, `x86_64`.
 
 > **Windows:** prebuilt FFmpeg **8.1.2** libraries (x86_64) are downloaded automatically at build time. For local development against a self-built bundle, set `FFMPEGKIT_LOCAL_DIR` (env or CMake cache variable) to the bundle directory before `flutter run/build windows`.
+
+> **Linux:** prebuilt FFmpeg **8.1.2** libraries (x86_64) are downloaded automatically at build time, exactly as on Windows; `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin needs **`libjson-glib-dev`**:
+>
+> ```bash
+> sudo apt-get install libjson-glib-dev   # Debian/Ubuntu
+> sudo dnf install json-glib-devel        # Fedora
+> ```
+
 
 ## 📖 Usage
 

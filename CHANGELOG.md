@@ -1,3 +1,8 @@
+## 2.6.0
+
+* **Linux support (x86_64).** `flutter run -d linux` and `flutter build linux` now work. Prebuilt FFmpeg **8.1.2** libraries for the `https` variant are downloaded at build time, the same way the Windows bundle already worked; set `FFMPEGKIT_LOCAL_DIR` (env or CMake cache variable) to build against a self-built bundle instead.
+* Linux builds additionally require **`libjson-glib-dev`** (runtime: `libjson-glib`) alongside Flutter's standard Linux prerequisites. It ships with GNOME, so most desktops already have the runtime.
+
 ## 2.5.3
 
 * **Fixed: log/statistics/complete callbacks silently dropped in apps with a second `FlutterEngine`** (e.g. a Firebase Messaging background isolate), a 4.4.1+ regression (#163). FFmpegKit's global native callbacks are now registered once and dispatched to every attached engine that is actually listening, instead of being captured by whichever engine attached last. Background-isolate execution (#155) keeps working.
