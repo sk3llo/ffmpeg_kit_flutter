@@ -31,7 +31,7 @@ _A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmp
 
 ```yaml
 dependencies:
-  ffmpeg_kit_flutter_new_min: ^3.5.0
+  ffmpeg_kit_flutter_new_min: ^3.6.0
 ```
 
 ```dart
