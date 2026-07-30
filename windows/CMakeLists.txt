@@ -66,7 +66,22 @@ else()
   set(FFMPEGKIT_ARCH "x86_64")
 endif()
 
-set(FFMPEGKIT_PREBUILT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeg-kit")
+# Unpack into the app's build tree, NOT the plugin source directory. When the
+# plugin is resolved from the pub cache, Flutter points
+# windows/flutter/ephemeral/.plugin_symlinks/<plugin> at the cached package, so
+# ${CMAKE_CURRENT_SOURCE_DIR} lives inside the pub cache. Extracting there makes
+# `cmake -E tar` fail outright, because libarchive refuses to write through a
+# symlink (#165):
+#
+#   Cannot extract through symlink ...\.plugin_symlinks\<plugin>
+#
+# It also wrote the unpacked DLLs into a directory shared by every project on
+# the machine, which `flutter clean` never removes.
+#
+# CMAKE_CURRENT_BINARY_DIR is per-project and per-configuration, so it is
+# cleaned normally and is never reached through a symlink. The cost is one
+# download per build configuration rather than one per machine.
+set(FFMPEGKIT_PREBUILT_DIR "${CMAKE_CURRENT_BINARY_DIR}/ffmpeg-kit")
 message(STATUS "FFmpegKit prebuilt dir: ${FFMPEGKIT_PREBUILT_DIR} (arch: ${FFMPEGKIT_ARCH})")
 
 # FFmpegKit package variant to consume.
