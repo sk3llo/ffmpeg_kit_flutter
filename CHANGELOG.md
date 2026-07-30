@@ -1,3 +1,7 @@
+## 2.5.1
+
+* **Fixed: `FFmpegKitConfig.getPlatform()` returned `windows` on Linux.** The Linux native layer was reporting the wrong platform name, so any code branching on it took the Windows path. It now returns `linux`. The prebuilt libraries attached to the `8.1.2-<variant>` release have been rebuilt with the fix; nothing else changed.
+
 ## 2.5.0
 
 * **Linux support (x86_64).** `flutter run -d linux` and `flutter build linux` now work. Prebuilt FFmpeg **8.1.2** libraries for the `full` variant are downloaded at build time, the same way the Windows bundle already worked; set `FFMPEGKIT_LOCAL_DIR` (env or CMake cache variable) to build against a self-built bundle instead.
