@@ -1,3 +1,8 @@
+## 3.6.2
+
+* **Fixed: Windows build failure `Cannot extract through symlink ... .plugin_symlinks` (#165).** The prebuilt FFmpeg archive was unpacked into the plugin's own source directory. For a package resolved from the pub cache that directory is reached through a symlink, and the extractor refuses to write through it. The archive now unpacks into the application's build directory instead.
+* The same change stops the plugin writing ~19 MB of native libraries into the shared pub cache on every platform. `flutter clean` never removed those; to reclaim the space delete `<pub-cache>/hosted/pub.dev/<package>-<version>/{linux,windows}/ffmpeg-kit` or run `dart pub cache repair`. The archive is now fetched once per build configuration rather than once per machine.
+
 ## 3.6.1
 
 * **Fixed: `FFmpegKitConfig.getPlatform()` returned `windows` on Linux.** The Linux native layer was reporting the wrong platform name, so any code branching on it took the Windows path. It now returns `linux`. The prebuilt libraries attached to the `8.1.2-<variant>` release have been rebuilt with the fix; nothing else changed.
