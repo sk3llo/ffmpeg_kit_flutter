@@ -14,7 +14,8 @@ extension XFFmpegSession on Future<FFmpegSession> {
             final String logOutput =
                 logs.map((log) => log.getMessage()).join('\n');
             throw Exception(
-              'FFmpeg command failed with return code: $returnCode. Logs: $logOutput',
+              'FFmpeg command failed with return code: $returnCode. '
+              'Logs: $logOutput',
             );
           });
         }),
