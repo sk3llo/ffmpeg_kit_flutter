@@ -236,7 +236,7 @@ abstract class AbstractSession extends Session {
   /// Returns session end time.
   Future<DateTime?> getEndTime() async {
     try {
-      return _platform
+      return await _platform
           .abstractSessionGetEndTime(this.getSessionId())
           .then(FFmpegKitFactory.validDate);
     } on PlatformException catch (e, stack) {
@@ -249,7 +249,7 @@ abstract class AbstractSession extends Session {
   /// if the session is not over yet.
   Future<int> getDuration() async {
     try {
-      return _platform
+      return await _platform
           .abstractSessionGetDuration(this.getSessionId())
           .then((duration) => duration ?? 0);
     } on PlatformException catch (e, stack) {
@@ -269,7 +269,7 @@ abstract class AbstractSession extends Session {
   /// them until [waitTimeout].
   Future<List<Log>> getAllLogs([int? waitTimeout = null]) async {
     try {
-      return _platform
+      return await _platform
           .abstractSessionGetAllLogs(this.getSessionId(), waitTimeout)
           .then((allLogs) {
         if (allLogs == null) {
@@ -292,7 +292,7 @@ abstract class AbstractSession extends Session {
   /// will not wait for them and will return immediately.
   Future<List<Log>> getLogs() async {
     try {
-      return _platform
+      return await _platform
           .abstractSessionGetLogs(this.getSessionId())
           .then((allLogs) {
         if (allLogs == null) {
@@ -315,7 +315,7 @@ abstract class AbstractSession extends Session {
   /// this method waits for them until [waitTimeout].
   Future<String?> getAllLogsAsString([int? waitTimeout = null]) async {
     try {
-      return _platform.abstractSessionGetAllLogsAsString(
+      return await _platform.abstractSessionGetAllLogsAsString(
           this.getSessionId(), waitTimeout);
     } on PlatformException catch (e, stack) {
       print("Plugin getAllLogsAsString error: ${e.message}");
@@ -345,7 +345,7 @@ abstract class AbstractSession extends Session {
   /// Returns the state of the session.
   Future<SessionState> getState() async {
     try {
-      return _platform
+      return await _platform
           .abstractSessionGetState(this.getSessionId())
           .then((state) {
         switch (state) {
@@ -371,7 +371,7 @@ abstract class AbstractSession extends Session {
   /// started, still running or failed then this method returns null.
   Future<ReturnCode?> getReturnCode() async {
     try {
-      return _platform
+      return await _platform
           .abstractSessionGetReturnCode(this.getSessionId())
           .then((returnCode) {
         if (returnCode == null) {
@@ -393,7 +393,8 @@ abstract class AbstractSession extends Session {
   /// sessions that has COMPLETED state this method returns null.
   Future<String?> getFailStackTrace() async {
     try {
-      return _platform.abstractSessionGetFailStackTrace(this.getSessionId());
+      return await _platform
+          .abstractSessionGetFailStackTrace(this.getSessionId());
     } on PlatformException catch (e, stack) {
       print("Plugin getFailStackTrace error: ${e.message}");
       return Future.error("getFailStackTrace failed.", stack);
@@ -408,8 +409,9 @@ abstract class AbstractSession extends Session {
   /// for this session or not.
   Future<bool> thereAreAsynchronousMessagesInTransmit() async {
     try {
-      return _platform.abstractSessionThereAreAsynchronousMessagesInTransmit(
-          this.getSessionId());
+      return await _platform
+          .abstractSessionThereAreAsynchronousMessagesInTransmit(
+              this.getSessionId());
     } on PlatformException catch (e, stack) {
       print(
           "Plugin thereAreAsynchronousMessagesInTransmit error: ${e.message}");
@@ -433,9 +435,9 @@ abstract class AbstractSession extends Session {
       final int? sessionId = getSessionId();
       await FFmpegKitConfig.init();
       if (sessionId == null) {
-        return _platform.ffmpegKitCancel();
+        return await _platform.ffmpegKitCancel();
       } else {
-        return _platform.ffmpegKitCancelSession(sessionId);
+        return await _platform.ffmpegKitCancelSession(sessionId);
       }
     } on PlatformException catch (e, stack) {
       print("Plugin cancel error: ${e.message}");
