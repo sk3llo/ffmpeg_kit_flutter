@@ -1,3 +1,8 @@
+## 3.6.3
+
+* **Windows: the app now ships the native libraries' license notices.** The prebuilt FFmpeg 8.1.2 Windows bundle now includes `LICENSES/`, covering FFmpeg, FFmpegKit and every bundled third-party DLL with a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new_min/` next to your executable. Existing build directories download the bundle once more to pick it up. The DLLs themselves are unchanged.
+* **Fixed: native errors bypassed the plugin's error handling.** The async API methods returned the platform call from inside their `try` block without awaiting it, so a `PlatformException` from the native side skipped the `catch` and reached your code unwrapped. They now await it, and these failures arrive as the documented `"<method> failed."` error. If you were catching `PlatformException` from these methods, catch the returned error instead.
+
 ## 3.6.2
 
 * **Fixed: Windows build failure `Cannot extract through symlink ... .plugin_symlinks` (#165).** The prebuilt FFmpeg archive was unpacked into the plugin's own source directory. For a package resolved from the pub cache that directory is reached through a symlink, and the extractor refuses to write through it. The archive now unpacks into the application's build directory instead.
