@@ -91,7 +91,7 @@ message(STATUS "FFmpegKit prebuilt dir: ${FFMPEGKIT_PREBUILT_DIR} (arch: ${FFMPE
 # libass, libiconv, libtheora, libvpx, libwebp, snappy. The variant name is an
 # emergent property of that library set (see windows/src/Packages.cpp).
 #   * The CANONICAL video build (reports "video") is produced by
-#     ffmpeg-kit/build-windows-video.sh — consume a self-built bundle by setting
+#     `FFMPEGKIT_VARIANT=video ./windows.sh` in ffmpeg-kit — consume a self-built bundle by setting
 #     FFMPEGKIT_LOCAL_DIR.
 # video contains no GPL components and stays under the default LGPL 3.0 license.
 set(FFMPEGKIT_PACKAGE "video" CACHE STRING "FFmpegKit variant: video, audio, min, https, full, ...")
@@ -121,6 +121,9 @@ if(FFMPEGKIT_LOCAL_DIR)
 else()
   set(FFMPEGKIT_WANT "${FFMPEGKIT_RELEASE_TAG}")
 endif()
+# Bundle layout revision, recorded in the marker so build trees unpacked by an
+# older plugin re-fetch once. 2: the archive carries LICENSES/.
+string(APPEND FFMPEGKIT_WANT " layout=2")
 set(FFMPEGKIT_HAVE "")
 if(EXISTS "${FFMPEGKIT_MARKER}")
   file(READ "${FFMPEGKIT_MARKER}" FFMPEGKIT_HAVE)
@@ -128,7 +131,7 @@ if(EXISTS "${FFMPEGKIT_MARKER}")
 endif()
 
 if(NOT "${FFMPEGKIT_HAVE}" STREQUAL "${FFMPEGKIT_WANT}")
-  file(REMOVE_RECURSE "${FFMPEGKIT_PREBUILT_DIR}/bin")
+  file(REMOVE_RECURSE "${FFMPEGKIT_PREBUILT_DIR}/bin" "${FFMPEGKIT_PREBUILT_DIR}/LICENSES")
   file(MAKE_DIRECTORY "${FFMPEGKIT_PREBUILT_DIR}")
   if(FFMPEGKIT_LOCAL_DIR)
     if(NOT EXISTS "${FFMPEGKIT_LOCAL_DIR}/bin/libffmpegkit.dll")
@@ -139,6 +142,9 @@ if(NOT "${FFMPEGKIT_HAVE}" STREQUAL "${FFMPEGKIT_WANT}")
     if(EXISTS "${FFMPEGKIT_LOCAL_DIR}/include")
       file(REMOVE_RECURSE "${FFMPEGKIT_PREBUILT_DIR}/include")
       file(COPY "${FFMPEGKIT_LOCAL_DIR}/include" DESTINATION "${FFMPEGKIT_PREBUILT_DIR}")
+    endif()
+    if(EXISTS "${FFMPEGKIT_LOCAL_DIR}/LICENSES")
+      file(COPY "${FFMPEGKIT_LOCAL_DIR}/LICENSES" DESTINATION "${FFMPEGKIT_PREBUILT_DIR}")
     endif()
   else()
     message(STATUS "FFmpegKit: downloading ${FFMPEGKIT_PACKAGE} from ${FFMPEGKIT_DOWNLOAD_URL}")
@@ -201,3 +207,24 @@ set(ffmpeg_kit_flutter_new_video_bundled_libraries
   ${FFMPEGKIT_DLLS}
   PARENT_SCOPE
 )
+
+# Ship the bundle's license notices (FFmpeg, FFmpegKit and every third-party
+# DLL above) with the app, in licenses/<package>/ next to the executable.
+# The runner only points CMAKE_INSTALL_PREFIX at its output directory after the
+# plugins are added, and a relative DESTINATION would be joined to that
+# unevaluated generator expression, so on a fresh build tree target the
+# runner's output directory directly, the same way the runner does.
+if(EXISTS "${FFMPEGKIT_PREBUILT_DIR}/LICENSES")
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT AND DEFINED BINARY_NAME)
+    set(FFMPEGKIT_LICENSES_DEST "$<TARGET_FILE_DIR:${BINARY_NAME}>")
+  else()
+    set(FFMPEGKIT_LICENSES_DEST "${CMAKE_INSTALL_PREFIX}")
+  endif()
+  install(DIRECTORY "${FFMPEGKIT_PREBUILT_DIR}/LICENSES/"
+    DESTINATION "${FFMPEGKIT_LICENSES_DEST}/licenses/${PROJECT_NAME}"
+    COMPONENT Runtime)
+else()
+  message(WARNING "FFmpegKit: the bundle has no LICENSES/ directory, so no "
+    "license notices are installed with the app. Ship the FFmpeg and "
+    "third-party DLL notices yourself.")
+endif()
