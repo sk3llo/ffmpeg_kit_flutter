@@ -1,3 +1,8 @@
+## 2.5.4
+
+* **Windows: the bundled DLLs keep ASLR.** Earlier versions ran `editbin` on every bundled DLL to turn off address space layout randomization (`DYNAMIC_BASE`, `HIGH_ENTROPY_VA`) and rebase it below 4 GB. That guarded against MinGW 32-bit pseudo-relocations overflowing when DLLs load far apart, but the published 8.1.2 bundles contain no 32-bit pseudo-relocations, so the DLLs are now shipped exactly as built. Builds also no longer need MSVC's `editbin`. Existing build directories download the bundle once more to replace the previously patched copies.
+* If you build against your own bundle (`FFMPEGKIT_LOCAL_DIR`) and need the old behaviour, set `FFMPEGKIT_DISABLE_ASLR=ON`, either as an environment variable before `flutter build windows` or as a CMake cache variable.
+
 ## 2.5.3
 
 * **Windows: the app now ships the native libraries' license notices.** The prebuilt FFmpeg 8.1.2 Windows bundle now includes `LICENSES/`, covering FFmpeg, FFmpegKit and every bundled third-party DLL with a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new_video/` next to your executable. Existing build directories download the bundle once more to pick it up. The DLLs themselves are unchanged.
