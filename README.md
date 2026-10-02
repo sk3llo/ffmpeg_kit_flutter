@@ -1,59 +1,35 @@
-<div align="center">
+# FFmpegKit for Flutter: Full GPL
 
-# 🎬 FFmpegKit for Flutter — Full-GPL
+[![pub package](https://img.shields.io/pub/v/ffmpeg_kit_flutter_new?logo=dart)](https://pub.dev/packages/ffmpeg_kit_flutter_new)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-8.1.2-green)](https://ffmpeg.org/download.html)
+[![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
+[![Discord](https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=discord)](https://discord.gg/8NVwykjA)
 
-**Run `FFmpeg` & `FFprobe` on Android, iOS, macOS, Windows and Linux from a single Dart API.**
+Run FFmpeg and FFprobe commands from Dart on Android, iOS, macOS, Windows and Linux.
 
-_A maintained fork of the original [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), updated for the Android V2 embedding and Flutter 3+._
+This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), which is no longer developed upstream, updated for the Android V2 embedding and current Flutter releases. `ffmpeg_kit_flutter_new` is the **Full GPL** variant: every supported library, including the GPL codecs. See [Choosing a package](#choosing-a-package) for the alternatives.
 
-<p align="center">
-  <a href="https://pub.dev/packages/ffmpeg_kit_flutter_new"><img src="https://img.shields.io/badge/pub-4.5.3-blue?logo=dart" alt="pub version"></a>
-  <a href="https://ffmpeg.org/index.html#news"><img src="https://img.shields.io/badge/FFmpeg-8.1.2-green?logo=ffmpeg&logoColor=white" alt="FFmpeg 8.1.2"></a>
-  <a href="https://discord.gg/8NVwykjA"><img src="https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord"></a>
-  <a href="https://buymeacoffee.com/sk3llo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="21" width="114"></a>
-</p>
+## Features
 
-</div>
+- FFmpeg 8.1.2 and FFprobe, with per-session logs, statistics and completion callbacks.
+- One Dart API for Android, iOS, macOS, Windows (x86_64) and Linux (x86_64).
+- Prebuilt native libraries for every platform, so nothing is compiled during your build.
+- Hardware-accelerated encoding and decoding through VideoToolbox on iOS and macOS.
+- Android Storage Access Framework (SAF) URIs can be used directly as inputs and outputs.
+- iOS and macOS integrate through Swift Package Manager (Flutter 3.24 or later) or CocoaPods, using checksum-pinned XCFrameworks.
 
----
-
-## ✨ Features
-
-- 🧰 **Full toolkit** — both `FFmpeg` and `FFprobe`, with per-session logs, statistics and callbacks.
-- 📱 **Five platforms** — `Android`, `iOS`, `macOS`, `Windows` (x86_64), and `Linux` (x86_64) behind one API.
-- 🎞️ **FFmpeg `v8.1.2`** with **VideoToolbox** hardware acceleration on iOS & macOS.
-- 🗂️ **Android SAF** — process Storage Access Framework URIs directly.
-- 📚 **External libraries** — see the [enabled-libraries table](#-enabled-libraries) below.
-- 🔄 **Modernised bindings** for the latest Flutter and Android/macOS toolchains.
-- 📦 **Swift Package Manager** — iOS & macOS integrate via SPM (Flutter 3.24+) or CocoaPods, with prebuilt checksum-pinned XCFrameworks.
-
-## 📦 Install
+## Installation
 
 ```yaml
 dependencies:
-  ffmpeg_kit_flutter_new: ^4.6.0
+  ffmpeg_kit_flutter_new: ^4.6.3
 ```
 
 ```dart
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 ```
 
-## 🎯 Choose your package
-
-There are **eight** `ffmpeg-kit` packages — pick the smallest one that covers the codecs and features you need. `GPL`-licensed codecs (`x264`, `x265`, `xvidcore`, `vid.stab`) are only in the `-gpl` packages.
-
-| Package | Best for |
-|---|---|
-| [`_min`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min) | Smallest build — core FFmpeg only |
-| [`_min_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal **+ GPL** codecs (x264/x265/xvid/vid.stab) |
-| [`_https`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https) | Adds TLS (`gnutls`) for `https://` inputs |
-| [`_https_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS **+ GPL** codecs |
-| [`_audio`](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio) | Audio-focused (mp3, opus, vorbis, speex, …) |
-| [`_video`](https://pub.dev/packages/ffmpeg_kit_flutter_new_video) | Video-focused (dav1d, vpx, theora, webp, …) |
-| [`_full`](https://pub.dev/packages/ffmpeg_kit_flutter_new_full) | Everything except GPL codecs |
-| [`ffmpeg_kit_flutter_new`](https://pub.dev/packages/ffmpeg_kit_flutter_new) **(this one)** | **Full + GPL** — every library |
-
-## 🚀 Quick start
+## Quick start
 
 ```dart
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -62,17 +38,32 @@ final session = await FFmpegKit.execute('-i input.mp4 -c:v mpeg4 output.mp4');
 final returnCode = await session.getReturnCode();
 
 if (ReturnCode.isSuccess(returnCode)) {
-  // ✅ done
+  // Success
 } else if (ReturnCode.isCancel(returnCode)) {
-  // ⏹️ cancelled
+  // Cancelled
 } else {
-  // ❌ error — inspect await session.getLogs()
+  // Failed: inspect await session.getLogs()
 }
 ```
 
-## 🧩 Enabled libraries
+## Choosing a package
 
-Below is which system and external libraries each package enables. Some parts of `FFmpeg` are `GPL`-licensed and are only present in the `GPL` packages.
+The plugin is published as eight packages that share the same Dart API and differ only in the native libraries they bundle. Choose the smallest one that covers the codecs you need. The GPL-licensed codecs (`x264`, `x265`, `xvidcore`, `vid.stab`) are only included in the `-gpl` packages.
+
+| Package | Contents |
+|---|---|
+| [`_min`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min) | Smallest build, core FFmpeg only |
+| [`_min_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal plus GPL codecs (x264, x265, xvid, vid.stab) |
+| [`_https`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https) | Adds TLS (`gnutls`) for `https://` inputs |
+| [`_https_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS plus GPL codecs |
+| [`_audio`](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio) | Audio codecs (mp3, opus, vorbis, speex and others) |
+| [`_video`](https://pub.dev/packages/ffmpeg_kit_flutter_new_video) | Video codecs (dav1d, vpx, theora, webp and others) |
+| [`_full`](https://pub.dev/packages/ffmpeg_kit_flutter_new_full) | Every library except the GPL codecs |
+| [`ffmpeg_kit_flutter_new`](https://pub.dev/packages/ffmpeg_kit_flutter_new) (this package) | Every library, including the GPL codecs |
+
+## Enabled libraries
+
+The table lists the system and external libraries enabled in each package's Android, iOS and macOS builds. The Windows and Linux bundles are built against MSYS2 and system packages respectively; the Windows bundle lists every DLL it contains in `LICENSES/NOTICE.txt`.
 
 <table>
 <thead>
@@ -110,8 +101,8 @@ Below is which system and external libraries each package enables. Some parts of
 </tr>
 <tr>
 <td align="center"><sup>ios VideoToolbox</sup></td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><sup>VideoToolbox</sup></td>
+<td align="center"><sup>VideoToolbox</sup></td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">-</td>
@@ -126,47 +117,35 @@ Below is which system and external libraries each package enables. Some parts of
 </tbody>
 </table>
 
-## 📱 Platform support
+## Platform support
 
-<table align="center">
-  <thead>
-    <tr>
-      <th align="center">Android<br>API Level</th>
-      <th align="center">Kotlin<br>Min Version</th>
-      <th align="center">iOS<br>Min Target</th>
-      <th align="center">macOS<br>Min Target</th>
-      <th align="center">Windows</th>
-      <th align="center">Linux</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center">24</td>
-      <td align="center">1.8.22</td>
-      <td align="center">14.0</td>
-      <td align="center">10.15</td>
-      <td align="center">10+ (x86_64)</td>
-      <td align="center">x86_64</td>
-    </tr>
-  </tbody>
-</table>
+| Platform | Minimum version | Architectures |
+|---|---|---|
+| Android | API 24 (Kotlin 1.8.22) | `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` |
+| iOS | 14.0 | `arm64` (device); `arm64`, `x86_64` (simulator), shipped as `.xcframework` |
+| macOS | 10.15 | `arm64`, `x86_64` |
+| Windows | 10 | `x86_64` |
+| Linux | - | `x86_64` |
 
-**Architectures** — Android: `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` · iOS: `arm64` (device) + `arm64`/`x86_64` (simulator, incl. Apple Silicon / Xcode 26), shipped as `.xcframework` · macOS: `arm64`, `x86_64`.
+### Windows
 
-> **Windows:** prebuilt FFmpeg **8.1.2** libraries (x86_64) are downloaded automatically at build time. For local development against a self-built bundle, set `FFMPEGKIT_LOCAL_DIR` (env or CMake cache variable) to the bundle directory before `flutter run/build windows`.
+Prebuilt FFmpeg 8.1.2 libraries are downloaded into your application's build directory the first time you build. To build against a locally built bundle instead, set `FFMPEGKIT_LOCAL_DIR` (as an environment variable or a CMake cache variable) to the bundle directory before running `flutter run` or `flutter build windows`.
 
-> **Linux:** prebuilt FFmpeg **8.1.2** libraries (x86_64) are downloaded automatically at build time, exactly as on Windows; `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin needs **`libjson-glib-dev`**:
->
-> ```bash
-> sudo apt-get install libjson-glib-dev   # Debian/Ubuntu
-> sudo dnf install json-glib-devel        # Fedora
-> ```
+The bundle's license notices are installed next to your executable in `licenses/ffmpeg_kit_flutter_new/`. See [License](#license).
 
+### Linux
 
-## 📖 Usage
+Prebuilt FFmpeg 8.1.2 libraries are downloaded at build time in the same way as on Windows, and `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin requires `libjson-glib-dev`:
+
+```bash
+sudo apt-get install libjson-glib-dev   # Debian, Ubuntu
+sudo dnf install json-glib-devel        # Fedora
+```
+
+## Usage
 
 <details open>
-<summary><strong>Execute a command & read the result</strong></summary>
+<summary><strong>Execute a command and read the result</strong></summary>
 
 ```dart
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -174,11 +153,11 @@ import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
   final returnCode = await session.getReturnCode();
   if (ReturnCode.isSuccess(returnCode)) {
-    // SUCCESS
+    // Success
   } else if (ReturnCode.isCancel(returnCode)) {
-    // CANCEL
+    // Cancelled
   } else {
-    // ERROR
+    // Failed
   }
 });
 ```
@@ -204,22 +183,22 @@ FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
 </details>
 
 <details>
-<summary><strong>Async execution with callbacks</strong></summary>
+<summary><strong>Run asynchronously with callbacks</strong></summary>
 
 ```dart
 FFmpegKit.executeAsync('-i file1.mp4 -c:v mpeg4 file2.mp4', (Session session) async {
-  // CALLED WHEN SESSION IS EXECUTED
+  // Called when the session completes
 }, (Log log) {
-  // CALLED WHEN SESSION PRINTS LOGS
+  // Called for each log line
 }, (Statistics statistics) {
-  // CALLED WHEN SESSION GENERATES STATISTICS
+  // Called when the session reports statistics
 });
 ```
 
 </details>
 
 <details>
-<summary><strong>FFprobe & media information</strong></summary>
+<summary><strong>Read media information with FFprobe</strong></summary>
 
 ```dart
 FFprobeKit.getMediaInformation('<file path or url>').then((session) async {
@@ -233,24 +212,24 @@ FFprobeKit.getMediaInformation('<file path or url>').then((session) async {
 <summary><strong>Cancel sessions</strong></summary>
 
 ```dart
-FFmpegKit.cancel();          // stop all sessions
-FFmpegKit.cancel(sessionId); // stop a specific session
+FFmpegKit.cancel();          // Cancel all sessions
+FFmpegKit.cancel(sessionId); // Cancel one session
 ```
 
 </details>
 
 <details>
-<summary><strong>Android — Storage Access Framework (SAF)</strong></summary>
+<summary><strong>Android: Storage Access Framework (SAF)</strong></summary>
 
 ```dart
-// Reading a file
+// Read from a document
 FFmpegKitConfig.selectDocumentForRead('*/*').then((uri) {
   FFmpegKitConfig.getSafParameterForRead(uri!).then((safUrl) {
     FFmpegKit.executeAsync("-i ${safUrl!} -c:v mpeg4 file2.mp4");
   });
 });
 
-// Writing to a file
+// Write to a document
 FFmpegKitConfig.selectDocumentForWrite('video.mp4', 'video/*').then((uri) {
   FFmpegKitConfig.getSafParameterForWrite(uri!).then((safUrl) {
     FFmpegKit.executeAsync("-i file1.mp4 -c:v mpeg4 ${safUrl}");
@@ -261,7 +240,7 @@ FFmpegKitConfig.selectDocumentForWrite('video.mp4', 'video/*').then((uri) {
 </details>
 
 <details>
-<summary><strong>Global callbacks & fonts</strong></summary>
+<summary><strong>Global callbacks and fonts</strong></summary>
 
 ```dart
 FFmpegKitConfig.enableLogCallback((log) { final message = log.getMessage(); });
@@ -271,12 +250,14 @@ FFmpegKitConfig.setFontDirectoryList(["/system/fonts", "/System/Library/Fonts", 
 
 </details>
 
-## 📄 License
+## License
 
-Licensed under **LGPL 3.0** by default. This package additionally includes `GPL v3.0`-licensed components (`x264`, `x265`, `xvidcore`, `vid.stab`) and is therefore effectively **GPL v3.0**.
+The plugin is licensed under LGPL 3.0. This package also includes GPL 3.0 components (`x264`, `x265`, `xvidcore`, `vid.stab`), so an application that uses it is distributed under GPL 3.0.
 
-## 💬 Community & support
+FFmpeg and the bundled third-party libraries keep their own licenses. On Windows, the prebuilt bundle includes a `LICENSES/` directory with the FFmpeg and FFmpegKit license texts, and a `NOTICE.txt` that lists every bundled DLL with its license, version and a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new/` next to your executable; ship that directory with your application.
 
-- 💙 [Join the Discord](https://discord.gg/8NVwykjA)
-- ☕ [Buy me a coffee](https://buymeacoffee.com/sk3llo)
-- 🐛 [Report an issue](https://github.com/sk3llo/ffmpeg_kit_flutter/issues)
+## Support
+
+- Questions and discussion: [Discord](https://discord.gg/8NVwykjA)
+- Bug reports and feature requests: [GitHub issues](https://github.com/sk3llo/ffmpeg_kit_flutter/issues)
+- Support development: [Buy Me a Coffee](https://buymeacoffee.com/sk3llo)
