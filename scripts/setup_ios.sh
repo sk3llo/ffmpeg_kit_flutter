@@ -85,6 +85,11 @@ fi
 mkdir -p "$WORK/extract"
 unzip -oq "$WORK/frameworks.zip" -d "$WORK/extract"
 rm -rf "$WORK/extract/__MACOSX"
+# Drop AppleDouble files (._*). A zip made on macOS without --norsrc stores
+# each file's extended attributes as a ._<name> file next to it, and unzip
+# writes those out as real files. They would be copied into every
+# .xcframework and sealed into the app's signature (issue #170).
+find "$WORK/extract" -name '._*' -type f -delete
 
 # Verify the archive actually contained the fat frameworks we expect.
 for FW in $FRAMEWORKS; do
