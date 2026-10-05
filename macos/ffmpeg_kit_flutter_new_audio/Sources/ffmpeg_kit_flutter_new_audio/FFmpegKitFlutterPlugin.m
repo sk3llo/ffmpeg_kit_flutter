@@ -282,6 +282,9 @@ extern int const AbstractSessionDefaultTimeoutForAsynchronousMessagesInTransmit;
   } else if ([@"setFontDirectory" isEqualToString:call.method]) {
     NSString* fontDirectory = call.arguments[@"fontDirectory"];
     NSDictionary* fontNameMap = call.arguments[@"fontNameMap"];
+    if ([fontNameMap isEqual:[NSNull null]]) {
+      fontNameMap = nil;
+    }
     if (fontDirectory != nil) {
       [self setFontDirectory:fontDirectory mapping:fontNameMap result:result];
     } else {
@@ -290,6 +293,9 @@ extern int const AbstractSessionDefaultTimeoutForAsynchronousMessagesInTransmit;
   } else if ([@"setFontDirectoryList" isEqualToString:call.method]) {
     NSArray* fontDirectoryList = call.arguments[@"fontDirectoryList"];
     NSDictionary* fontNameMap = call.arguments[@"fontNameMap"];
+    if ([fontNameMap isEqual:[NSNull null]]) {
+      fontNameMap = nil;
+    }
     if (fontDirectoryList != nil) {
       [self setFontDirectoryList:fontDirectoryList mapping:fontNameMap result:result];
     } else {
