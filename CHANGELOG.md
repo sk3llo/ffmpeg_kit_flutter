@@ -1,3 +1,7 @@
+## 2.6.6
+
+* **Android: the plugin no longer applies the Kotlin Gradle Plugin (#168, #171).** The plugin's Android code is Java only, so `android/build.gradle` no longer applies `kotlin-android` or adds the Kotlin Gradle Plugin to its build script. This removes Flutter's warning that the plugin applies the Kotlin Gradle Plugin (KGP), and fixes the build failure `Failed to apply plugin 'kotlin-android'` in apps that use Android Gradle Plugin 9 with built-in Kotlin (`android.builtInKotlin=true`). Apps on Android Gradle Plugin 8 are unaffected. No changes to the plugin's API or native libraries.
+
 ## 2.6.5
 
 * **Android: corrected Maven metadata.** The plugin now depends on `com.antonkarpenko:ffmpeg-kit-min-gpl:2.2.3`. Its native libraries are byte-identical to the previous release (FFmpeg n8.1.2); only the POM changed. The POM no longer describes the libraries as "FFmpeg v8.1.1", and its project and SCM URLs point to the real source repository. No other changes.
