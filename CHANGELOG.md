@@ -1,3 +1,7 @@
+## 2.6.5
+
+* **Android: corrected Maven metadata.** The plugin now depends on `com.antonkarpenko:ffmpeg-kit-https-gpl:2.2.3`. Its native libraries are byte-identical to the previous release (FFmpeg n8.1.2); only the POM changed. The POM no longer describes the libraries as "FFmpeg v8.1.1", and its project and SCM URLs point to the real source repository. No other changes.
+
 ## 2.6.4
 
 * **Windows: the bundled DLLs keep ASLR.** Earlier versions ran `editbin` on every bundled DLL to turn off address space layout randomization (`DYNAMIC_BASE`, `HIGH_ENTROPY_VA`) and rebase it below 4 GB. That guarded against MinGW 32-bit pseudo-relocations overflowing when DLLs load far apart, but the published 8.1.2 bundles contain no 32-bit pseudo-relocations, so the DLLs are now shipped exactly as built. Builds also no longer need MSVC's `editbin`. Existing build directories download the bundle once more to replace the previously patched copies.
