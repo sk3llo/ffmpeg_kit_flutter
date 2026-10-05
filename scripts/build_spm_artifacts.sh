@@ -24,6 +24,7 @@ VERSION="${2:?usage: build_spm_artifacts.sh <variant> <version>}"
 TAG="${VERSION}-${VARIANT}"
 BASE="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${TAG}"
 FRAMEWORKS="ffmpegkit libavcodec libavdevice libavfilter libavformat libavutil libswresample libswscale"
+HERE="$(cd "$(dirname "$0")" && pwd)"
 
 WORK="spm-artifacts-${TAG}"
 mkdir -p "$WORK"
@@ -36,6 +37,8 @@ mkdir -p ios macos out stage
 unzip -q -o ios.zip -d ios
 unzip -q -o macos.zip -d macos
 rm -rf ios/__MACOSX macos/__MACOSX
+# Drop AppleDouble files (._*), as setup_macos.sh does (issue #170).
+find ios macos -name '._*' -type f -delete
 
 # Strip bitcode everywhere (no-op if absent)
 for FW in $FRAMEWORKS; do
@@ -43,6 +46,10 @@ for FW in $FRAMEWORKS; do
     [ -f "$BIN" ] && xcrun bitcode_strip -r "$BIN" -o "$BIN" || true
   done
 done
+
+# Refuse to package frameworks that are incomplete or would not sign.
+"$HERE/check_apple_zip.sh" --platform ios ios
+"$HERE/check_apple_zip.sh" --platform macos macos
 
 convert() {
   local FW="$1"
@@ -90,8 +97,13 @@ convert() {
     -framework "$MAC_DIR" \
     -output "out/${FW}.xcframework" >/dev/null
 
-  # ditto preserves the macOS slice's Versions/ symlinks inside the zip
-  (cd out && ditto -c -k --keepParent "${FW}.xcframework" "${FW}.xcframework.zip")
+  # ditto preserves the macOS slice's Versions/ symlinks inside the zip.
+  # --norsrc --noextattr --noacl keep extended attributes out: without them
+  # ditto stores each file's attributes as a ._<name> file (issue #170).
+  (cd out && ditto -c -k --norsrc --noextattr --noacl --keepParent "${FW}.xcframework" "${FW}.xcframework.zip")
+  local JUNK
+  JUNK=$(unzip -Z1 "out/${FW}.xcframework.zip" | grep -cE '(^|/)(\._|__MACOSX(/|$))' || true)
+  [ "$JUNK" -eq 0 ] || { echo "ERROR: out/${FW}.xcframework.zip has $JUNK AppleDouble entries" >&2; exit 1; }
   rm -rf "$STAGE"
 }
 
