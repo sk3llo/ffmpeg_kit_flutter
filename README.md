@@ -120,7 +120,7 @@ The table lists the system and external libraries enabled in each package's Andr
 
 | Platform | Minimum version | Architectures |
 |---|---|---|
-| Android | API 24 (Kotlin 1.8.22) | `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` |
+| Android | API 24 | `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` |
 | iOS | 14.0 | `arm64` (device); `arm64`, `x86_64` (simulator), shipped as `.xcframework` |
 | macOS | 10.15 | `arm64`, `x86_64` |
 | Windows | 10 | `x86_64` |
