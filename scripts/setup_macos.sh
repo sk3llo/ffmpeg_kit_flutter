@@ -70,6 +70,12 @@ fi
 mkdir -p "$WORK/extract"
 unzip -oq "$WORK/frameworks.zip" -d "$WORK/extract"
 rm -rf "$WORK/extract/__MACOSX"
+# Drop AppleDouble files (._*). A zip made on macOS without --norsrc stores
+# each file's extended attributes as a ._<name> file next to it, and unzip
+# writes those out as real files. In a framework root they are unsealed
+# contents, so codesign refuses to sign the framework and the app's CodeSign
+# step fails with "code object is not signed at all" (issue #170).
+find "$WORK/extract" -name '._*' -type f -delete
 
 # Verify all expected frameworks are present.
 for FW in $FRAMEWORKS; do
