@@ -1,3 +1,8 @@
+## 2.6.2
+
+* **iOS and macOS with CocoaPods: optional SHA-256 check of the downloaded frameworks (#174).** Set `FFMPEG_KIT_IOS_SHA256` or `FFMPEG_KIT_MACOS_SHA256` to the SHA-256 of the release zip before `pod install`. A zip with another SHA-256 is then refused before it is unpacked, whether it comes from the GitHub release or from a mirror set with `FFMPEG_KIT_IOS_URL` or `FFMPEG_KIT_MACOS_URL`. Without the variable nothing changes. Swift Package Manager builds already check pinned checksums.
+* README: describes the check, and no longer says the CocoaPods download is checksum-pinned.
+
 ## 2.6.1
 
 * **Fixed: registered pipes could not be used on Windows (#175).** `FFmpegKitConfig.registerNewFFmpegPipe()` returned a path that did not exist, so `File(path).openWrite()` failed with `Cannot open file` and FFmpeg reported `No such file or directory`. `FFmpegKitConfig.writeToPipe` failed the same way. Registered pipes now work as they do on the other platforms: open the path with `File(path).openWrite()` or `File(path).openRead()`, pass it to FFmpeg as an input or an output, and call `FFmpegKitConfig.closeFFmpegPipe` when you are done. FFmpeg receives everything written to the pipe before it sees the end of the input, and `closeFFmpegPipe` lets a transfer that is still running finish. On Windows the path now has the form `\\?\pipe\fk_pipe_...`, because Dart's `File` cannot open `\\.\pipe\` paths. Only the current Windows user can open the pipe, and connections from other machines are refused.
