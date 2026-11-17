@@ -16,7 +16,7 @@ This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit
 - Prebuilt native libraries for every platform, so nothing is compiled during your build.
 - Hardware-accelerated encoding and decoding through VideoToolbox on iOS and macOS.
 - Android Storage Access Framework (SAF) URIs can be used directly as inputs and outputs.
-- iOS and macOS integrate through Swift Package Manager or CocoaPods, using checksum-pinned XCFrameworks.
+- iOS and macOS integrate through Swift Package Manager, with checksum-pinned XCFrameworks, or through CocoaPods, which can check the download's SHA-256.
 
 ## Installation
 
@@ -128,6 +128,14 @@ The table lists the system and external libraries enabled in each package's Andr
 | macOS | 10.15 | `arm64`, `x86_64` |
 | Windows | 10 | `x86_64` |
 | Linux | - | `x86_64` |
+
+### iOS and macOS
+
+With Swift Package Manager, Xcode downloads the XCFrameworks and checks them against the checksums pinned in the package.
+
+With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`8.1.2-min` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/8.1.2-min) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
+
+If your network cannot reach GitHub, mirror the zip and set `FFMPEG_KIT_IOS_URL` (or `FFMPEG_KIT_MACOS_URL`) to the mirror's address. The SHA-256 check applies to a mirror too.
 
 ### Windows
 
