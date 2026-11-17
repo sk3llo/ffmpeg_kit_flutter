@@ -28,7 +28,9 @@ let package = Package(
     products: [
         .library(name: "ffmpeg-kit-flutter-new", targets: ["ffmpeg_kit_flutter_new"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework")
+    ],
     targets: ffmpegLibs.map { lib in
         .binaryTarget(
             name: lib.name,
@@ -38,7 +40,9 @@ let package = Package(
     } + [
         .target(
             name: "ffmpeg_kit_flutter_new",
-            dependencies: ffmpegLibs.map { .target(name: $0.name) },
+            dependencies: ffmpegLibs.map { .target(name: $0.name) } + [
+                .product(name: "FlutterFramework", package: "FlutterFramework")
+            ],
             cSettings: [
                 .headerSearchPath("include/ffmpeg_kit_flutter_new")
             ]
