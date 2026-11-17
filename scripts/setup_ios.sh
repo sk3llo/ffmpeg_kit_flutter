@@ -16,6 +16,8 @@
 #     must be present afterwards.
 #   * Restricted networks (behind a firewall / in a blocked region) can point
 #     FFMPEG_KIT_IOS_URL at a reachable mirror of the release zip.
+#   * FFMPEG_KIT_IOS_SHA256, when set, is the SHA-256 the downloaded zip must
+#     have, whichever URL it came from. On a mismatch nothing is unpacked.
 #
 set -euo pipefail
 
@@ -23,6 +25,9 @@ VERSION="8.1.2"
 VARIANT="https"
 DEFAULT_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${VERSION}-${VARIANT}/ffmpeg-kit-ios-${VARIANT}-${VERSION}.zip"
 IOS_URL="${FFMPEG_KIT_IOS_URL:-$DEFAULT_URL}"
+# Lower-cased, without the "sha256:" prefix GitHub prints in front of a digest.
+IOS_SHA256="$(printf '%s' "${FFMPEG_KIT_IOS_SHA256:-}" | tr '[:upper:]' '[:lower:]')"
+IOS_SHA256="${IOS_SHA256#sha256:}"
 
 FRAMEWORKS="ffmpegkit libavcodec libavdevice libavfilter libavformat libavutil libswresample libswscale"
 
@@ -38,7 +43,7 @@ WORK="$(mktemp -d "${TMPDIR:-/tmp}/ffmpegkit-ios.XXXXXX")"
 cleanup() { rm -rf "$WORK"; }
 trap cleanup EXIT
 
-fail() {
+fail() {  # <reason> [no-network-help]
   {
     echo ""
     echo "======================================================================"
@@ -47,21 +52,34 @@ fail() {
     echo ""
     echo "The prebuilt FFmpegKit frameworks are downloaded at build time from:"
     echo "  $IOS_URL"
-    echo ""
-    echo "If your network cannot reach GitHub release assets (e.g. behind a"
-    echo "corporate firewall or in a restricted region), either:"
-    echo ""
-    echo "  1. Mirror the zip somewhere reachable and set FFMPEG_KIT_IOS_URL"
-    echo "     before installing pods:"
-    echo "       export FFMPEG_KIT_IOS_URL=\"https://your-mirror/ffmpeg-kit-ios-${VARIANT}-${VERSION}.zip\""
-    echo "       cd ios && pod install"
-    echo ""
-    echo "  2. Or download the zip manually and re-run this script from the"
-    echo "     plugin's ios/ directory:"
-    echo "       ../scripts/setup_ios.sh"
+    if [ "${2:-}" != "no-network-help" ]; then
+      echo ""
+      echo "If your network cannot reach GitHub release assets (e.g. behind a"
+      echo "corporate firewall or in a restricted region), either:"
+      echo ""
+      echo "  1. Mirror the zip somewhere reachable and set FFMPEG_KIT_IOS_URL"
+      echo "     before installing pods:"
+      echo "       export FFMPEG_KIT_IOS_URL=\"https://your-mirror/ffmpeg-kit-ios-${VARIANT}-${VERSION}.zip\""
+      echo "       cd ios && pod install"
+      echo ""
+      echo "  2. Or download the zip manually and re-run this script from the"
+      echo "     plugin's ios/ directory:"
+      echo "       ../scripts/setup_ios.sh"
+    fi
     echo "======================================================================"
   } >&2
   exit 1
+}
+
+if [ -n "$IOS_SHA256" ] && ! printf '%s' "$IOS_SHA256" | grep -qE '^[0-9a-f]{64}$'; then
+  fail "FFMPEG_KIT_IOS_SHA256 is not a SHA-256 digest (64 hexadecimal characters)." no-network-help
+fi
+
+sha256_of() {  # <file>; prints the digest in lower-case hex
+  local OUT
+  OUT="$(shasum -a 256 "$1" 2>/dev/null)" || OUT="$(sha256sum "$1" 2>/dev/null)" ||
+    OUT="$(openssl dgst -sha256 -r "$1" 2>/dev/null)" || return 1
+  printf '%s' "${OUT%% *}" | tr '[:upper:]' '[:lower:]'
 }
 
 # Build curl args, feature-detecting --retry-all-errors (curl >= 7.71).
@@ -78,6 +96,16 @@ fi
 
 # Reject empty / truncated / non-zip payloads before trusting them.
 [ -s "$WORK/frameworks.zip" ] || fail "The downloaded file is empty."
+if [ -n "$IOS_SHA256" ]; then
+  ACTUAL_SHA256="$(sha256_of "$WORK/frameworks.zip")" ||
+    fail "Could not compute the downloaded file's SHA-256 (tried shasum, sha256sum and openssl)." no-network-help
+  if [ "$ACTUAL_SHA256" != "$IOS_SHA256" ]; then
+    fail "The downloaded file's SHA-256 does not match FFMPEG_KIT_IOS_SHA256.
+    expected: $IOS_SHA256
+    actual:   $ACTUAL_SHA256" no-network-help
+  fi
+  echo "[ffmpeg_kit_flutter]   SHA-256 verified: $ACTUAL_SHA256"
+fi
 if ! unzip -tq "$WORK/frameworks.zip" >/dev/null 2>&1; then
   fail "The downloaded file is not a valid zip (likely a partial download or an error page)."
 fi

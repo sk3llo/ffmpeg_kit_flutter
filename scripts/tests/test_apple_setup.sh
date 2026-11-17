@@ -22,6 +22,11 @@
 # signature). Otherwise the test could not tell a fixed setup script from a
 # broken one.
 #
+# It also covers the optional download check (issue #174). With
+# FFMPEG_KIT_{MACOS,IOS}_SHA256 set, setup must install the zip only when its
+# SHA-256 matches, and leave no ./Frameworks otherwise. Without the variable
+# it must not check a digest at all.
+#
 # Needs macOS with Xcode (clang, lipo, vtool, xcodebuild, codesign).
 #
 set -euo pipefail
@@ -93,16 +98,51 @@ count_entries() {  # <zip> <regex>
   unzip -Z1 "$1" | grep -cE "$2" || true
 }
 
-run_setup() {  # <platform> <case>; installs into $WORK/run-<platform>-<case>/pod
-  local P="$1" C="$2" R="$WORK/run-$1-$2"
+# run_setup <platform> <case> [sha256 [run]] installs the <case> zip into
+# $WORK/run-<platform>-<run>/pod; <run> defaults to <case>. SETUP_PATH, when
+# set, is the PATH the setup script runs with.
+run_setup() {
+  local P="$1" C="$2" SHA="${3:-}" R="$WORK/run-$1-${4:-$2}"
   rm -rf "$R"
   mkdir -p "$R/pod"
   if [ "$P" = "macos" ]; then
-    (cd "$R/pod" && FFMPEG_KIT_MACOS_URL="file://$WORK/$P-$C.zip" /bin/bash "$SCRIPTS/setup_macos.sh") > "$R/log" 2>&1
+    (cd "$R/pod" && PATH="${SETUP_PATH:-$PATH}" FFMPEG_KIT_MACOS_URL="file://$WORK/$P-$C.zip" FFMPEG_KIT_MACOS_SHA256="$SHA" /bin/bash "$SCRIPTS/setup_macos.sh") > "$R/log" 2>&1
   else
-    (cd "$R/pod" && FFMPEG_KIT_IOS_URL="file://$WORK/$P-$C.zip" /bin/bash "$SCRIPTS/setup_ios.sh") > "$R/log" 2>&1
+    (cd "$R/pod" && PATH="${SETUP_PATH:-$PATH}" FFMPEG_KIT_IOS_URL="file://$WORK/$P-$C.zip" FFMPEG_KIT_IOS_SHA256="$SHA" /bin/bash "$SCRIPTS/setup_ios.sh") > "$R/log" 2>&1
   fi
 }
+
+verifies() {  # <platform> <run> <sha256> <label>: setup installs the clean zip and reports the check
+  local P="$1" R="$WORK/run-$1-$2"
+  if run_setup "$P" clean "$3" "$2" && grep -q "SHA-256 verified" "$R/log"; then
+    pass "$P: $4"
+  else
+    fail "$P: $4"
+    tail -15 "$R/log" | indent
+  fi
+}
+
+refuses() {  # <platform> <run> <sha256> <error> <label>: setup fails with <error> and installs nothing
+  local P="$1" R="$WORK/run-$1-$2"
+  if run_setup "$P" clean "$3" "$2"; then
+    fail "$P: $5 (setup succeeded)"
+  elif ! grep -q "$4" "$R/log"; then
+    fail "$P: $5 (it failed for another reason)"
+    tail -15 "$R/log" | indent
+  elif [ -e "$R/pod/Frameworks" ]; then
+    fail "$P: $5 (./Frameworks was left behind)"
+  else
+    pass "$P: $5"
+  fi
+}
+
+# PATH prefixes that hide the hashing tools one by one, so the setup scripts
+# fall back from shasum to sha256sum to openssl, and then run out.
+for N in 1 2 3; do mkdir -p "$WORK/hide$N"; done
+for D in hide1/shasum hide2/shasum hide2/sha256sum hide3/shasum hide3/sha256sum hide3/openssl; do
+  printf '#!/bin/sh\nexit 127\n' > "$WORK/$D"
+  chmod +x "$WORK/$D"
+done
 
 for P in macos ios; do
   T="$WORK/tree-$P"
@@ -174,6 +214,30 @@ for P in macos ios; do
       indent < "$R/check"
     fi
   done
+
+  # The optional SHA-256 check (#174), on the clean zip.
+  SHA="$(shasum -a 256 "$WORK/$P-clean.zip" | awk '{print $1}')"
+  VAR="FFMPEG_KIT_$(printf '%s' "$P" | tr '[:lower:]' '[:upper:]')_SHA256"
+  if grep -q "SHA-256" "$WORK/run-$P-clean/log"; then
+    fail "$P: setup checked a SHA-256 without $VAR"
+  else
+    pass "$P: setup checks no SHA-256 without $VAR"
+  fi
+  verifies "$P" sha-ok "$SHA" "setup accepts the zip's SHA-256 in $VAR"
+  verifies "$P" sha-prefixed "sha256:$(printf '%s' "$SHA" | tr '[:lower:]' '[:upper:]')" \
+    "setup accepts it in upper case with a sha256: prefix"
+  refuses "$P" sha-wrong "$(printf '%064d' 0)" "does not match $VAR" \
+    "setup refuses a zip with another SHA-256"
+  refuses "$P" sha-malformed "abc123" "is not a SHA-256 digest" "setup refuses a malformed $VAR"
+  if grep -q "Downloading" "$WORK/run-$P-sha-malformed/log"; then
+    fail "$P: setup downloaded the zip before refusing a malformed $VAR"
+  else
+    pass "$P: setup refuses a malformed $VAR before downloading"
+  fi
+  SETUP_PATH="$WORK/hide1:$PATH" verifies "$P" sha-no-shasum "$SHA" "setup verifies without shasum"
+  SETUP_PATH="$WORK/hide2:$PATH" verifies "$P" sha-openssl "$SHA" "setup verifies with openssl alone"
+  SETUP_PATH="$WORK/hide3:$PATH" refuses "$P" sha-no-tool "$SHA" "Could not compute" \
+    "setup refuses the zip when no tool can hash it"
 done
 
 echo
