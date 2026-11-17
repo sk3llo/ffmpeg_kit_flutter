@@ -15,9 +15,11 @@ This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit
 - One Dart API for Android, iOS, macOS, Windows (x86_64) and Linux (x86_64).
 - Prebuilt native libraries for every platform, so nothing is compiled during your build.
 - Android Storage Access Framework (SAF) URIs can be used directly as inputs and outputs.
-- iOS and macOS integrate through Swift Package Manager (Flutter 3.24 or later) or CocoaPods, using checksum-pinned XCFrameworks.
+- iOS and macOS integrate through Swift Package Manager or CocoaPods, using checksum-pinned XCFrameworks.
 
 ## Installation
+
+Requires Flutter 3.41 or later.
 
 ```yaml
 dependencies:
