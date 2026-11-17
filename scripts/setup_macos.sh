@@ -11,6 +11,8 @@
 #     skip setup and produce a confusing "header not found" build error).
 #   * curl --fail/--retry surfaces network errors here instead of later.
 #   * FFMPEG_KIT_MACOS_URL overrides the download URL for restricted networks.
+#   * FFMPEG_KIT_MACOS_SHA256, when set, is the SHA-256 the downloaded zip must
+#     have, whichever URL it came from. On a mismatch nothing is unpacked.
 #
 set -euo pipefail
 
@@ -18,6 +20,9 @@ VERSION="8.1.2"
 VARIANT="audio"
 DEFAULT_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${VERSION}-${VARIANT}/ffmpeg-kit-macos-${VARIANT}-${VERSION}.zip"
 MACOS_URL="${FFMPEG_KIT_MACOS_URL:-$DEFAULT_URL}"
+# Lower-cased, without the "sha256:" prefix GitHub prints in front of a digest.
+MACOS_SHA256="$(printf '%s' "${FFMPEG_KIT_MACOS_SHA256:-}" | tr '[:upper:]' '[:lower:]')"
+MACOS_SHA256="${MACOS_SHA256#sha256:}"
 
 FRAMEWORKS="ffmpegkit libavcodec libavdevice libavfilter libavformat libavutil libswresample libswscale"
 
@@ -31,7 +36,7 @@ WORK="$(mktemp -d "${TMPDIR:-/tmp}/ffmpegkit-macos.XXXXXX")"
 cleanup() { rm -rf "$WORK"; }
 trap cleanup EXIT
 
-fail() {
+fail() {  # <reason> [no-network-help]
   {
     echo ""
     echo "======================================================================"
@@ -40,15 +45,28 @@ fail() {
     echo ""
     echo "The prebuilt FFmpegKit frameworks are downloaded at build time from:"
     echo "  $MACOS_URL"
-    echo ""
-    echo "If your network cannot reach GitHub release assets, either mirror the"
-    echo "zip and set FFMPEG_KIT_MACOS_URL before installing pods:"
-    echo "  export FFMPEG_KIT_MACOS_URL=\"https://your-mirror/ffmpeg-kit-macos-${VARIANT}-${VERSION}.zip\""
-    echo "  cd macos && pod install"
-    echo "or download it manually and re-run ../scripts/setup_macos.sh."
+    if [ "${2:-}" != "no-network-help" ]; then
+      echo ""
+      echo "If your network cannot reach GitHub release assets, either mirror the"
+      echo "zip and set FFMPEG_KIT_MACOS_URL before installing pods:"
+      echo "  export FFMPEG_KIT_MACOS_URL=\"https://your-mirror/ffmpeg-kit-macos-${VARIANT}-${VERSION}.zip\""
+      echo "  cd macos && pod install"
+      echo "or download it manually and re-run ../scripts/setup_macos.sh."
+    fi
     echo "======================================================================"
   } >&2
   exit 1
+}
+
+if [ -n "$MACOS_SHA256" ] && ! printf '%s' "$MACOS_SHA256" | grep -qE '^[0-9a-f]{64}$'; then
+  fail "FFMPEG_KIT_MACOS_SHA256 is not a SHA-256 digest (64 hexadecimal characters)." no-network-help
+fi
+
+sha256_of() {  # <file>; prints the digest in lower-case hex
+  local OUT
+  OUT="$(shasum -a 256 "$1" 2>/dev/null)" || OUT="$(sha256sum "$1" 2>/dev/null)" ||
+    OUT="$(openssl dgst -sha256 -r "$1" 2>/dev/null)" || return 1
+  printf '%s' "${OUT%% *}" | tr '[:upper:]' '[:lower:]'
 }
 
 CURL_ARGS=(-fL --retry 3 --retry-delay 2 --connect-timeout 30)
@@ -63,6 +81,16 @@ if ! curl "${CURL_ARGS[@]}" -o "$WORK/frameworks.zip" "$MACOS_URL"; then
 fi
 
 [ -s "$WORK/frameworks.zip" ] || fail "The downloaded file is empty."
+if [ -n "$MACOS_SHA256" ]; then
+  ACTUAL_SHA256="$(sha256_of "$WORK/frameworks.zip")" ||
+    fail "Could not compute the downloaded file's SHA-256 (tried shasum, sha256sum and openssl)." no-network-help
+  if [ "$ACTUAL_SHA256" != "$MACOS_SHA256" ]; then
+    fail "The downloaded file's SHA-256 does not match FFMPEG_KIT_MACOS_SHA256.
+    expected: $MACOS_SHA256
+    actual:   $ACTUAL_SHA256" no-network-help
+  fi
+  echo "[ffmpeg_kit_flutter]   SHA-256 verified: $ACTUAL_SHA256"
+fi
 if ! unzip -tq "$WORK/frameworks.zip" >/dev/null 2>&1; then
   fail "The downloaded file is not a valid zip (likely a partial download or an error page)."
 fi
