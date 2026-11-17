@@ -2,7 +2,7 @@ name: ffmpeg_kit_flutter_new_video
 description: FFmpeg Kit Video for Flutter. Supports Android, iOS, macOS and Windows platforms.
 repository: https://github.com/sk3llo/ffmpeg_kit_flutter/tree/video
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
-version: 2.6.0
+version: 2.6.1
 environment:
   sdk: ^3.11.0
   flutter: ">=3.41.0"
