@@ -90,6 +90,10 @@ if(FFMPEGKIT_LOCAL_DIR)
 else()
   set(FFMPEGKIT_WANT "${FFMPEGKIT_RELEASE_TAG}-${FFMPEGKIT_ARCH}")
 endif()
+# Bundle layout revision, recorded in the marker so build trees unpacked by an
+# older plugin re-fetch once. 2: libffmpegkit.so with the C API fixes from
+# ffmpeg-kit PR #5.
+string(APPEND FFMPEGKIT_WANT " layout=2")
 set(FFMPEGKIT_HAVE "")
 if(EXISTS "${FFMPEGKIT_MARKER}")
   file(READ "${FFMPEGKIT_MARKER}" FFMPEGKIT_HAVE)
