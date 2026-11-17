@@ -1,3 +1,9 @@
+## 2.6.0
+
+* **Requires Flutter 3.41 or later (Dart 3.11).** Apps on an older Flutter keep resolving 2.5.8.
+* **iOS and macOS: the Swift package now depends on `FlutterFramework` (#176).** When Flutter builds plugins through Swift Package Manager, the default since Flutter 3.44, it generates a `FlutterFramework` package next to them. Flutter asks plugins to depend on it and says future Flutter versions will require that. CocoaPods builds are unchanged. No changes to the native libraries.
+* README: states the Flutter 3.41 minimum, and no longer says Swift Package Manager needs Flutter 3.24.
+
 ## 2.5.8
 
 * **Fixed: Windows apps raised an uncaught `FileSystemException` when no log callback was set.** By default, when no log callback is set, the plugin prints FFmpeg's logs to stdout. A Windows app started from Explorer, or from a console without redirected output, has no stdout handle, so the write failed and Dart reported it afterwards as an uncaught `FileSystemException: writeFrom failed ... (OS Error: The handle is invalid, errno = 6)`. Error reporters such as Sentry recorded it once per run, and apps that treat uncaught errors as fatal exited. The plugin now handles the failure and stops printing logs for the rest of the run. Where stdout works, the printed output is unchanged. No changes to the native libraries.
