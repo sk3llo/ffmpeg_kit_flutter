@@ -134,7 +134,9 @@ endif()
 # Bundle layout revision, recorded in the marker so build trees unpacked by an
 # older plugin re-fetch once. 2: the archive carries LICENSES/. 3: the DLLs are
 # no longer patched in place, so trees holding patched copies get fresh ones.
-string(APPEND FFMPEGKIT_WANT " layout=3")
+# 4: libffmpegkit.dll with working registered pipes (#175) and the C API fixes
+# from ffmpeg-kit PR #5.
+string(APPEND FFMPEGKIT_WANT " layout=4")
 if(FFMPEGKIT_DISABLE_ASLR)
   # The workaround rewrites the DLLs in place, so toggling it must re-fetch.
   string(APPEND FFMPEGKIT_WANT " aslr=off")
