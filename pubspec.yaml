@@ -4,8 +4,8 @@ repository: https://github.com/sk3llo/ffmpeg_kit_flutter/tree/audio
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
 version: 2.5.8
 environment:
-  sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=3.0.0"
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
 
 flutter:
   plugin:
