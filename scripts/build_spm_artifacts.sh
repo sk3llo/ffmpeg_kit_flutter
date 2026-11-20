@@ -4,7 +4,7 @@
 # targets, and emit their checksums.
 #
 # Usage: build_spm_artifacts.sh <variant> <version>
-#   e.g. build_spm_artifacts.sh full-gpl 8.1.2
+#   e.g. build_spm_artifacts.sh full-gpl 8.1.3
 #
 # Inputs:  GitHub release assets ffmpeg-kit-{ios,macos}-<variant>-<version>.zip
 #          under tag <version>-<variant>.
@@ -86,7 +86,7 @@ convert() {
   ARCHS=$(lipo -archs "$IOS_BIN")
   MINOS=$(otool -l -arch arm64 "$IOS_BIN" 2>/dev/null | awk '/LC_BUILD_VERSION/{b=1} b&&/minos/{print $2; exit}')
   SDK=$(otool -l -arch arm64 "$IOS_BIN" 2>/dev/null | awk '/LC_BUILD_VERSION/{b=1} b&&/sdk/{print $2; exit}')
-  [ -n "$MINOS" ] || MINOS="14.0"
+  [ -n "$MINOS" ] || MINOS="15.0"
   [ -n "$SDK" ] || SDK="$MINOS"
 
   cp -R "$IOS_DIR" "$STAGE/device/${FW}.framework"
