@@ -66,7 +66,7 @@ endif()
 # configuration rather than one per machine.
 set(FFMPEGKIT_PREBUILT_DIR "${CMAKE_CURRENT_BINARY_DIR}/ffmpeg-kit")
 set(FFMPEGKIT_PACKAGE "full" CACHE STRING "FFmpegKit variant: min, min-gpl, https, https-gpl, audio, video, full, full-gpl")
-set(FFMPEGKIT_VERSION "8.1.2" CACHE STRING "FFmpegKit release version")
+set(FFMPEGKIT_VERSION "8.1.3" CACHE STRING "FFmpegKit release version")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (a dir containing lib/) to use instead of downloading")
 
 if(NOT FFMPEGKIT_LOCAL_DIR AND DEFINED ENV{FFMPEGKIT_LOCAL_DIR})
