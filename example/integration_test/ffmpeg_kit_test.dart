@@ -17,7 +17,7 @@ void main() {
     final platform = await FFmpegKitConfig.getPlatform();
     debugPrint('FFmpeg version: $version, platform: $platform');
     expect(version, isNotNull);
-    // ffmpeg-kit reports the upstream tag name, e.g. "n8.1.2"
+    // ffmpeg-kit reports the upstream tag name, e.g. "n8.1.3"
     expect(version, contains('8.1'));
   });
 

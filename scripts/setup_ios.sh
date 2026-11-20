@@ -31,7 +31,7 @@
 #
 set -euo pipefail
 
-VERSION="8.1.2"
+VERSION="8.1.3"
 VARIANT="https"
 DEFAULT_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${VERSION}-${VARIANT}/ffmpeg-kit-ios-${VARIANT}-${VERSION}.zip"
 IOS_URL="${FFMPEG_KIT_IOS_URL:-$DEFAULT_URL}"
@@ -179,7 +179,7 @@ convert_to_xcframework() {
   local MINOS SDK
   MINOS=$(otool -l -arch arm64 "$BIN" 2>/dev/null | awk '/LC_BUILD_VERSION/{b=1} b&&/minos/{print $2; exit}')
   SDK=$(otool -l -arch arm64 "$BIN" 2>/dev/null | awk '/LC_BUILD_VERSION/{b=1} b&&/sdk/{print $2; exit}')
-  [ -n "$MINOS" ] || MINOS="14.0"
+  [ -n "$MINOS" ] || MINOS="15.0"
   [ -n "$SDK" ] || SDK="$MINOS"
 
   local STAGE="${BASE}/.xc_tmp/${FW}"

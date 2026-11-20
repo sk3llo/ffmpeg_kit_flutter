@@ -3,28 +3,28 @@
 
 import PackageDescription
 
-// FFmpeg 8.1.2 https prebuilt binaries.
+// FFmpeg 8.1.3 https prebuilt binaries.
 // Each zip contains one combined XCFramework with ios-arm64 (arm64e dropped, #164),
-// ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices.
+// ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices, each with its dSYM.
 // URLs and checksums are regenerated on every native FFmpeg release
 // (see scripts/build_spm_artifacts.sh).
-let ffmpegTag = "8.1.2-https"
+let ffmpegTag = "8.1.3-https"
 let ffmpegBase = "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/\(ffmpegTag)"
 let ffmpegLibs: [(name: String, checksum: String)] = [
-    ("ffmpegkit", "96b8e0fdb9904e1433e436393318d490a28bdf0d37e4f2679e4d022772584f76"),
-    ("libavcodec", "8e121c6cba47851baa7d4dc047c763c2d2e9dc51caa76d6b109fa8cc2369d7b6"),
-    ("libavdevice", "91a14a0ccd305221788723bfb6d2f441972f0f4b672a80a2efb495286e080704"),
-    ("libavfilter", "a2a48ed6d5aa1c1cf996bd4b838a4d62b18c5cc87b1b312ce22d5fcd828a00f5"),
-    ("libavformat", "23b4128c7bdde73c66cd5d5d211b563e6a228414c8edff4cfd04444535f36597"),
-    ("libavutil", "6ffda916f89135a77a84cf34766a6e598c7e681bfb63e1788218842a61a7b980"),
-    ("libswresample", "52d6c3de7a4f1f05198d19ed887febcab9bdbd352dae019bb00b498ae06eb2ae"),
-    ("libswscale", "b6ee65b6d7df12325ee62bb7b2ebd2f62097817aac8c13fffb10b3159b8d4227"),
+    ("ffmpegkit", "2c91e2e11ebc2bfa5b615238cbfa2726a9420a60b0b68e2341dbb3b0de23ea2d"),
+    ("libavcodec", "56391b69f19e13cd5778b4a5202cffd8d61a2f69115a27203d4b64d7e12d73bd"),
+    ("libavdevice", "5e21b025825b14511d1f671276db667abaa214eb894435239b9694d35789cc55"),
+    ("libavfilter", "ef74bef9a75d62f5683cf4a4b7b0ae20b0123c2959b70ff6660114c8254667d9"),
+    ("libavformat", "0e8c5bb3fa5629a2ef8e9fe6832c55ea665ed12c73ebc6a320a4f42974b1e745"),
+    ("libavutil", "049904de88dc484889b5d3650d522ebcbfe8f7a4a2270883f6e5bc8834733442"),
+    ("libswresample", "c407eb23a827986999cf11c463801990bee1af355ee3afdb28a477c1361dce62"),
+    ("libswscale", "6ac452dbc8480663738555dd10580437cbc479a35abdba6a8f533c97387d3baf"),
 ]
 
 let package = Package(
     name: "ffmpeg_kit_flutter_new_https",
     platforms: [
-        .macOS("10.15")
+        .macOS("11.0")
     ],
     products: [
         .library(name: "ffmpeg-kit-flutter-new-https", targets: ["ffmpeg_kit_flutter_new_https"])
