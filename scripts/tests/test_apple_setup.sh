@@ -27,6 +27,12 @@
 # SHA-256 matches, and leave no ./Frameworks otherwise. Without the variable
 # it must not check a digest at all.
 #
+# And the dSYMs that zips carry from 8.1.3 on: each tree has a
+# <name>.framework.dSYM beside each framework, and setup must install every
+# one where CocoaPods looks for it, with the binary's UUIDs (iOS: in
+# <name>.dSYMs/ beside the .xcframework, covering both slices; macOS: beside
+# the framework). A zip without dSYMs, like 8.1.2's, must still install.
+#
 # Needs macOS with Xcode (clang, lipo, vtool, xcodebuild, codesign).
 #
 set -euo pipefail
@@ -60,15 +66,26 @@ plist() {  # <path> <executable> <platform>
 PLIST
 }
 
+# with_dsym <binary> <dSYM>: the dSYM a release build makes, then the strip.
+# dsymutil reads the DWARF from the object files the binary was linked from.
+with_dsym() {
+  xcrun dsymutil "$1" -o "$2" && xcrun strip -x "$1"
+}
+
 make_macos_tree() {  # <out>
-  local OUT="$1" FW D
+  local OUT="$1" FW D A
   for FW in $FRAMEWORKS; do
     D="$OUT/$FW.framework"
     mkdir -p "$D/Versions/A/Headers" "$D/Versions/A/Resources"
     printf 'int %s_test(void) { return 0; }\n' "$FW" > "$WORK/$FW.c"
-    xcrun --sdk macosx clang -arch arm64 -arch x86_64 -mmacosx-version-min=10.15 \
-      -dynamiclib -install_name "@rpath/$FW.framework/Versions/A/$FW" \
-      -o "$D/Versions/A/$FW" "$WORK/$FW.c"
+    for A in arm64 x86_64; do
+      xcrun --sdk macosx clang -arch $A -mmacosx-version-min=10.15 -g -c \
+        -o "$WORK/$FW-mac-$A.o" "$WORK/$FW.c"
+      xcrun --sdk macosx clang -arch $A -mmacosx-version-min=10.15 -dynamiclib \
+        -install_name "@rpath/$FW.framework/Versions/A/$FW" -o "$WORK/$FW-mac-$A" "$WORK/$FW-mac-$A.o"
+    done
+    lipo -create "$WORK/$FW-mac-arm64" "$WORK/$FW-mac-x86_64" -output "$D/Versions/A/$FW"
+    with_dsym "$D/Versions/A/$FW" "$OUT/$FW.framework.dSYM"
     printf 'int %s_test(void);\n' "$FW" > "$D/Versions/A/Headers/$FW.h"
     plist "$D/Versions/A/Resources/Info.plist" "$FW" MacOSX
     ln -s A "$D/Versions/Current"
@@ -84,11 +101,16 @@ make_ios_tree() {  # <out>
     D="$OUT/$FW.framework"
     mkdir -p "$D/Headers"
     printf 'int %s_test(void) { return 0; }\n' "$FW" > "$WORK/$FW.c"
+    xcrun --sdk iphoneos clang -arch arm64 -miphoneos-version-min=14.0 -g -c \
+      -o "$WORK/$FW-device.o" "$WORK/$FW.c"
     xcrun --sdk iphoneos clang -arch arm64 -miphoneos-version-min=14.0 -dynamiclib \
-      -install_name "@rpath/$FW.framework/$FW" -o "$WORK/$FW-device" "$WORK/$FW.c"
+      -install_name "@rpath/$FW.framework/$FW" -o "$WORK/$FW-device" "$WORK/$FW-device.o"
+    xcrun --sdk iphonesimulator clang -arch x86_64 -mios-simulator-version-min=14.0 -g -c \
+      -o "$WORK/$FW-sim.o" "$WORK/$FW.c"
     xcrun --sdk iphonesimulator clang -arch x86_64 -mios-simulator-version-min=14.0 -dynamiclib \
-      -install_name "@rpath/$FW.framework/$FW" -o "$WORK/$FW-sim" "$WORK/$FW.c"
+      -install_name "@rpath/$FW.framework/$FW" -o "$WORK/$FW-sim" "$WORK/$FW-sim.o"
     lipo -create "$WORK/$FW-device" "$WORK/$FW-sim" -output "$D/$FW"
+    with_dsym "$D/$FW" "$OUT/$FW.framework.dSYM"
     printf 'int %s_test(void);\n' "$FW" > "$D/Headers/$FW.h"
     plist "$D/Info.plist" "$FW" iPhoneOS
   done
@@ -96,6 +118,30 @@ make_ios_tree() {  # <out>
 
 count_entries() {  # <zip> <regex>
   unzip -Z1 "$1" | grep -cE "$2" || true
+}
+
+uuids() {  # <binary or dSYM>: "UUID (arch)" per architecture
+  dwarfdump --uuid "$1" 2>/dev/null | awk '{print $2, $3}' | sort
+}
+
+# dsym_problems <platform> <Frameworks dir>: names each framework whose
+# installed dSYM is missing or doesn't have its binary's UUIDs. On iOS the one
+# dSYM must match the simulator slice (x86_64 and the retagged arm64) and hold
+# the device slice's arm64 UUID too.
+dsym_problems() {
+  local P="$1" F="$2" FW SYM DEV
+  for FW in $FRAMEWORKS; do
+    if [ "$P" = "macos" ]; then
+      SYM="$F/$FW.framework.dSYM"
+      { [ -d "$SYM" ] && [ "$(uuids "$F/$FW.framework/Versions/A/$FW")" = "$(uuids "$SYM")" ]; } || echo "$FW"
+    else
+      SYM="$F/$FW.dSYMs/$FW.framework.dSYM"
+      DEV="$(uuids "$F/$FW.xcframework/ios-arm64/$FW.framework/$FW")"
+      { [ -d "$SYM" ] && [ -n "$DEV" ] &&
+        [ "$(uuids "$F/$FW.xcframework/ios-arm64_x86_64-simulator/$FW.framework/$FW")" = "$(uuids "$SYM")" ] &&
+        uuids "$SYM" | grep -qxF "$DEV"; } || echo "$FW"
+    fi
+  done
 }
 
 # run_setup <platform> <case> [sha256 [run]] installs the <case> zip into
@@ -148,6 +194,9 @@ for P in macos ios; do
   T="$WORK/tree-$P"
   mkdir -p "$T"
   if [ "$P" = "macos" ]; then make_macos_tree "$T"; else make_ios_tree "$T"; fi
+  # A zip without dSYMs, as 8.1.2 and earlier shipped.
+  mkdir -p "$WORK/tree-$P-nodsym" && cp -R "$T"/*.framework "$WORK/tree-$P-nodsym/"
+  ditto -c -k --norsrc --noextattr --noacl "$WORK/tree-$P-nodsym" "$WORK/$P-nodsym.zip"
   # Files on a build machine carry extended attributes (com.apple.provenance
   # on every file a recent macOS creates). Give ditto some to store.
   find "$T" -mindepth 1 ! -type l -exec xattr -w com.ffmpegkit.test 1 {} \;
@@ -213,7 +262,21 @@ for P in macos ios; do
       fail "$P/$C: installed frameworks fail check_apple_zip.sh"
       indent < "$R/check"
     fi
+    N=$(dsym_problems "$P" "$F" | paste -sd, - | sed 's/,/, /g')
+    if [ -z "$N" ]; then pass "$P/$C: every framework got its dSYM, with the binary's UUIDs"
+    else fail "$P/$C: dSYM missing or with other UUIDs: $N"; fi
   done
+
+  # A zip without dSYMs installs, with none.
+  R="$WORK/run-$P-nodsym"
+  if ! run_setup "$P" nodsym; then
+    fail "$P/nodsym: setup script failed"
+    tail -15 "$R/log" | indent
+  elif [ -n "$(find "$R/pod/Frameworks" -name '*.dSYM*')" ]; then
+    fail "$P/nodsym: setup installed dSYMs: $(find "$R/pod/Frameworks" -name '*.dSYM*' | head -2 | tr '\n' ' ')"
+  else
+    pass "$P/nodsym: setup installs the frameworks, with no dSYMs"
+  fi
 
   # The optional SHA-256 check (#174), on the clean zip.
   SHA="$(shasum -a 256 "$WORK/$P-clean.zip" | awk '{print $1}')"
