@@ -2,7 +2,7 @@ name: ffmpeg_kit_flutter_new_converter_gpl
 description: FFmpeg Kit Converter-GPL for Flutter. FFmpeg with x264, x265, LAME, Opus, Vorbis, VP8/VP9, WebP and dav1d. Supports Android, iOS, macOS, Windows and Linux.
 repository: https://github.com/sk3llo/ffmpeg_kit_flutter
 homepage: https://github.com/sk3llo/ffmpeg_kit_flutter
-version: 2.7.2
+version: 1.0.0
 environment:
   sdk: ^3.11.0
   flutter: ">=3.41.0"
