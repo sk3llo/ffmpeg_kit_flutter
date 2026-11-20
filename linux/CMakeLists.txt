@@ -66,8 +66,12 @@ endif()
 # never reached through a symlink. The cost is one download per build
 # configuration rather than one per machine.
 set(FFMPEGKIT_PREBUILT_DIR "${CMAKE_CURRENT_BINARY_DIR}/ffmpeg-kit")
-set(FFMPEGKIT_PACKAGE "min-gpl" CACHE STRING "FFmpegKit variant: min, min-gpl, https, https-gpl, audio, video, full, full-gpl")
-set(FFMPEGKIT_VERSION "8.1.3" CACHE STRING "FFmpegKit release version")
+# The release this plugin version uses. Plain variables, not cache entries: a
+# cached value would outlive an upgrade of the plugin, or a switch to another of
+# its packages, in an existing build folder, which would then keep the old
+# release's libraries until `flutter clean`.
+set(FFMPEGKIT_PACKAGE "min-gpl")
+set(FFMPEGKIT_VERSION "8.1.3")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (a dir containing lib/) to use instead of downloading")
 
 if(NOT FFMPEGKIT_LOCAL_DIR AND DEFINED ENV{FFMPEGKIT_LOCAL_DIR})
