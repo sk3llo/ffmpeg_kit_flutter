@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'ffmpeg_kit_flutter_new_min_gpl'
+  s.name             = 'ffmpeg_kit_flutter_new_converter_gpl'
   s.version          = '8.1.2'
   s.summary          = 'FFmpeg Kit for Flutter'
   s.description      = 'A Flutter plugin for running FFmpeg and FFprobe commands.'
@@ -12,25 +12,25 @@ Pod::Spec.new do |s|
   s.static_framework    = true
 
   s.source              = { :path => '.' }
-  s.source_files        = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/**/*.{h,m}'
-  s.public_header_files = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/include/**/*.h'
+  s.source_files        = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/**/*.{h,m}'
+  s.public_header_files = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/include/**/*.h'
 
-  s.default_subspec = 'min-gpl'
+  s.default_subspec = 'converter-gpl'
 
   s.dependency          'Flutter'
   # The vendored xcframeworks ship a native arm64 iOS-simulator slice, so arm64
   # must NOT be excluded for the simulator (required by Apple Silicon / Xcode 26+).
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 
-  s.subspec 'min-gpl' do |ss|
+  s.subspec 'converter-gpl' do |ss|
     s.prepare_command = <<-CMD
       if [ ! -d "./Frameworks/ffmpegkit.xcframework" ]; then
         chmod +x ../scripts/setup_ios.sh
         ../scripts/setup_ios.sh
         fi
     CMD
-    ss.source_files         = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/**/*.{h,m}'
-    ss.public_header_files  = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/include/**/*.h'
+    ss.source_files         = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/**/*.{h,m}'
+    ss.public_header_files  = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/include/**/*.h'
     ss.ios.vendored_frameworks = 'Frameworks/ffmpegkit.xcframework',
                                  'Frameworks/libavcodec.xcframework',
                                  'Frameworks/libavdevice.xcframework',

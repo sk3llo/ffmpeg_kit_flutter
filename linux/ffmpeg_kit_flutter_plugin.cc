@@ -1,4 +1,4 @@
-#include "include/ffmpeg_kit_flutter_new_min_gpl/f_fmpeg_kit_flutter_plugin.h"
+#include "include/ffmpeg_kit_flutter_new_converter_gpl/f_fmpeg_kit_flutter_plugin.h"
 
 #include <flutter_linux/flutter_linux.h>
 #include <gtk/gtk.h>

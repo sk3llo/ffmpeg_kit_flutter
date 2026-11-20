@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  ffmpeg_kit_flutter_new_min_gpl
+  ffmpeg_kit_flutter_new_converter_gpl
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

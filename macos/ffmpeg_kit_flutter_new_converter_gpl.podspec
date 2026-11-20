@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'ffmpeg_kit_flutter_new_min_gpl'
+  s.name             = 'ffmpeg_kit_flutter_new_converter_gpl'
   s.version          = '8.1.2'
   s.summary          = 'FFmpeg Kit for Flutter'
   s.description      = 'A Flutter plugin for running FFmpeg and FFprobe commands.'
@@ -12,17 +12,17 @@ Pod::Spec.new do |s|
   s.static_framework    = true
 
   s.source              = { :path => '.' }
-  s.source_files        = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/**/*.{h,m}'
-  s.public_header_files = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/include/**/*.h'
+  s.source_files        = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/**/*.{h,m}'
+  s.public_header_files = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/include/**/*.h'
 
-  s.default_subspec     = 'min-gpl'
+  s.default_subspec     = 'converter-gpl'
 
   s.dependency          'FlutterMacOS'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
-  s.subspec 'min-gpl' do |ss|
-    ss.source_files         = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/**/*.{h,m}'
-    ss.public_header_files  = 'ffmpeg_kit_flutter_new_min_gpl/Sources/ffmpeg_kit_flutter_new_min_gpl/include/**/*.h'
+  s.subspec 'converter-gpl' do |ss|
+    ss.source_files         = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/**/*.{h,m}'
+    ss.public_header_files  = 'ffmpeg_kit_flutter_new_converter_gpl/Sources/ffmpeg_kit_flutter_new_converter_gpl/include/**/*.h'
     ss.osx.vendored_frameworks = 'Frameworks/ffmpegkit.framework',
                                  'Frameworks/libavcodec.framework',
                                  'Frameworks/libavdevice.framework',

@@ -6,7 +6,7 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <ffmpeg_kit_flutter_new_min_gpl/f_fmpeg_kit_flutter_plugin.h>
+#include <ffmpeg_kit_flutter_new_converter_gpl/f_fmpeg_kit_flutter_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   FFmpegKitFlutterPluginRegisterWithRegistrar(

@@ -1,13 +1,13 @@
-# FFmpegKit for Flutter: Minimal GPL
+# FFmpegKit for Flutter: Converter GPL
 
-[![pub package](https://img.shields.io/pub/v/ffmpeg_kit_flutter_new_min_gpl?logo=dart)](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)
+[![pub package](https://img.shields.io/pub/v/ffmpeg_kit_flutter_new_converter_gpl?logo=dart)](https://pub.dev/packages/ffmpeg_kit_flutter_new_converter_gpl)
 [![FFmpeg](https://img.shields.io/badge/FFmpeg-8.1.2-green)](https://ffmpeg.org/download.html)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 [![Discord](https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=discord)](https://discord.gg/8NVwykjA)
 
 Run FFmpeg and FFprobe commands from Dart on Android, iOS, macOS, Windows and Linux.
 
-This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), which is no longer developed upstream, updated for the Android V2 embedding and current Flutter releases. `ffmpeg_kit_flutter_new_min_gpl` is the **Minimal GPL** variant: the minimal build plus the GPL video codecs. See [Choosing a package](#choosing-a-package) for the alternatives.
+This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit/tree/main/flutter/flutter), which is no longer developed upstream, updated for the Android V2 embedding and current Flutter releases. `ffmpeg_kit_flutter_new_converter_gpl` is the **Converter GPL** variant: the encoders that converting between common audio and video formats needs (x264, x265, LAME, Opus, libvorbis, libvpx and libwebp) and the dav1d AV1 decoder, without the rest of the full build. See [Choosing a package](#choosing-a-package) for the alternatives.
 
 ## Features
 
@@ -24,17 +24,17 @@ Requires Flutter 3.41 or later.
 
 ```yaml
 dependencies:
-  ffmpeg_kit_flutter_new_min_gpl: ^2.6.3
+  ffmpeg_kit_flutter_new_converter_gpl: ^2.6.3
 ```
 
 ```dart
-import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_converter_gpl/ffmpeg_kit.dart';
 ```
 
 ## Quick start
 
 ```dart
-import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_converter_gpl/ffmpeg_kit.dart';
 
 final session = await FFmpegKit.execute('-i input.mp4 -c:v mpeg4 output.mp4');
 final returnCode = await session.getReturnCode();
@@ -55,7 +55,7 @@ The plugin is published as eight packages that share the same Dart API and diffe
 | Package | Contents |
 |---|---|
 | [`_min`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min) | Smallest build, core FFmpeg only |
-| [`_min_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) (this package) | Minimal plus GPL codecs (x264, x265, xvid, vid.stab) |
+| [`_min_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl) | Minimal plus GPL codecs (x264, x265, xvid, vid.stab) |
 | [`_https`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https) | Adds TLS (`gnutls`) for `https://` inputs |
 | [`_https_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS plus GPL codecs |
 | [`_audio`](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio) | Audio codecs (mp3, opus, vorbis, speex and others) |
@@ -133,7 +133,7 @@ The table lists the system and external libraries enabled in each package's Andr
 
 With Swift Package Manager, Xcode downloads the XCFrameworks and checks them against the checksums pinned in the package.
 
-With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`8.1.2-min-gpl` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/8.1.2-min-gpl) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
+With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`8.1.2-converter-gpl` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/8.1.2-converter-gpl) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
 
 If your network cannot reach GitHub, mirror the zip and set `FFMPEG_KIT_IOS_URL` (or `FFMPEG_KIT_MACOS_URL`) to the mirror's address. The SHA-256 check applies to a mirror too.
 
@@ -141,7 +141,7 @@ If your network cannot reach GitHub, mirror the zip and set `FFMPEG_KIT_IOS_URL`
 
 Prebuilt FFmpeg 8.1.2 libraries are downloaded into your application's build directory the first time you build. To build against a locally built bundle instead, set `FFMPEGKIT_LOCAL_DIR` (as an environment variable or a CMake cache variable) to the bundle directory before running `flutter run` or `flutter build windows`.
 
-The bundle's license notices are installed next to your executable in `licenses/ffmpeg_kit_flutter_new_min_gpl/`. See [License](#license).
+The bundle's license notices are installed next to your executable in `licenses/ffmpeg_kit_flutter_new_converter_gpl/`. See [License](#license).
 
 ### Linux
 
@@ -158,7 +158,7 @@ sudo dnf install json-glib-devel        # Fedora
 <summary><strong>Execute a command and read the result</strong></summary>
 
 ```dart
-import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new_converter_gpl/ffmpeg_kit.dart';
 
 FFmpegKit.execute('-i file1.mp4 -c:v mpeg4 file2.mp4').then((session) async {
   final returnCode = await session.getReturnCode();
@@ -262,9 +262,9 @@ FFmpegKitConfig.setFontDirectoryList(["/system/fonts", "/System/Library/Fonts", 
 
 ## License
 
-The plugin is licensed under LGPL 3.0. This package also includes GPL 3.0 components (`x264`, `x265`, `xvidcore`, `vid.stab`), so an application that uses it is distributed under GPL 3.0.
+The plugin is licensed under LGPL 3.0. This package also includes GPL 3.0 components (`x264`, `x265`), so an application that uses it is distributed under GPL 3.0.
 
-FFmpeg and the bundled third-party libraries keep their own licenses. On Windows, the prebuilt bundle includes a `LICENSES/` directory with the FFmpeg and FFmpegKit license texts, and a `NOTICE.txt` that lists every bundled DLL with its license, version and a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new_min_gpl/` next to your executable; ship that directory with your application.
+FFmpeg and the bundled third-party libraries keep their own licenses. On Windows, the prebuilt bundle includes a `LICENSES/` directory with the FFmpeg and FFmpegKit license texts, and a `NOTICE.txt` that lists every bundled DLL with its license, version and a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new_converter_gpl/` next to your executable; ship that directory with your application.
 
 ## Support
 

@@ -3,12 +3,12 @@
 
 import PackageDescription
 
-// FFmpeg 8.1.2 min-gpl prebuilt binaries.
+// FFmpeg 8.1.2 converter-gpl prebuilt binaries.
 // Each zip contains one combined XCFramework with ios-arm64 (arm64e dropped, #164),
 // ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices.
 // URLs and checksums are regenerated on every native FFmpeg release
 // (see scripts/build_spm_artifacts.sh).
-let ffmpegTag = "8.1.2-min-gpl"
+let ffmpegTag = "8.1.2-converter-gpl"
 let ffmpegBase = "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/\(ffmpegTag)"
 let ffmpegLibs: [(name: String, checksum: String)] = [
     ("ffmpegkit", "75e4466decd57f882a04324a7cd43f8d1e390f614e16c74ece11099391e92c73"),
@@ -22,12 +22,12 @@ let ffmpegLibs: [(name: String, checksum: String)] = [
 ]
 
 let package = Package(
-    name: "ffmpeg_kit_flutter_new_min_gpl",
+    name: "ffmpeg_kit_flutter_new_converter_gpl",
     platforms: [
-        .macOS("10.15")
+        .iOS("14.0")
     ],
     products: [
-        .library(name: "ffmpeg-kit-flutter-new-min-gpl", targets: ["ffmpeg_kit_flutter_new_min_gpl"])
+        .library(name: "ffmpeg-kit-flutter-new-converter-gpl", targets: ["ffmpeg_kit_flutter_new_converter_gpl"])
     ],
     dependencies: [
         .package(name: "FlutterFramework", path: "../FlutterFramework")
@@ -40,12 +40,12 @@ let package = Package(
         )
     } + [
         .target(
-            name: "ffmpeg_kit_flutter_new_min_gpl",
+            name: "ffmpeg_kit_flutter_new_converter_gpl",
             dependencies: ffmpegLibs.map { .target(name: $0.name) } + [
                 .product(name: "FlutterFramework", package: "FlutterFramework")
             ],
             cSettings: [
-                .headerSearchPath("include/ffmpeg_kit_flutter_new_min_gpl")
+                .headerSearchPath("include/ffmpeg_kit_flutter_new_converter_gpl")
             ]
         )
     ]

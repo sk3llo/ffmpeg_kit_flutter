@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit_config.dart';
-import 'package:ffmpeg_kit_flutter_new_min_gpl/level.dart';
+import 'package:ffmpeg_kit_flutter_new_converter_gpl/ffmpeg_kit_config.dart';
+import 'package:ffmpeg_kit_flutter_new_converter_gpl/level.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.14)
 
 # Must match the pubspec package name so the generated public header lands at
-# include/ffmpeg_kit_flutter_new_min_gpl/ where generated_plugin_registrant.cc expects it.
-set(PROJECT_NAME "ffmpeg_kit_flutter_new_min_gpl")
+# include/ffmpeg_kit_flutter_new_converter_gpl/ where generated_plugin_registrant.cc expects it.
+set(PROJECT_NAME "ffmpeg_kit_flutter_new_converter_gpl")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Must match the Flutter plugin target name derived from the pubspec package
-# name (ffmpeg_kit_flutter_new_min_gpl): generated_plugins.cmake links ${plugin}_plugin
+# name (ffmpeg_kit_flutter_new_converter_gpl): generated_plugins.cmake links ${plugin}_plugin
 # and bundles ${plugin}_bundled_libraries.
-set(PLUGIN_NAME "ffmpeg_kit_flutter_new_min_gpl_plugin")
+set(PLUGIN_NAME "ffmpeg_kit_flutter_new_converter_gpl_plugin")
 
 add_library(${PLUGIN_NAME} SHARED
   "ffmpeg_kit_flutter_plugin.cpp"
@@ -86,15 +86,15 @@ message(STATUS "FFmpegKit prebuilt dir: ${FFMPEGKIT_PREBUILT_DIR} (arch: ${FFMPE
 
 # FFmpegKit package variant to consume.
 #
-# This branch ships the GPL "min-gpl" variant, so the default is "min-gpl": a
-# bare FFmpeg plus only the four GPL video libraries (x264, x265, xvid,
-# vid.stab) and --enable-gpl, and nothing else. The variant name is an emergent
-# property of that exact library set (see windows/src/Packages.cpp).
-#   * The CANONICAL min-gpl build (reports "min-gpl") is produced by
-#     `FFMPEGKIT_VARIANT=min-gpl ./windows.sh` in ffmpeg-kit — consume a self-built bundle by
-#     setting FFMPEGKIT_LOCAL_DIR.
-# Distributing min-gpl makes the whole application GPL.
-set(FFMPEGKIT_PACKAGE "min-gpl" CACHE STRING "FFmpegKit variant: min-gpl, min, full, full-gpl, https, ...")
+# This branch ships the GPL "converter-gpl" variant, so the default is
+# "converter-gpl": FFmpeg with x264, x265, LAME, Opus, libvorbis, libvpx, libwebp
+# and dav1d, built with --enable-gpl --enable-version3, and nothing else. The
+# variant name is an emergent property of that exact library set.
+#   * The CANONICAL converter-gpl build (reports "converter-gpl") is produced by
+#     `FFMPEGKIT_VARIANT=converter-gpl ./windows.sh --enable-gpl` in ffmpeg-kit — consume a
+#     self-built bundle by setting FFMPEGKIT_LOCAL_DIR.
+# Distributing converter-gpl makes the whole application GPL.
+set(FFMPEGKIT_PACKAGE "converter-gpl" CACHE STRING "FFmpegKit variant: converter-gpl, min-gpl, min, full, full-gpl, https, ...")
 set(FFMPEGKIT_VERSION "8.1.2" CACHE STRING "FFmpegKit release version")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (dir containing bin/ [+ include/]) to use instead of downloading")
 
@@ -192,9 +192,9 @@ if(NOT "${FFMPEGKIT_HAVE}" STREQUAL "${FFMPEGKIT_WANT}")
   message(STATUS "FFmpegKit ${FFMPEGKIT_WANT} ready")
 endif()
 
-# Bundle every DLL shipped in the prebuilt bin/. The min-gpl build links the
-# external codecs (x264, x265, xvid, vid.stab) statically into the av* DLLs, but
-# globbing also picks up any extra MinGW runtime DLLs and is robust to FFmpeg
+# Bundle every DLL shipped in the prebuilt bin/. The converter-gpl bundle ships
+# its codecs as MSYS2 DLLs next to the av* DLLs, and globbing picks them all up,
+# with any extra MinGW runtime DLLs, and is robust to FFmpeg
 # soname bumps (avcodec-61 -> 62, etc.) without editing this list.
 file(GLOB FFMPEGKIT_DLLS "${FFMPEGKIT_PREBUILT_DIR}/bin/*.dll")
 if(NOT FFMPEGKIT_DLLS)
@@ -225,7 +225,7 @@ if(FFMPEGKIT_DISABLE_ASLR)
   add_dependencies(${PLUGIN_NAME} patch_ffmpegkit_dlls)
 endif()
 
-set(ffmpeg_kit_flutter_new_min_gpl_bundled_libraries
+set(ffmpeg_kit_flutter_new_converter_gpl_bundled_libraries
   ${FFMPEGKIT_DLLS}
   PARENT_SCOPE
 )

@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 3.13)
 # Must match the pubspec package name: the Flutter tool looks for the public
 # header under include/<package_name>/ and generated_plugins.cmake links
 # ${plugin}_plugin and bundles ${plugin}_bundled_libraries.
-set(PROJECT_NAME "ffmpeg_kit_flutter_new_min_gpl")
+set(PROJECT_NAME "ffmpeg_kit_flutter_new_converter_gpl")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
-set(PLUGIN_NAME "ffmpeg_kit_flutter_new_min_gpl_plugin")
+set(PLUGIN_NAME "ffmpeg_kit_flutter_new_converter_gpl_plugin")
 
 add_library(${PLUGIN_NAME} SHARED
   "ffmpeg_kit_flutter_plugin.cc"
@@ -65,7 +65,7 @@ endif()
 # never reached through a symlink. The cost is one download per build
 # configuration rather than one per machine.
 set(FFMPEGKIT_PREBUILT_DIR "${CMAKE_CURRENT_BINARY_DIR}/ffmpeg-kit")
-set(FFMPEGKIT_PACKAGE "min-gpl" CACHE STRING "FFmpegKit variant: min, min-gpl, https, https-gpl, audio, video, full, full-gpl")
+set(FFMPEGKIT_PACKAGE "converter-gpl" CACHE STRING "FFmpegKit variant: min, min-gpl, https, https-gpl, audio, video, converter-gpl, full, full-gpl")
 set(FFMPEGKIT_VERSION "8.1.2" CACHE STRING "FFmpegKit release version")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (a dir containing lib/) to use instead of downloading")
 
@@ -155,7 +155,7 @@ endif()
 # The plugin resolves libffmpegkit.so at runtime with dlopen() rather than
 # linking it, so the bundled copy stays the single source of truth and the
 # plugin still loads when a variant ships extra codec libraries.
-set(ffmpeg_kit_flutter_new_min_gpl_bundled_libraries
+set(ffmpeg_kit_flutter_new_converter_gpl_bundled_libraries
   ${FFMPEGKIT_LIBS}
   PARENT_SCOPE
 )

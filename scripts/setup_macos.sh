@@ -17,7 +17,7 @@
 set -euo pipefail
 
 VERSION="8.1.2"
-VARIANT="min-gpl"
+VARIANT="converter-gpl"
 DEFAULT_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${VERSION}-${VARIANT}/ffmpeg-kit-macos-${VARIANT}-${VERSION}.zip"
 MACOS_URL="${FFMPEG_KIT_MACOS_URL:-$DEFAULT_URL}"
 # Lower-cased, without the "sha256:" prefix GitHub prints in front of a digest.
