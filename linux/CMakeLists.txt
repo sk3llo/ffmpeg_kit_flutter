@@ -10,6 +10,7 @@ set(PLUGIN_NAME "ffmpeg_kit_flutter_new_min_plugin")
 
 add_library(${PLUGIN_NAME} SHARED
   "ffmpeg_kit_flutter_plugin.cc"
+  "ffmpeg_kit_library_loader.cc"
 )
 
 # apply_standard_settings comes from the host application's linux/CMakeLists.txt.
