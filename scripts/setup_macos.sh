@@ -14,6 +14,11 @@
 #   * FFMPEG_KIT_MACOS_SHA256, when set, is the SHA-256 the downloaded zip must
 #     have, whichever URL it came from. On a mismatch nothing is unpacked.
 #
+# Zips from 8.1.3 on carry <name>.framework.dSYM beside each framework. They
+# are installed beside the frameworks, where CocoaPods finds a vendored
+# framework's dSYM and copies it into builds and archives. A zip without dSYMs
+# installs as before.
+#
 set -euo pipefail
 
 VERSION="8.1.2"
@@ -122,6 +127,9 @@ rm -rf Frameworks
 mkdir -p Frameworks
 for FW in $FRAMEWORKS; do
   mv "$WORK/extract/${FW}.framework" "Frameworks/${FW}.framework"
+  if [ -d "$WORK/extract/${FW}.framework.dSYM" ]; then
+    mv "$WORK/extract/${FW}.framework.dSYM" "Frameworks/${FW}.framework.dSYM"
+  fi
 done
 
 echo "[ffmpeg_kit_flutter] macOS frameworks installed successfully."
