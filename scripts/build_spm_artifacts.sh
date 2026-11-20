@@ -17,6 +17,10 @@
 # arm64 slice's LC_BUILD_VERSION platform from iOS (2) to iOS-Simulator (7) —
 # FFmpeg is plain C with no platform-conditional linkage, so the retagged slice
 # runs natively on Apple Silicon simulators (required by Xcode 26+).
+#
+# Every slice carries its dSYM (-debug-symbols), so the zips must hold
+# <name>.framework.dSYM beside each framework, as they do from 8.1.3 on, with
+# the same UUIDs as the frameworks.
 set -euo pipefail
 
 VARIANT="${1:?usage: build_spm_artifacts.sh <variant> <version>}"
@@ -50,6 +54,24 @@ done
 # Refuse to package frameworks that are incomplete or would not sign.
 "$HERE/check_apple_zip.sh" --platform ios ios
 "$HERE/check_apple_zip.sh" --platform macos macos
+
+# slice_dsym <dSYM> <binary> <output dSYM>: a copy of <dSYM> that holds only
+# the DWARF for <binary>'s architectures. Fails if <dSYM> lacks one of them.
+# vtool's retag keeps the arm64 slice's UUID, so the device arm64 DWARF also
+# matches the simulator's arm64 slice.
+slice_dsym() {
+  local SRC="$1" BIN="$2" OUT="$3" A EXTRACT=()
+  local DWARF="Contents/Resources/DWARF/$(basename "$SRC" .framework.dSYM)"
+  for A in $(lipo -archs "$BIN"); do EXTRACT+=(-extract "$A"); done
+  rm -rf "$OUT" && mkdir -p "$(dirname "$OUT")" && cp -R "$SRC" "$OUT" &&
+    lipo "$SRC/$DWARF" "${EXTRACT[@]}" -output "$OUT/$DWARF" 2>/dev/null
+}
+
+# matches_dsym <binary> <dSYM>: the same UUID for every architecture.
+uuids() { dwarfdump --uuid "$1" | awk '{print $2, $3}' | sort; }
+matches_dsym() {
+  [ "$(uuids "$1")" = "$(uuids "$2/Contents/Resources/DWARF/$(basename "$2" .framework.dSYM)")" ]
+}
 
 convert() {
   local FW="$1"
@@ -90,11 +112,24 @@ convert() {
   fi
   lipo -create "${SIM_ARGS[@]}" -output "$STAGE/sim/${FW}.framework/${FW}"
 
+  # Debug symbols for each slice; -debug-symbols takes absolute paths.
+  local DEV_DSYM="$PWD/$STAGE/device-dsym/${FW}.framework.dSYM"
+  local SIM_DSYM="$PWD/$STAGE/sim-dsym/${FW}.framework.dSYM"
+  local MAC_DSYM="$PWD/macos/${FW}.framework.dSYM"
+  slice_dsym "ios/${FW}.framework.dSYM" "$STAGE/device/${FW}.framework/${FW}" "$DEV_DSYM" &&
+    slice_dsym "ios/${FW}.framework.dSYM" "$STAGE/sim/${FW}.framework/${FW}" "$SIM_DSYM" &&
+    [ -d "$MAC_DSYM" ] ||
+    { echo "ERROR: ${FW}.framework.dSYM is missing or lacks an architecture" >&2; exit 1; }
+  matches_dsym "$STAGE/device/${FW}.framework/${FW}" "$DEV_DSYM" &&
+    matches_dsym "$STAGE/sim/${FW}.framework/${FW}" "$SIM_DSYM" &&
+    matches_dsym "${MAC_DIR}/${FW}" "$MAC_DSYM" ||
+    { echo "ERROR: ${FW}.framework.dSYM does not match the framework's UUIDs" >&2; exit 1; }
+
   rm -rf "out/${FW}.xcframework"
   xcodebuild -create-xcframework \
-    -framework "$STAGE/device/${FW}.framework" \
-    -framework "$STAGE/sim/${FW}.framework" \
-    -framework "$MAC_DIR" \
+    -framework "$STAGE/device/${FW}.framework" -debug-symbols "$DEV_DSYM" \
+    -framework "$STAGE/sim/${FW}.framework" -debug-symbols "$SIM_DSYM" \
+    -framework "$MAC_DIR" -debug-symbols "$MAC_DSYM" \
     -output "out/${FW}.xcframework" >/dev/null
 
   # ditto preserves the macOS slice's Versions/ symlinks inside the zip.
