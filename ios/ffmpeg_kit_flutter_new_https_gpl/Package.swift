@@ -3,28 +3,28 @@
 
 import PackageDescription
 
-// FFmpeg 8.1.2 https-gpl prebuilt binaries.
+// FFmpeg 8.1.3 https-gpl prebuilt binaries.
 // Each zip contains one combined XCFramework with ios-arm64 (arm64e dropped, #164),
-// ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices.
+// ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices, each with its dSYM.
 // URLs and checksums are regenerated on every native FFmpeg release
 // (see scripts/build_spm_artifacts.sh).
-let ffmpegTag = "8.1.2-https-gpl"
+let ffmpegTag = "8.1.3-https-gpl"
 let ffmpegBase = "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/\(ffmpegTag)"
 let ffmpegLibs: [(name: String, checksum: String)] = [
-    ("ffmpegkit", "075f6a2d102c668311f8a9c58bb351e3f38aa90c7abb4f130fbb8f59a20aa2f7"),
-    ("libavcodec", "dc8e7e340ae683cf4215fcc7661bb4314b028b7441b658d1adcfd6ee0f15960e"),
-    ("libavdevice", "54e1fd05ab7f2c3bb1523f3b02b650f587091866227be2a537054bebdeb4ed5f"),
-    ("libavfilter", "8418b040f2161c8a6d0d54462737370d4ff44cabf161d35fed0c80248c0aa19c"),
-    ("libavformat", "daa5a6bf0e4164c517a35598413948282b1e5153600daa5f00b9334ec9674138"),
-    ("libavutil", "88bea70eeca849356d74c2744390aaa02ee50bf4924c958e08ac11016d5fb01b"),
-    ("libswresample", "7fe7119378ca3ac9c31964aaa00e67ea9d61418cf472814808b99a510ce434ab"),
-    ("libswscale", "3ec71939ac96e9717ee66db0dd7478db650238a0c40f42541d247c9099def670"),
+    ("ffmpegkit", "83cdb48e7fd6cc3a5dca9d752425de4c67c3ff7cabd03dd60fd537fbe49831e5"),
+    ("libavcodec", "6679cce2a72ec230d9c11a277df81a7fa75dbdf906afcf4bb37e23dfa4c705d9"),
+    ("libavdevice", "d1901b0812ffeb64d9b92d322744731cf9438f4f6a47185a9e0b3c35b6001525"),
+    ("libavfilter", "6030f60e95fc11198860d11f9adb860f586aacd48be87778cbd81f4e04a3aeec"),
+    ("libavformat", "bce16f836bc8a2a5ec8029fc16c6f3c395c9f0276efec3d87388b4376193d86c"),
+    ("libavutil", "9b2d4442e4251d8553e9067a3c8cd8f949ef224df1f2653173e1399050646b93"),
+    ("libswresample", "97292173919101503749c8dd7884e94fbac4ead77138915d677156f534859280"),
+    ("libswscale", "1b253bc0fcb623838176de3b1929a16745345b11180e0f6b04d8db85422eb9dd"),
 ]
 
 let package = Package(
     name: "ffmpeg_kit_flutter_new_https_gpl",
     platforms: [
-        .iOS("14.0")
+        .iOS("15.0")
     ],
     products: [
         .library(name: "ffmpeg-kit-flutter-new-https-gpl", targets: ["ffmpeg_kit_flutter_new_https_gpl"])
