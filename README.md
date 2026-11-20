@@ -1,7 +1,7 @@
 # FFmpegKit for Flutter: Full GPL
 
 [![pub package](https://img.shields.io/pub/v/ffmpeg_kit_flutter_new?logo=dart)](https://pub.dev/packages/ffmpeg_kit_flutter_new)
-[![FFmpeg](https://img.shields.io/badge/FFmpeg-8.1.2-green)](https://ffmpeg.org/download.html)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-8.1.3-green)](https://ffmpeg.org/download.html)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 [![Discord](https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=discord)](https://discord.gg/8NVwykjA)
 
@@ -11,7 +11,7 @@ This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit
 
 ## Features
 
-- FFmpeg 8.1.2 and FFprobe, with per-session logs, statistics and completion callbacks.
+- FFmpeg 8.1.3 and FFprobe, with per-session logs, statistics and completion callbacks.
 - One Dart API for Android, iOS, macOS, Windows (x86_64) and Linux (x86_64).
 - Prebuilt native libraries for every platform, so nothing is compiled during your build.
 - Hardware-accelerated encoding and decoding through VideoToolbox on iOS and macOS.
@@ -124,8 +124,8 @@ The table lists the system and external libraries enabled in each package's Andr
 | Platform | Minimum version | Architectures |
 |---|---|---|
 | Android | API 24 | `arm-v7a`, `arm-v7a-neon`, `arm64-v8a`, `x86`, `x86_64` |
-| iOS | 14.0 | `arm64` (device); `arm64`, `x86_64` (simulator), shipped as `.xcframework` |
-| macOS | 10.15 | `arm64`, `x86_64` |
+| iOS | 15.0 | `arm64` (device); `arm64`, `x86_64` (simulator), shipped as `.xcframework` |
+| macOS | 11.0 | `arm64`, `x86_64` |
 | Windows | 10 | `x86_64` |
 | Linux | - | `x86_64` |
 
@@ -133,19 +133,21 @@ The table lists the system and external libraries enabled in each package's Andr
 
 With Swift Package Manager, Xcode downloads the XCFrameworks and checks them against the checksums pinned in the package.
 
-With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`8.1.2-full-gpl` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/8.1.2-full-gpl) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
+With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`8.1.3-full-gpl` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/8.1.3-full-gpl) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
 
 If your network cannot reach GitHub, mirror the zip and set `FFMPEG_KIT_IOS_URL` (or `FFMPEG_KIT_MACOS_URL`) to the mirror's address. The SHA-256 check applies to a mirror too.
 
+With either package manager, the frameworks come with their dSYMs, so Xcode puts them in your app's archives and crash reports symbolicate inside FFmpeg.
+
 ### Windows
 
-Prebuilt FFmpeg 8.1.2 libraries are downloaded into your application's build directory the first time you build. To build against a locally built bundle instead, set `FFMPEGKIT_LOCAL_DIR` (as an environment variable or a CMake cache variable) to the bundle directory before running `flutter run` or `flutter build windows`.
+Prebuilt FFmpeg 8.1.3 libraries are downloaded into your application's build directory the first time you build. To build against a locally built bundle instead, set `FFMPEGKIT_LOCAL_DIR` (as an environment variable or a CMake cache variable) to the bundle directory before running `flutter run` or `flutter build windows`.
 
 The bundle's license notices are installed next to your executable in `licenses/ffmpeg_kit_flutter_new/`. See [License](#license).
 
 ### Linux
 
-Prebuilt FFmpeg 8.1.2 libraries are downloaded at build time in the same way as on Windows, and `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin requires `libjson-glib-dev`:
+Prebuilt FFmpeg 8.1.3 libraries are downloaded at build time in the same way as on Windows, and `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin requires `libjson-glib-dev`:
 
 ```bash
 sudo apt-get install libjson-glib-dev   # Debian, Ubuntu

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ffmpeg_kit_flutter_new'
-  s.version          = '8.1.2'
+  s.version          = '8.1.3'
   s.summary          = 'FFmpeg Kit for Flutter'
   s.description      = 'A Flutter plugin for running FFmpeg and FFprobe commands.'
   s.homepage         = 'https://github.com/sk3llo/ffmpeg_kit_flutter'
@@ -42,6 +42,6 @@ Pod::Spec.new do |s|
                                  'Frameworks/libswscale.xcframework'
     ss.ios.frameworks = 'AudioToolbox', 'CoreMedia'
     ss.libraries = 'z', 'bz2', 'c++', 'iconv'
-    ss.ios.deployment_target = '14.0'
+    ss.ios.deployment_target = '15.0'
   end
 end
