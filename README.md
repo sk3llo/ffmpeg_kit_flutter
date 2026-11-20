@@ -50,7 +50,7 @@ if (ReturnCode.isSuccess(returnCode)) {
 
 ## Choosing a package
 
-The plugin is published as eight packages that share the same Dart API and differ only in the native libraries they bundle. Choose the smallest one that covers the codecs you need. The GPL-licensed codecs (`x264`, `x265`, `xvidcore`, `vid.stab`) are only included in the `-gpl` packages.
+The plugin is published as nine packages that share the same Dart API and differ only in the native libraries they bundle. Choose the smallest one that covers the codecs you need. The GPL-licensed codecs (`x264`, `x265`, `xvidcore`, `vid.stab`) are only included in the `-gpl` packages.
 
 | Package | Contents |
 |---|---|
@@ -60,6 +60,7 @@ The plugin is published as eight packages that share the same Dart API and diffe
 | [`_https_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_https_gpl) | HTTPS plus GPL codecs |
 | [`_audio`](https://pub.dev/packages/ffmpeg_kit_flutter_new_audio) | Audio codecs (mp3, opus, vorbis, speex and others) |
 | [`_video`](https://pub.dev/packages/ffmpeg_kit_flutter_new_video) | Video codecs (dav1d, vpx, theora, webp and others) |
+| [`_converter_gpl`](https://pub.dev/packages/ffmpeg_kit_flutter_new_converter_gpl) (this package) | Converting between common formats: x264, x265, lame, opus, vorbis, vpx, webp and dav1d (GPL) |
 | [`_full`](https://pub.dev/packages/ffmpeg_kit_flutter_new_full) | Every library except the GPL codecs |
 | [`ffmpeg_kit_flutter_new`](https://pub.dev/packages/ffmpeg_kit_flutter_new) | Every library, including the GPL codecs |
 
@@ -77,6 +78,7 @@ The table lists the system and external libraries enabled in each package's Andr
 <th align="center"><sup>https-gpl</sup></th>
 <th align="center"><sup>audio</sup></th>
 <th align="center"><sup>video</sup></th>
+<th align="center"><sup>converter-gpl</sup></th>
 <th align="center"><sup>full</sup></th>
 <th align="center"><sup>full-gpl</sup></th>
 </tr>
@@ -90,16 +92,17 @@ The table lists the system and external libraries enabled in each package's Andr
 <td align="center"><sup>gmp</sup><br><sup>gnutls</sup><br><sup>vid.stab</sup><br><sup>x264</sup><br><sup>x265</sup><br><sup>xvidcore</sup></td>
 <td align="center"><sup>lame</sup><br><sup>libilbc</sup><br><sup>libvorbis</sup><br><sup>opencore-amr</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>twolame</sup><br><sup>vo-amrwbenc</sup></td>
 <td align="center"><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>kvazaar</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libtheora</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>snappy</sup><br><sup>zimg</sup></td>
-<td align="center"><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>gmp</sup><br><sup>gnutls</sup><br><sup>kvazaar</sup><br><sup>lame</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libilbc</sup><br><sup>libtheora</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>libxml2</sup><br><sup>opencore-amr</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>snappy</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>twolame</sup><br><sup>vo-amrwbenc</sup><br><sup>zimg</sup></td>
-<td align="center"><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>gmp</sup><br><sup>gnutls</sup><br><sup>kvazaar</sup><br><sup>lame</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libilbc</sup><br><sup>libtheora</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>libxml2</sup><br><sup>opencore-amr</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>snappy</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>twolame</sup><br><sup>vid.stab</sup><br><sup>vo-amrwbenc</sup><br><sup>x264</sup><br><sup>x265</sup><br><sup>xvidcore</sup><br><sup>zimg</sup></td>
+<td align="center"><sup>dav1d</sup><br><sup>lame</sup><br><sup>libiconv</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>opus</sup><br><sup>x264</sup><br><sup>x265</sup></td>
+<td align="center"><sup>chromaprint</sup><br><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>gmp</sup><br><sup>gnutls</sup><br><sup>kvazaar</sup><br><sup>lame</sup><br><sup>libaom</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libilbc</sup><br><sup>libtheora</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>libxml2</sup><br><sup>opencore-amr</sup><br><sup>openh264</sup><br><sup>openssl</sup><br><sup>opus</sup><br><sup>shine</sup><br><sup>snappy</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>srt</sup><br><sup>tesseract</sup><br><sup>twolame</sup><br><sup>vo-amrwbenc</sup><br><sup>zimg</sup></td>
+<td align="center"><sup>chromaprint</sup><br><sup>dav1d</sup><br><sup>fontconfig</sup><br><sup>freetype</sup><br><sup>fribidi</sup><br><sup>gmp</sup><br><sup>gnutls</sup><br><sup>kvazaar</sup><br><sup>lame</sup><br><sup>libaom</sup><br><sup>libass</sup><br><sup>libiconv</sup><br><sup>libilbc</sup><br><sup>libtheora</sup><br><sup>libvorbis</sup><br><sup>libvpx</sup><br><sup>libwebp</sup><br><sup>libxml2</sup><br><sup>opencore-amr</sup><br><sup>openh264</sup><br><sup>openssl</sup><br><sup>opus</sup><br><sup>rubberband</sup><br><sup>shine</sup><br><sup>snappy</sup><br><sup>soxr</sup><br><sup>speex</sup><br><sup>srt</sup><br><sup>tesseract</sup><br><sup>twolame</sup><br><sup>vid.stab</sup><br><sup>vo-amrwbenc</sup><br><sup>x264</sup><br><sup>x265</sup><br><sup>xvidcore</sup><br><sup>zimg</sup></td>
 </tr>
 <tr>
 <td align="center"><sup>android system libraries</sup></td>
-<td align="center" colspan=8><sup>zlib</sup><br><sup>MediaCodec</sup></td>
+<td align="center" colspan=9><sup>zlib</sup><br><sup>MediaCodec</sup></td>
 </tr>
 <tr>
 <td align="center"><sup>ios system libraries</sup></td>
-<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>iconv</sup><br><sup>zlib</sup></td>
+<td align="center" colspan=9><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>iconv</sup><br><sup>zlib</sup></td>
 </tr>
 <tr>
 <td align="center"><sup>ios VideoToolbox</sup></td>
@@ -111,10 +114,11 @@ The table lists the system and external libraries enabled in each package's Andr
 <td align="center">-</td>
 <td align="center"><sup>VideoToolbox</sup></td>
 <td align="center"><sup>VideoToolbox</sup></td>
+<td align="center"><sup>VideoToolbox</sup></td>
 </tr>
 <tr>
 <td align="center"><sup>macos system libraries</sup></td>
-<td align="center" colspan=8><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>Core Image</sup><br><sup>iconv</sup><br><sup>OpenCL</sup><br><sup>OpenGL</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
+<td align="center" colspan=9><sup>bzip2</sup><br><sup>AudioToolbox</sup><br><sup>AVFoundation</sup><br><sup>Core Image</sup><br><sup>iconv</sup><br><sup>OpenCL</sup><br><sup>OpenGL</sup><br><sup>VideoToolbox</sup><br><sup>zlib</sup></td>
 </tr>
 </tbody>
 </table>
@@ -266,7 +270,7 @@ FFmpegKitConfig.setFontDirectoryList(["/system/fonts", "/System/Library/Fonts", 
 
 The plugin is licensed under LGPL 3.0. This package also includes GPL 3.0 components (`x264`, `x265`), so an application that uses it is distributed under GPL 3.0.
 
-FFmpeg and the bundled third-party libraries keep their own licenses. On Windows, the prebuilt bundle includes a `LICENSES/` directory with the FFmpeg and FFmpegKit license texts, and a `NOTICE.txt` that lists every bundled DLL with its license, version and a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new_converter_gpl/` next to your executable; ship that directory with your application.
+FFmpeg and the bundled third-party libraries keep their own licenses. On Windows, the prebuilt bundle includes a `LICENSES/` directory with the FFmpeg and FFmpegKit license texts, and a `NOTICE.txt` that lists every bundled DLL with its license, version and a link to its exact source. The plugin installs it into `licenses/ffmpeg_kit_flutter_new_converter_gpl/` next to your executable; ship that directory with your application. The other platforms' downloads carry the same kind of `LICENSES/` directory, whose `NOTICE.txt` lists FFmpeg, FFmpegKit and each library compiled into the binaries: at the root of the Android AAR and of the iOS and macOS zips on the GitHub release, and in `ffmpeg-kit/LICENSES/` in the Linux bundle. The plugin doesn't copy those into your app.
 
 ## Support
 
