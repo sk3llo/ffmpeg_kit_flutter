@@ -196,7 +196,7 @@ convert_to_xcframework() {
   fi
   if echo "$ARCHS" | tr ' ' '\n' | grep -qx "arm64"; then
     lipo "$BIN" -thin arm64 -output "$STAGE/arm64-dev.dylib"
-    vtool -arch arm64 -set-build-version 7 "$MINOS" "$SDK" -replace \
+    vtool -arch arm64 -set-build-version iossim "$MINOS" "$SDK" -replace \
       -output "$STAGE/arm64-sim.dylib" "$STAGE/arm64-dev.dylib"
     SIM_ARGS+=("$STAGE/arm64-sim.dylib")
   fi
