@@ -84,7 +84,7 @@ convert() {
   fi
   if echo "$ARCHS" | tr ' ' '\n' | grep -qx "arm64"; then
     lipo "$IOS_BIN" -thin arm64 -output "$STAGE/arm64-dev.bin"
-    vtool -arch arm64 -set-build-version 7 "$MINOS" "$SDK" -replace \
+    vtool -arch arm64 -set-build-version iossim "$MINOS" "$SDK" -replace \
       -output "$STAGE/arm64-sim.bin" "$STAGE/arm64-dev.bin"
     SIM_ARGS+=("$STAGE/arm64-sim.bin")
   fi
