@@ -94,8 +94,13 @@ message(STATUS "FFmpegKit prebuilt dir: ${FFMPEGKIT_PREBUILT_DIR} (arch: ${FFMPE
 #     `FFMPEGKIT_VARIANT=converter-gpl ./windows.sh --enable-gpl` in ffmpeg-kit — consume a
 #     self-built bundle by setting FFMPEGKIT_LOCAL_DIR.
 # Distributing converter-gpl makes the whole application GPL.
-set(FFMPEGKIT_PACKAGE "converter-gpl" CACHE STRING "FFmpegKit variant: converter-gpl, min-gpl, min, full, full-gpl, https, ...")
-set(FFMPEGKIT_VERSION "8.1.3" CACHE STRING "FFmpegKit release version")
+#
+# The release this plugin version uses. Plain variables, not cache entries: a
+# cached value would outlive an upgrade of the plugin, or a switch to another of
+# its packages, in an existing build folder, which would then keep the old
+# release's libraries until `flutter clean`.
+set(FFMPEGKIT_PACKAGE "converter-gpl")
+set(FFMPEGKIT_VERSION "8.1.3")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (dir containing bin/ [+ include/]) to use instead of downloading")
 
 # Allow pointing at a local bundle via the environment too, so it can be set
