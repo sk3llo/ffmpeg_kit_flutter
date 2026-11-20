@@ -24,7 +24,7 @@ Requires Flutter 3.41 or later.
 
 ```yaml
 dependencies:
-  ffmpeg_kit_flutter_new_full: ^2.5.3
+  ffmpeg_kit_flutter_new_full: ^3.0.0
 ```
 
 ```dart
