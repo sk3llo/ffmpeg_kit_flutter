@@ -21,7 +21,7 @@
 #
 set -euo pipefail
 
-VERSION="8.1.2"
+VERSION="8.1.3"
 VARIANT="audio"
 DEFAULT_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${VERSION}-${VARIANT}/ffmpeg-kit-macos-${VARIANT}-${VERSION}.zip"
 MACOS_URL="${FFMPEG_KIT_MACOS_URL:-$DEFAULT_URL}"
