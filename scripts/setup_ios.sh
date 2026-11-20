@@ -19,6 +19,16 @@
 #   * FFMPEG_KIT_IOS_SHA256, when set, is the SHA-256 the downloaded zip must
 #     have, whichever URL it came from. On a mismatch nothing is unpacked.
 #
+# Zips from 8.1.3 on carry <name>.framework.dSYM beside each framework. It is
+# installed as Frameworks/<name>.dSYMs/<name>.framework.dSYM, where CocoaPods
+# looks for an .xcframework's dSYMs: its copy-dSYMs phase thins each one to the
+# build's architectures and puts it where archives collect dSYMs. One dSYM
+# serves both slices, since vtool's retag keeps the arm64 slice's UUID. A zip
+# without dSYMs installs as before. Don't put them inside the slices with
+# -debug-symbols instead: CocoaPods copies every slice of a pod into one folder
+# with rsync --delete, so the slices' dSYMs/ folders replace each other and only
+# the last framework's dSYM reaches the archive.
+#
 set -euo pipefail
 
 VERSION="8.1.2"
@@ -229,6 +239,10 @@ rm -rf Frameworks
 mkdir -p Frameworks
 for FW in $FRAMEWORKS; do
   mv "$WORK/extract/${FW}.xcframework" "Frameworks/${FW}.xcframework"
+  if [ -d "$WORK/extract/${FW}.framework.dSYM" ]; then
+    mkdir -p "Frameworks/${FW}.dSYMs"
+    mv "$WORK/extract/${FW}.framework.dSYM" "Frameworks/${FW}.dSYMs/${FW}.framework.dSYM"
+  fi
 done
 
 echo "[ffmpeg_kit_flutter] iOS frameworks installed successfully."
