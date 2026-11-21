@@ -17,8 +17,8 @@ void main() {
     final platform = await FFmpegKitConfig.getPlatform();
     debugPrint('FFmpeg version: $version, platform: $platform');
     expect(version, isNotNull);
-    // ffmpeg-kit reports the upstream tag name, e.g. "n8.1.3"
-    expect(version, contains('8.1'));
+    // ffmpeg-kit reports the upstream tag name, e.g. "n9.1"
+    expect(version, contains('9.1'));
   });
 
   testWidgets('encodes video with mpeg4 (built-in encoder)', (tester) async {
