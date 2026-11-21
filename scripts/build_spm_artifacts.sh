@@ -4,7 +4,7 @@
 # targets, and emit their checksums.
 #
 # Usage: build_spm_artifacts.sh <variant> <version>
-#   e.g. build_spm_artifacts.sh full-gpl 8.1.3
+#   e.g. build_spm_artifacts.sh full-gpl 9.1-beta.1
 #
 # Inputs:  GitHub release assets ffmpeg-kit-{ios,macos}-<variant>-<version>.zip
 #          under tag <version>-<variant>.
