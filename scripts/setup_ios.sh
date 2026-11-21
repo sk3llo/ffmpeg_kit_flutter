@@ -31,7 +31,7 @@
 #
 set -euo pipefail
 
-VERSION="8.1.3"
+VERSION="9.1-beta.1"
 VARIANT="min-gpl"
 DEFAULT_URL="https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/${VERSION}-${VARIANT}/ffmpeg-kit-ios-${VARIANT}-${VERSION}.zip"
 IOS_URL="${FFMPEG_KIT_IOS_URL:-$DEFAULT_URL}"

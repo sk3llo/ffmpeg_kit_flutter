@@ -3,22 +3,22 @@
 
 import PackageDescription
 
-// FFmpeg 8.1.3 min-gpl prebuilt binaries.
+// FFmpeg 9.1-beta.1 min-gpl prebuilt binaries.
 // Each zip contains one combined XCFramework with ios-arm64 (arm64e dropped, #164),
 // ios-arm64_x86_64-simulator and macos-arm64_x86_64 slices, each with its dSYM.
 // URLs and checksums are regenerated on every native FFmpeg release
 // (see scripts/build_spm_artifacts.sh).
-let ffmpegTag = "8.1.3-min-gpl"
+let ffmpegTag = "9.1-beta.1-min-gpl"
 let ffmpegBase = "https://github.com/sk3llo/ffmpeg_kit_flutter/releases/download/\(ffmpegTag)"
 let ffmpegLibs: [(name: String, checksum: String)] = [
-    ("ffmpegkit", "e66878df065aafee17f73d278eb21db5f75226c37e8577f7e11240bd2efc8ed6"),
-    ("libavcodec", "1d11ca13537e3736982705d23f192bad8b107dc6e69057ffc75dbeea61d9fef5"),
-    ("libavdevice", "a2deef370aa96d1dcd3e9155ec943fbd5d7e4285dfdd9909e17b0e5b78d0402d"),
-    ("libavfilter", "3e123b9c22ef83d037158cde937f98d7471c6327cd21995d375975085ca53531"),
-    ("libavformat", "d9d5bc121749141e901e54c1b0be41b879d6a87037fc897646db3ce9d0e7543a"),
-    ("libavutil", "160eac9c0c6b62bb8efc67252c75022521f647302c816f173dbbcdb24a003370"),
-    ("libswresample", "85735fc29a8e85a66a5ad056dfe98177b0befbd6b7f8b8c8360277e51b6d1124"),
-    ("libswscale", "42ebe51f5fe5ebd5e6022478d571a3a3362320b72ae138efeb77a6e562281fde"),
+    ("ffmpegkit", "6407fee3e1386a06e504406184f36a48d7e26f5625013c1acdc6b73ab846cd06"),
+    ("libavcodec", "0ad05f4326668d7241b38b7b08a1cfaec4dfad48b92ce87cf9e01b6f7d29391e"),
+    ("libavdevice", "99b611a4e017e8e7479c6620b2b552f5f40d3dd173af8a83222a5c22ae428c45"),
+    ("libavfilter", "8b0871af7a91dd780edf394e1c273b7a334730ff330bc6fbed1e4e46a571b691"),
+    ("libavformat", "37d405ff7560fed14044e1e83186718a45aedd3603fba29b98f9b5bd4ecf3136"),
+    ("libavutil", "700fd120adfbeb2847eaf20e7e8da14d55b0d56c2454590e0dc62d06c18767f1"),
+    ("libswresample", "93c1745f3e559b8e3a27420df3a997dd5c6ac8b442e3cd3f3d34cd476c450ebe"),
+    ("libswscale", "be0f315f16d99231e4d4358429fe804f342acdefad779af167495841f3f4072b"),
 ]
 
 let package = Package(

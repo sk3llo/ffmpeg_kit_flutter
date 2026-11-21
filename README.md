@@ -1,7 +1,7 @@
 # FFmpegKit for Flutter: Minimal GPL
 
 [![pub package](https://img.shields.io/pub/v/ffmpeg_kit_flutter_new_min_gpl?logo=dart)](https://pub.dev/packages/ffmpeg_kit_flutter_new_min_gpl)
-[![FFmpeg](https://img.shields.io/badge/FFmpeg-8.1.3-green)](https://ffmpeg.org/download.html)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-9.1-green)](https://ffmpeg.org/download.html)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 [![Discord](https://img.shields.io/discord/1387108888452665427?logo=discord&logoColor=white&label=discord)](https://discord.gg/8NVwykjA)
 
@@ -11,7 +11,7 @@ This is a maintained fork of [FFmpegKit](https://github.com/arthenica/ffmpeg-kit
 
 ## Features
 
-- FFmpeg 8.1.3 and FFprobe, with per-session logs, statistics and completion callbacks.
+- FFmpeg 9.1 and FFprobe, with per-session logs, statistics and completion callbacks.
 - One Dart API for Android, iOS, macOS, Windows (x86_64) and Linux (x86_64).
 - Prebuilt native libraries for every platform, so nothing is compiled during your build.
 - Hardware-accelerated encoding and decoding through VideoToolbox on iOS and macOS.
@@ -24,12 +24,45 @@ Requires Flutter 3.41 or later.
 
 ```yaml
 dependencies:
-  ffmpeg_kit_flutter_new_min_gpl: ^3.0.0
+  ffmpeg_kit_flutter_new_min_gpl: ^4.0.0-beta.1
 ```
 
 ```dart
 import 'package:ffmpeg_kit_flutter_new_min_gpl/ffmpeg_kit.dart';
 ```
+
+## Migrating from 8.1
+
+Version 4.0.0-beta.1 moves FFmpegKit from FFmpeg 8.1.3 to FFmpeg 9.1. The Dart API doesn't change, but some commands behave differently.
+
+**HTTPS certificates are checked.** FFmpeg 9 verifies the server's certificate for every `https://` input and output, against the device's trusted certificates. A server with an expired, self-signed or wrong-host certificate now fails to open where 8.1 connected.
+- To skip the check for one input, put `-tls_verify 0` before its `-i`.
+- To trust your own certificate authority, pass `-ca_file /path/to/ca.pem` instead.
+- On Windows, the `min`, `min-gpl`, `audio`, `video` and `converter-gpl` packages use Windows' own TLS (SChannel), which always checks against the Windows certificate store and ignores `-ca_file`.
+
+**Some `ffmpeg` options are gone.** A command that uses one fails with "Unrecognized option":
+
+| Removed | Use instead |
+|---|---|
+| `-vsync` | `-fps_mode` |
+| `-map_channel` | the `pan` or `channelmap` filter |
+| `-psnr` | `-flags +psnr` |
+| `-top` | the `setfield` filter |
+| `-absf`, `-vbsf` | `-bsf:a`, `-bsf:v` |
+| `-filter_script`, `-filter_complex_script` | `-/filter <file>`, `-/filter_complex <file>` |
+| `-qphist`, `-adrift_threshold` | nothing; drop them |
+
+`-copytb` is still accepted, but has no effect. `ffprobe` keeps all its options.
+
+**Formats removed:** CELT audio decoding (Opus is unaffected), CELT in Ogg, and the `asf_o` demuxer.
+
+**Media information:** `MediaInformation` and `StreamInformation`'s getters return the same values. `getAllProperties()` follows FFmpeg 9's `ffprobe`: streams no longer include `refs`, include `closed_captions` and `film_grain` only when frames are analysed (`-analyze_frames`), and leave out an unknown `level`; there are new fields such as `mime_codec_string` and `nb_stream_groups`.
+
+**Speed:** most commands run as fast as before. Two are slower: Vorbis encoding (`libvorbis`), about 3× on Android and 1.2–1.4× on Apple devices, and burning in subtitles with the `subtitles` filter, up to 2× inside apps, because FFmpeg 9 sets up libass and its fonts twice.
+
+**Statistics:** FFmpeg 9 sends its first statistics report once the outputs are set up, so a very short session can get one statistics callback fewer than before.
+
+**Library file names:** each FFmpeg library's major version goes up by one, so on Linux and Windows the files are now `libavcodec.so.63`, `avcodec-63.dll` and so on. That only matters if your app links FFmpeg's libraries directly rather than through FFmpegKit.
 
 ## Quick start
 
@@ -137,7 +170,7 @@ The table lists the system and external libraries enabled in each package's Andr
 
 With Swift Package Manager, Xcode downloads the XCFrameworks and checks them against the checksums pinned in the package.
 
-With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`8.1.3-min-gpl` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/8.1.3-min-gpl) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
+With CocoaPods, `pod install` downloads the prebuilt frameworks as a zip from the [`9.1-beta.1-min-gpl` release](https://github.com/sk3llo/ffmpeg_kit_flutter/releases/tag/9.1-beta.1-min-gpl) the first time it installs the plugin. To have that download checked, set `FFMPEG_KIT_IOS_SHA256` (or `FFMPEG_KIT_MACOS_SHA256`) to the zip's SHA-256 before running `pod install`. The release page shows the SHA-256 of each file. A zip with another SHA-256 is refused and nothing is installed. Frameworks that are already installed are not downloaded or checked again. A plugin version with new frameworks downloads a different zip, so update the value when you upgrade to one.
 
 If your network cannot reach GitHub, mirror the zip and set `FFMPEG_KIT_IOS_URL` (or `FFMPEG_KIT_MACOS_URL`) to the mirror's address. The SHA-256 check applies to a mirror too.
 
@@ -145,13 +178,13 @@ With either package manager, the frameworks come with their dSYMs, so Xcode puts
 
 ### Windows
 
-Prebuilt FFmpeg 8.1.3 libraries are downloaded into your application's build directory the first time you build. To build against a locally built bundle instead, set `FFMPEGKIT_LOCAL_DIR` (as an environment variable or a CMake cache variable) to the bundle directory before running `flutter run` or `flutter build windows`.
+Prebuilt FFmpeg 9.1 libraries are downloaded into your application's build directory the first time you build. To build against a locally built bundle instead, set `FFMPEGKIT_LOCAL_DIR` (as an environment variable or a CMake cache variable) to the bundle directory before running `flutter run` or `flutter build windows`.
 
 The bundle's license notices are installed next to your executable in `licenses/ffmpeg_kit_flutter_new_min_gpl/`. See [License](#license).
 
 ### Linux
 
-Prebuilt FFmpeg 8.1.3 libraries are downloaded at build time in the same way as on Windows, and `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin requires `libjson-glib-dev`:
+Prebuilt FFmpeg 9.1 libraries are downloaded at build time in the same way as on Windows, and `FFMPEGKIT_LOCAL_DIR` works the same way. In addition to Flutter's standard Linux prerequisites (`clang`, `cmake`, `ninja-build`, `pkg-config`, `libgtk-3-dev`), the plugin requires `libjson-glib-dev`:
 
 ```bash
 sudo apt-get install libjson-glib-dev   # Debian, Ubuntu
