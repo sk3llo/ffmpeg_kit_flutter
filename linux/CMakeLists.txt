@@ -71,7 +71,7 @@ set(FFMPEGKIT_PREBUILT_DIR "${CMAKE_CURRENT_BINARY_DIR}/ffmpeg-kit")
 # its packages, in an existing build folder, which would then keep the old
 # release's libraries until `flutter clean`.
 set(FFMPEGKIT_PACKAGE "full")
-set(FFMPEGKIT_VERSION "8.1.3")
+set(FFMPEGKIT_VERSION "9.1-beta.1")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (a dir containing lib/) to use instead of downloading")
 
 if(NOT FFMPEGKIT_LOCAL_DIR AND DEFINED ENV{FFMPEGKIT_LOCAL_DIR})
