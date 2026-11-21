@@ -101,7 +101,7 @@ message(STATUS "FFmpegKit prebuilt dir: ${FFMPEGKIT_PREBUILT_DIR} (arch: ${FFMPE
 # its packages, in an existing build folder, which would then keep the old
 # release's libraries until `flutter clean`.
 set(FFMPEGKIT_PACKAGE "full-gpl")
-set(FFMPEGKIT_VERSION "8.1.3")
+set(FFMPEGKIT_VERSION "9.1-beta.1")
 set(FFMPEGKIT_LOCAL_DIR "" CACHE PATH "Path to a locally-built bundle (dir containing bin/ [+ include/]) to use instead of downloading")
 
 # Allow pointing at a local bundle via the environment too, so it can be set
